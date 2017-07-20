@@ -57,7 +57,6 @@ module.exports = function(defaults) {
                 'bower_components/bootstrap-sass/assets/stylesheets',
                 'bower_components/osf-style/sass',
                 'bower_components/hint.css',
-                'bower_components/c3',
                 'bower_components/bootstrap-daterangepicker',
             ]
         },
@@ -135,8 +134,6 @@ module.exports = function(defaults) {
     });
 
     app.import(path.join(app.bowerDirectory, 'jquery.tagsinput/src/jquery.tagsinput.js'));
-    app.import(path.join(app.bowerDirectory, 'c3/c3.js'));
-    app.import(path.join(app.bowerDirectory, 'd3/d3.js'));
 
     app.import({
         development: path.join(app.bowerDirectory, 'hint.css/hint.css'),
