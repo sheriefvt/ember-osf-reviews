@@ -71,7 +71,7 @@ module.exports = function(defaults) {
                 enabled: useCdn,
                 content: `
                     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-                    <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/2.7.1/ember.prod.js"></script>`
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/2.12.2/ember.min.js"></script>`
             },
             assets: {
                 enabled: true
@@ -134,11 +134,6 @@ module.exports = function(defaults) {
     });
 
     app.import(path.join(app.bowerDirectory, 'jquery.tagsinput/src/jquery.tagsinput.js'));
-
-    app.import({
-        development: path.join(app.bowerDirectory, 'hint.css/hint.css'),
-        production: path.join(app.bowerDirectory, 'hint.css/hint.css')
-    });
 
     app.import({
         test: path.join(app.bowerDirectory, 'ember/ember-template-compiler.js')
