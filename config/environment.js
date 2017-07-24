@@ -7,7 +7,7 @@ module.exports = function(environment) {
         modulePrefix: 'reviews',
         appName: 'Reviews',
         environment: environment,
-        rootURL: '/',
+        rootURL: '/reviews/',
         locationType: 'auto',
         authorizationType: authorizationType,
         sentryDSN: 'http://test@localhost/80' || process.env.SENTRY_DSN,
@@ -35,6 +35,18 @@ module.exports = function(environment) {
         Reviews: {
             defaultProvider: 'osf',
         },
+        providers: [
+            // OSF must be the first provider
+            {
+                id: 'osf',
+                logoSharing: {
+                    path: '/assets/img/provider_logos/osf-dark.png',
+                    type: 'image/png',
+                    width: 363,
+                    height: 242
+                }
+            }
+        ],
         i18n: {
             defaultLocale: 'en'
         },
