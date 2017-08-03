@@ -15,7 +15,9 @@
     "test": "ember test"
   },
   "devDependencies": {
+    "@centerforopenscience/ember-osf": "0.7.1",
     "autoprefixer": "6.3.7",
+    "bootstrap-sass": "^3.3.7",
     "broccoli-asset-rev": "2.4.2",
     "ember-ajax": "2.0.1",
     "ember-cli": "2.11.1",
@@ -37,22 +39,25 @@
     "ember-cli-sass": "5.3.1",
     "ember-cli-shims": "1.0.2",
     "ember-cli-sri": "2.1.0",
+    "ember-cli-string-helpers": "1.4.0",
     "ember-cli-template-lint": "0.4.12",
     "ember-cli-test-loader": "1.1.0",
     "ember-cli-uglify": "1.2.0",
+    "ember-crumbly": "1.0.7",
     "ember-data": "2.7.0",
     "ember-export-application-global": "1.0.5",
     "ember-font-awesome": "2.1.1",
     "ember-get-config": "0.0.4",
     "ember-load-initializers": "0.5.1",
-    "@centerforopenscience/ember-osf": "0.7.1",
     "ember-power-select": "1.0.0-beta.7",
     "ember-resolver": "2.1.0",
+    "ember-responsive-tabs": "0.0.10",
     "ember-sanitize": "2.0.2",
     "ember-sortable": "1.8.2",
     "eslint": "3.18.0",
     "loader.js": "4.5.1",
-    "postcss": "5.1.0"
+    "postcss": "5.1.0",
+    "ui-navigator-service": "0.3.11"
   },
   "engines": {
     "node": ">= 0.12.0"

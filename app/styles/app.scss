@@ -20,16 +20,30 @@
   list-style-type: none;
 }
 
-
-
 .reviews-brand {
-  background: url('img/reviews-logo.png') top center no-repeat;
-  height: 70px;
-  background-size: contain;
+  background: url('img/reviews-logo-beta.png') top center no-repeat;
+  height: 100px;
+  background-size: 50%;
 }
 
-
-
+.dark-header {
+  background:white url('img/dark-overlay.png') top center ;
+  padding-top: 60px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dddddd;
+  height: 194px;
+  color: white;
+  h1 {
+    font-size: 41px;
+    font-weight: 300;
+  }
+  a:not(.btn) {
+    color: white;
+  }
+  .btn-info {
+    color: #fff
+  }
+}
 
 /* This should be a temporary adjustment */
 @media (max-width: 768px) {
@@ -38,12 +52,11 @@
   }
 }
 
-
-/* Main header with search bar */
+/* Main header*/
 .reviews-header{
   background:#214661 url('img/reviews-bg.jpg') top center ;
   padding-top: 150px;
-  padding-bottom: 30px;
+  padding-bottom: 100px;
   border-bottom: 1px solid #dddddd;
   color: white;
   h1 {
@@ -57,7 +70,71 @@
   .btn-info {
     color: #fff
   }
+}
 
+.reviews-middle{
+  background: white;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #dddddd;
+  color: black;
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.reviews-middle-features {
+  background: url('img/reviews-screens.png') top center no-repeat;
+  height: 300px;
+  background-size: contain;
+}
+
+.reviews-workflow{
+  background: white url('img/reviews-workflow-background.jpg') top center;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #dddddd;
+  color: white;
+  h2 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  li {
+    padding: 5px;
+    font-size: 12px;
+  }
+  h4 {
+    text-shadow: 2px 2px 4px grey;
+  }
+}
+
+.reviews-contact{
+  background: white;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #dddddd;
+  color: black;
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.reviews-workflow-figure1 {
+  background-image: url('img/post-moderation-workflow.png');
+  background-position: left top;
+  background-repeat: no-repeat;
+  height: 300px;
+  background-size: contain;
+}
+
+.reviews-workflow-figure2 {
+  background-image: url('img/pre-moderation-workflow.png');
+  background-position: right top;
+  background-repeat: no-repeat;
+  height: 300px;
+  background-size: contain;
 }
 
 /* Not found page */
@@ -79,4 +156,36 @@
   padding: 120px 0 120px 0;
   background-color: #ecf2f3;
   border-bottom: 1px solid #d6dbdc;
+}
+
+
+#Tab .tab-content {
+  color : black;
+  background-color: white;
+  padding : 5px 15px;
+}
+
+#Tab h3 {
+  color : black;
+}
+
+#tabTitle .nav > li > a {
+  border-radius: 0;
+}
+
+#tabTitle .nav > li > a:hover {
+  color: black;
+}
+
+li.active > a {
+  background-color: white !important;
+  color: black !important;
+}
+
+.unread-label {
+  background-color: #c7c7c7;
+  color: black;
+  padding: 2px;
+  border-radius: 5px;
+  font-weight: bold;
 }

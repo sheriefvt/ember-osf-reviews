@@ -1,0 +1,38 @@
+<div class="dark-header"> {{!HEADER}}
+    <div class="container"> {{!CONTAINER}}
+        <div class="row">{{!HEADER ROW}}
+            <div class="text-left p-l-lg col-md-12">
+                {{#each breadCrumbs as |breadCrumb|}}
+                    <b>
+                        {{#if (eq breadCrumb.name 'provider')}}
+                            {{provider-title}}
+                        {{else}}
+                            {{#link-to breadCrumb.path}}
+                                {{capitalize breadCrumb.name}}
+                            {{/link-to}}
+                        {{/if}}
+                    </b>
+                    {{#unless (eq breadCrumb breadCrumbs.lastObject)}}
+                        >
+                    {{/unless}}
+                {{/each}}
+                {{!TITLE}}
+                <h1 class="provider-title">{{provider-title}}</h1>
+                <div id="tabTitle">
+                    <ul class="nav nav-pills">
+                        {{#each tabs as |tab|}}
+                            {{#link-to tab.route tagName='li' href=false class=(if (eq active tab.name) 'active')}}
+                                {{#link-to tab.route provider-id}}
+                                    {{tab.name}}
+                                    {{#if (eq tab.name 'Moderation')}}
+                                        <small class="unread-label">{{unread-count}}</small>
+                                    {{/if}}
+                                {{/link-to}}
+                            {{/link-to}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> {{!END HEADER}}

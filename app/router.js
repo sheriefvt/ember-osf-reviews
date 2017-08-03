@@ -7,6 +7,11 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('provider', {path: 'preprints/:slug'}, function () {
+      this.route('moderation');
+      this.route('settings');
+  });
+  this.route('dashboard');
 });
 
 export default Router;

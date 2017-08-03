@@ -34,19 +34,64 @@ module.exports = function(environment) {
         },
         Reviews: {
             defaultProvider: 'osf',
-        },
-        providers: [
-            // OSF must be the first provider
-            {
-                id: 'osf',
-                logoSharing: {
-                    path: '/assets/img/provider_logos/osf-dark.png',
-                    type: 'image/png',
-                    width: 363,
-                    height: 242
+            providers: [
+                // OSF must be the first provider
+                {
+                    id: 'osf',
+                    logoSharing: {
+                        path: '/assets/img/provider_logos/osf-dark.png',
+                        type: 'image/png',
+                        width: 363,
+                        height: 242
+                    }
+                },
+                {
+                    id: 'engrxiv',
+                },
+                {
+                    id: 'socarxiv',
+                },
+                {
+                    id: 'psyarxiv',
+                },
+                {
+                    id: 'bitss',
+                },
+                {
+                    id: 'scielo',
+                },
+                {
+                    id: 'agrixiv',
+                },
+                {
+                    id: 'lawarxiv',
+                },
+                {
+                    id: 'focusarchive',
+                },
+                {
+                    id: 'paleorxiv',
+                },
+                {
+                    id: 'mindrxiv',
+                },
+                {
+                    id: 'lissa',
+                },
+                {
+                    id: 'sportrxiv',
+                },
+                {
+                    id: 'thesiscommons',
+                },
+                {
+                    id: 'asu',
+                },
+                {
+                    id: 'nutrixiv',
                 }
-            }
-        ],
+            ],
+        },
         i18n: {
             defaultLocale: 'en'
         },
