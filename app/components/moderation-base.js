@@ -20,6 +20,7 @@ export default Ember.Component.extend({
     ],
     breadCrumbs: Ember.computed('navigator.currentPath', 'provider-id', function(){
         let crumbs = this.get('navigator.currentPath').split('.');
+        crumbs.popObject();
         if(this.get('navigator.isIndexRoute')){
             crumbs.popObject(); //get rid of the index route at end
         }
