@@ -22,7 +22,7 @@
 
 .reviews-brand {
   background: url('img/reviews-logo-beta.png') top center no-repeat;
-  height: 120px;
+  height: 100px;
   background-size: contain;
   padding: 1px;
 }
@@ -78,35 +78,48 @@
   padding-top: 50px;
   padding-bottom: 30px;
   border-bottom: 1px solid #dddddd;
-  color: black;
+  color: #333333;
+  text-align: left;
   h2 {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
+  }
+  h4 {
+    font-size: 18px;
+  }
+  li {
+    font-weight: bold;
+  }
+  .features {
+    padding-top: 2%;
+    max-width: 500px;
   }
 }
 
 .reviews-middle-features {
-  background: url('img/reviews-screens.png') top center no-repeat;
-  height: 300px;
-  background-size: contain;
+  content: url('img/reviews-screens.png');
+  display: block;
+  position: relative;
+  width: 90%;
 }
 
 .reviews-workflow{
   background: white url('img/reviews-workflow-background.jpg') top center;
-  padding-top: 50px;
-  padding-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #dddddd;
   color: white;
   h2 {
     font-weight: bold;
-    font-size: 20px;
-  }
-  li {
-    padding: 5px;
-    font-size: 12px;
+    font-size: 24px;
   }
   h4 {
     text-shadow: 2px 2px 4px grey;
+    font-size: 18px;
+    text-align: left;
+  }
+  li {
+    padding-bottom: 20px;
   }
 }
 
@@ -115,27 +128,30 @@
   padding-top: 30px;
   padding-bottom: 30px;
   border-bottom: 1px solid #dddddd;
-  color: black;
+  color: #333333;
   h2 {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
+  }
+  h4 {
+    font-size: 21px;
   }
 }
 
 .reviews-workflow-figure1 {
-  background-image: url('img/post-moderation-workflow.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 300px;
-  background-size: contain;
+  content: url('img/post-moderation-workflow.png');
+  display: block;
+  position: relative;
+  text-align: center;
+  width: 100%;
 }
 
 .reviews-workflow-figure2 {
-  background-image: url('img/pre-moderation-workflow.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 300px;
-  background-size: contain;
+  content: url('img/pre-moderation-workflow.png');
+  display: block;
+  position: relative;
+  text-align: center;
+  width: 100%;
 }
 
 /* Not found page */
@@ -189,4 +205,8 @@ li.active > a {
   padding: 2px;
   border-radius: 5px;
   font-weight: bold;
+}
+
+.column-offset {
+  height: 120px;
 }
