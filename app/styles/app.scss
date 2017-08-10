@@ -31,7 +31,7 @@
   padding-top: 60px;
   padding-bottom: 20px;
   border-bottom: 1px solid #dddddd;
-  height: 210px;
+  height: 205px;
   color: white;
   h1 {
     font-size: 41px;
@@ -158,13 +158,6 @@
   border-bottom: 1px solid #d6dbdc;
 }
 
-
-#Tab .tab-content {
-  color: #333333;
-  background-color: white;
-  padding : 5px 15px;
-}
-
 #Tab h3 {
   color: #333333;
 }
@@ -172,11 +165,21 @@
 #tabTitle .nav > li > a {
   border-radius: 0;
   font-size: 24px;
-  padding-left: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 #tabTitle .nav > li > a:hover {
   color: #333333;
+}
+
+@media (max-device-width: 400px) {
+  #tabTitle .nav > li > a {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 li.active > a {
@@ -202,9 +205,7 @@ li.active > a {
 }
 
 .provider-title {
-  font-family: "Helvetica Neue bold", Helvetica, sans-serif;
   font-weight: bold;
   font-size: 36px;
-  width: 24px;
   color: #FCFCFC;
 }

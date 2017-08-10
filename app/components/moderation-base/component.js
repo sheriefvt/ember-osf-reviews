@@ -4,7 +4,7 @@ import Ember from 'ember';
  *
  * Sample usage:
  * ```handlebars
- * {{moderation-base}}
+ * {{moderation-base
  *    provider-title='SocArXiv'
  *    provider-id='socarxiv'
  *    unread-count=10
