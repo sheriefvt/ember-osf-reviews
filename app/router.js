@@ -12,6 +12,7 @@ Router.map(function() {
       this.route('settings');
   });
   this.route('dashboard');
+  this.route('page-not-found');
 });
 
 export default Router;
