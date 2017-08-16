@@ -12,10 +12,10 @@ Router.map(function() {
             this.route('setup');
             this.route('moderation');
             this.route('settings');
+            this.route('preprint_detail', {path:':preprint_id'}); // TODO replace with actual route when merging
         });
     });
 
-    this.route('dashboard');
     this.route('page-not-found');
 });
 
