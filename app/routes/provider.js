@@ -15,8 +15,6 @@ const providerIds = providers.map(p => p.id);
 export default Ember.Route.extend({
     theme: Ember.inject.service(),
 
-    // Todo: Replace the use of hardcoded preprint provider list with an API request.
-
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();

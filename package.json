@@ -52,7 +52,8 @@
     "ember-sortable": "1.8.2",
     "eslint": "3.18.0",
     "loader.js": "4.5.1",
-    "postcss": "5.1.0"
+    "postcss": "5.1.0",
+    "ui-navigator-service": "^0.3.11"
   },
   "engines": {
     "node": ">= 0.12.0"
