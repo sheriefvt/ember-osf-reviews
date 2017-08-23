@@ -8,7 +8,7 @@
                             <b>{{provider-title}}</b>
                         {{else}}
                             {{#link-to breadCrumb.path}}
-                                {{capitalize breadCrumb.name}}
+                                {{breadCrumb.name}}
                             {{/link-to}}
                         {{/if}}
                         {{#unless (eq breadCrumb breadCrumbs.lastObject)}}
