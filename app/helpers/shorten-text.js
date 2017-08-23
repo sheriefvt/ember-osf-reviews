@@ -9,7 +9,7 @@ import Ember from 'ember';
  * @class shorten-text
  **/
 export function shortenText(params/*, hash*/) {
-  return (params[0].length > params[1]) ? params[0].substr(0, params[1] - 2) + '...' : params[0];
+  return (params[0].length > params[1]) ? (params[0].substr(0, params[1] - 2)).trim() + '...' : params[0];
 }
 
 export default Ember.Helper.helper(shortenText);
