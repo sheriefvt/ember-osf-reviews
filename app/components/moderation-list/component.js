@@ -41,12 +41,16 @@ export default Ember.Component.extend({
         sortSelected: function (type) {
             if (type == 'newest'){
                 Ember.$(".checknew").addClass('fa fa-check');
-                Ember.$(".checkold").removeClass('fa fa-check');
+                if (Ember.$(".checkold").hasClass('fa fa-check')){
+                    Ember.$(".checkold").removeClass('fa fa-check');
+                }
                 this.get('params').setDesc();
                 this.send('pageChanged', 1);
             } else {
                 Ember.$(".checkold").addClass('fa fa-check');
-                Ember.$(".checknew").removeClass('fa fa-check');
+                if (Ember.$(".checknew").hasClass('fa fa-check')){
+                    Ember.$(".checknew").removeClass('fa fa-check');
+                }
                 this.get('params').setAsc();
                 this.send('pageChanged', 1);
             }
