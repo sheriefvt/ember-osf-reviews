@@ -17,14 +17,14 @@ export default Ember.Component.extend({
     store: Ember.inject.service(),
     params: Ember.inject.service('pager'),
     theme: Ember.inject.service(),
-    loading: false,
     screenWidth: 0,
+    loading: false,
     sortOptions: Ember.computed( function() { // Sort options for moderation list
         return ['Oldest', 'Newest'];
     }),
     didInsertElement: function() {
         this._super(...arguments);
-        this.set('screenWidth',  Math.round(Ember.$(window).width() / 14));
+        this.set('screenWidth', Math.round(Ember.$('.table tr').width() / 12));
         Ember.$('.table tr').css('display', 'none');
         this.set('buttonType', this.get('params').getButton());
         Ember.$('.btn-toolbar button[data-target="' + this.get('params').getButton() + '"]').addClass('activated');
