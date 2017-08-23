@@ -1,2 +1,2 @@
-{{outlet}}
-{{moderation-base provider-title='SocArXiv' provider-id='socarxiv' unread-count=10 active='Moderation'}}
+{{moderation-base provider-title='engrXiv' provider-id='engrxiv' unread-count=model.pendingPreprints.meta.pagination.total active='Moderation'}}
+{{moderation-list model=model}}

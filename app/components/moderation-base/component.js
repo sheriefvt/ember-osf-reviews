@@ -5,8 +5,8 @@ import Ember from 'ember';
  * Sample usage:
  * ```handlebars
  * {{moderation-base
- *    provider-title='SocArXiv'
- *    provider-id='socarxiv'
+ *    provider-title='engrxiv'
+ *    provider-id='engrxiv'
  *    unread-count=10
  *    active='Settings'
  * }}

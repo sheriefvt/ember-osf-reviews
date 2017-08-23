@@ -1,0 +1,30 @@
+<table class="table table-filter">
+    <tbody>
+        {{#each model.acceptedPreprints.records as |record|}}
+            <tr data-status={{record.reviewsState}}>
+                <td class="state">
+                    <a class="fa fa-check-circle-o fa-lg"> </a>
+                </td>
+                <td>
+                    <div class="media">
+                        <div class="media-body" title={{record.title}}>
+                            <a href="/preprints/{{theme.id}}/{{record.id}}">
+                                <p class="record-title">{{shorten-text record.title screenWidth}}</p>
+                                <p class="record-body">
+                                    submitted on {{moment-format record.dateCreated "MMMM DD, YYYY"}} by
+                                    {{#each record.node.contributors as |contributor|}}
+                                        {{contributor.users.fullName}}
+                                        {{#unless (eq contributor record.node.contributors.lastObject)}}
+                                            ,
+                                        {{/unless}}
+                                    {{/each}}
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+

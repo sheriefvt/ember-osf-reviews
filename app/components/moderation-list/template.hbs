@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 moderation-list">
+            <div class="panel panel-default">
+                <div class="heading">
+                    <div class="btn-toolbar">
+                        <button type="button" class="btn btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} Pending</button>
+                        <button type="button" class="btn btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} Accepted</button>
+                        <button type="button" class="btn btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} Rejected</button>
+                        <div class="dropdown pull-right">
+                            <button class="btn dropdown-toggle" type="button" id="sortBy" data-toggle="dropdown">
+                                Sort
+                                <span class="fa fa-caret-down"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" id="sortByOptionList">
+                                <span>
+                                    <button class="btn" onclick={{action "sortSelected" 'newest'}}><a class="checknew"></a> Newest</button>
+                                    <button class="btn" onclick={{action "sortSelected" 'oldest'}}><a class="checkold"></a> Oldest</button>
+                                </span>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {{#if loading}}
+                    <div class="text-center p-v-md" aria-label='Loading data'>
+                        {{fa-icon 'spinner' ariaHidden=false pulse=true size=3}}
+                    </div>
+                {{else}}
+                    <div class="panel-body">
+                        <div class="table-container">
+                            {{#if (eq buttonType 'accepted')}}
+                                {{accepted-record model=model screenWidth=screenWidth}}
+                            {{else if (eq buttonType 'pending')}}
+                                {{pending-record model=model screenWidth=screenWidth}}
+                            {{else}}
+                                {{rejected-record model=model screenWidth=screenWidth}}
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{#if (and (gt model.pendingPreprints.meta.total 1) (eq buttonType 'pending'))}}
+                        <div class="pull-right text-right">
+                            {{pagination-pager count=model.pendingPreprints.meta.total current=params.pendingpage change=(action 'pageChanged')}}
+                        </div>
+                    {{else if (and (gt model.acceptedPreprints.meta.total 1) (eq buttonType 'accepted'))}}
+                        <div class="pull-right text-right">
+                            {{pagination-pager count=model.acceptedPreprints.meta.total current=params.acceptedpage change=(action 'pageChanged')}}
+                        </div>
+                    {{else if (and (gt model.rejectedPreprints.meta.total 1) (eq buttonType 'rejected'))}}
+                        <div class="pull-right text-right">
+                            {{pagination-pager count=model.rejectedPreprints.meta.total current=params.rejectedpage change=(action 'pageChanged')}}
+                        </div>
+                    {{/if}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

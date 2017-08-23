@@ -14,12 +14,14 @@ const providerIds = providers.map(p => p.id);
  */
 export default Ember.Route.extend({
     theme: Ember.inject.service(),
+    params: Ember.inject.service('pager'),
 
     // Todo: Replace the use of hardcoded preprint provider list with an API request.
 
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();
+        this.set('theme.id', slugLower);
         if (providerIds.includes(slugLower)) {
             if (slugLower !== slug) {
                 const {pathname} = window.location;
@@ -30,4 +32,31 @@ export default Ember.Route.extend({
             this.replaceWith('page-not-found');
         }
     },
-});
+    model(params) {
+        params["filter[provider]"] = this.get('theme.id');
+        delete params["page"];
+        return Ember.RSVP.hash({
+            acceptedPreprints: this.store.query('preprint', Object.assign({'filter[reviews_state]': 'accepted'}, params))
+                .then((results) => {
+                    return {
+                        records: results,
+                        meta: results.get('meta')
+                    };
+            }),
+            rejectedPreprints: this.store.query('preprint', Object.assign({'filter[reviews_state]': 'rejected'}, params))
+                .then((results) => {
+                    return {
+                        records: results,
+                        meta: results.get('meta')
+                    };
+            }),
+            pendingPreprints: this.store.query('preprint', Object.assign({'filter[reviews_state]': 'pending'}, params))
+                .then((results) => {
+                    return {
+                        records: results,
+                        meta: results.get('meta')
+                    };
+            }),
+        });
+    }
+})
