@@ -32,4 +32,14 @@ export default Ember.Service.extend({
         return `${config.OSF.url}register?${query}`;
     }),
 
+    // The provider object
+    provider: Ember.computed('id', function() {
+        return this.get('store').findRecord('preprint-provider', this.get('id'));
+    }),
+
+    // If we're using a branded provider
+    isProvider: Ember.computed('id', function() {
+        return this.get('id') !== 'osf';
+    }),
+
 });
