@@ -12,11 +12,14 @@
                                 <p class="record-title">{{shorten-text record.title screenWidth}}</p>
                                 <p class="record-body">
                                     submitted on {{moment-format record.dateCreated "MMMM DD, YYYY"}} by
-                                    {{#each record.node.contributors as |contributor|}}
-                                        {{contributor.users.fullName}}
-                                        {{#unless (eq contributor record.node.contributors.lastObject)}}
-                                            ,
-                                        {{/unless}}
+                                    {{#each record.node.contributors as |contributor index| ~}}
+                                        {{#if (and (gt index 0) (lt index 3))}}
+                                            {{concat ', ' contributor.users.fullName}}
+                                        {{else if (eq index 0)}}
+                                            {{contributor.users.fullName}}
+                                        {{else}}
+                                            ....
+                                        {{/if}}
                                     {{/each}}
                                 </p>
                             </a>

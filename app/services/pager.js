@@ -7,21 +7,7 @@ export default Ember.Service.extend({
     page: 1,
     limit: 10,
     activeButton: 'pending',
-    sort: 'date_created',
-    setPage: function(pageNumber, type) {
-        this.set(type + 'page', pageNumber);
-        this.set('page', pageNumber);
-    },
-    setButton: function(type) {
-        this.set('activeButton', type);
-    },
-    getButton: function() {
-        return this.get('activeButton');
-    },
-    setAsc: function() {
-        this.set('sort', 'date_created');
-    },
-    setDesc: function() {
-        this.set('sort', '-date_created');
-    }
+    sortType: 'date_created',
+    filter: {},
+    embed: 'node',
 });

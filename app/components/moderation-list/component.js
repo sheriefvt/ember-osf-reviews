@@ -15,10 +15,11 @@ import Ember from 'ember';
  **/
 export default Ember.Component.extend({
     store: Ember.inject.service(),
-    params: Ember.inject.service('pager'),
     theme: Ember.inject.service(),
+    pager: Ember.inject.service(),
     screenWidth: 0,
     loading: false,
+    sortType: 'date_created',
     sortOptions: Ember.computed( function() { // Sort options for moderation list
         return ['Oldest', 'Newest'];
     }),
@@ -26,50 +27,40 @@ export default Ember.Component.extend({
         this._super(...arguments);
         this.set('screenWidth', Math.round(Ember.$('.table tr').width() / 12));
         Ember.$('.table tr').css('display', 'none');
-        this.set('buttonType', this.get('params').getButton());
-        Ember.$('.btn-toolbar button[data-target="' + this.get('params').getButton() + '"]').addClass('activated');
-        Ember.$('.table tr[data-status="' + this.get('params').getButton() + '"]').fadeIn('fast');
+        const activeButton = this.get('pager.activeButton');
+        this.set('buttonType', activeButton);
+        Ember.$('.btn-toolbar button[data-target="' + activeButton + '"]').addClass('activated');
+        Ember.$('.table tr[data-status="' + activeButton + '"]').fadeIn('fast');
     },
     actions: {
         buttonPressed: function(target){
-            Ember.$('.btn-toolbar button[data-target="' + this.get('params').getButton() + '"]').removeClass('activated');
+            Ember.$('.btn-toolbar button[data-target="' +  this.get('pager.activeButton') + '"]').removeClass('activated');
             this.set('buttonType', target);
-            this.get('params').setButton(target);
+            this.set('pager.activeButton', target);
             Ember.$('.table tr').css('display', 'none');
             Ember.$('.table tr[data-status="' + target + '"]').fadeIn('fast');
         },
         sortSelected: function (type) {
-            if (type == 'newest'){
-                Ember.$(".checknew").addClass('fa fa-check');
-                if (Ember.$(".checkold").hasClass('fa fa-check')){
-                    Ember.$(".checkold").removeClass('fa fa-check');
-                }
-                this.get('params').setDesc();
-                this.send('pageChanged', 1);
-            } else {
-                Ember.$(".checkold").addClass('fa fa-check');
-                if (Ember.$(".checknew").hasClass('fa fa-check')){
-                    Ember.$(".checknew").removeClass('fa fa-check');
-                }
-                this.get('params').setAsc();
-                this.send('pageChanged', 1);
-            }
+            this.set('pager.sort', type);
+            this.set('sortType', type);
+            this.send('pageChanged', 1);
         },
         pageChanged: function (current) {
             this.set('loading', true);
             const state = this.get('buttonType');
-            this.get('params').setPage(current, state);
-            let requestParams = this.get('params');
-            requestParams["filter[provider]"] = this.get('theme.id');
-            requestParams['filter[reviews_state]'] = state;
-            requestParams['embed'] = 'node';
-            this.get('store').query('preprint', requestParams)
+            this.set('pager.page', current);
+            this.set('pager.filter.provider', this.get('theme.id'));
+            this.set('pager.filter', {'provider': this.get('theme.id'), 'reviews_state': state});
+            this.set('pager.'+ state +'page', current);
+            this.set('pager.sort', this.get('sortType'));
+            this.get('store').query('preprint', this.get('pager'))
                 .then((results) => {
                     const records = 'model.'+ state +'Preprints.records';
                     this.set(records, results);
             }).then(() => {
                 this.send('buttonPressed', state);
                 this.set('loading', false);
+                Ember.$('window').history.pushState("object or string", "Title", window.location.href.substring(window.location.href).split("?")[0]);
             });
         }
     }

@@ -1,8 +1,4 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
-
-const providers = config.Reviews.providers.slice(1);
-const providerIds = providers.map(p => p.id);
 
 /**
  * @module ember-osf-reviews
@@ -14,27 +10,29 @@ const providerIds = providers.map(p => p.id);
  */
 export default Ember.Route.extend({
     theme: Ember.inject.service(),
-    params: Ember.inject.service('pager'),
-
+    pager: Ember.inject.service('pager'),
     // Todo: Replace the use of hardcoded preprint provider list with an API request.
-
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();
-        this.set('theme.id', slugLower);
-        if (providerIds.includes(slugLower)) {
-            if (slugLower !== slug) {
-                const {pathname} = window.location;
-                const pathRegex = new RegExp(`^/preprints/${slug}`);
-                window.location.pathname = pathname.replace(pathRegex, `/preprints/${slugLower}`);
-            }
-        } else {
+        const upstreamPromise = this._super();
+        this.store.find('preprint-provider', slugLower).then((provider) =>{
+            this.set('theme.id', provider.id);
+            this.set('pager.filter.provider', provider.id);
+        }).catch(() =>{
             this.replaceWith('page-not-found');
-        }
+        });
+        return Ember.RSVP.resolve(upstreamPromise)
+            .then(function() {
+                return new Ember.RSVP.Promise(function(resolve) {
+                    setTimeout(function() {
+                        resolve();
+                    }, 1000);
+                });
+            });
     },
     model(params) {
-        params["filter[provider]"] = this.get('theme.id');
-        delete params["page"];
+        delete params['page'];
         return Ember.RSVP.hash({
             acceptedPreprints: this.store.query('preprint', Object.assign({'filter[reviews_state]': 'accepted'}, params))
                 .then((results) => {

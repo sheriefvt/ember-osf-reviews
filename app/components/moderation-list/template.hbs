@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12 moderation-list">
+        <div class="col-md-12 reviews-list">
             <div class="panel panel-default">
                 <div class="heading">
                     <div class="btn-toolbar">
@@ -14,8 +14,8 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" id="sortByOptionList">
                                 <span>
-                                    <button class="btn" onclick={{action "sortSelected" 'newest'}}><a class="checknew"></a> Newest</button>
-                                    <button class="btn" onclick={{action "sortSelected" 'oldest'}}><a class="checkold"></a> Oldest</button>
+                                    <button class="btn" onclick={{action "sortSelected" '-data_created'}}><a class='{{if (eq pager.sort '-data_created') 'fa fa-check'}}'></a> Newest</button>
+                                    <button class="btn" onclick={{action "sortSelected" 'data_created'}}><a class='{{if (eq pager.sort 'data_created') 'fa fa-check'}}'></a> Oldest</button>
                                 </span>
                             </ul>
                         </div>
@@ -39,15 +39,15 @@
                     </div>
                     {{#if (and (gt model.pendingPreprints.meta.total 1) (eq buttonType 'pending'))}}
                         <div class="pull-right text-right">
-                            {{pagination-pager count=model.pendingPreprints.meta.total current=params.pendingpage change=(action 'pageChanged')}}
+                            {{pagination-pager count=model.pendingPreprints.meta.total current=pager.pendingpage change=(action 'pageChanged')}}
                         </div>
                     {{else if (and (gt model.acceptedPreprints.meta.total 1) (eq buttonType 'accepted'))}}
                         <div class="pull-right text-right">
-                            {{pagination-pager count=model.acceptedPreprints.meta.total current=params.acceptedpage change=(action 'pageChanged')}}
+                            {{pagination-pager count=model.acceptedPreprints.meta.total current=pager.acceptedpage change=(action 'pageChanged')}}
                         </div>
                     {{else if (and (gt model.rejectedPreprints.meta.total 1) (eq buttonType 'rejected'))}}
                         <div class="pull-right text-right">
-                            {{pagination-pager count=model.rejectedPreprints.meta.total current=params.rejectedpage change=(action 'pageChanged')}}
+                            {{pagination-pager count=model.rejectedPreprints.meta.total current=pager.rejectedpage change=(action 'pageChanged')}}
                         </div>
                     {{/if}}
                 {{/if}}
