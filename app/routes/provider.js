@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import queryParamsMixin from '../mixins/query-params-mixin'
 
 /**
  * @module ember-osf-reviews
@@ -8,9 +9,8 @@ import Ember from 'ember';
 /**
  * @class Provider Route Handler
  */
-export default Ember.Route.extend({
+export default Ember.Route.extend(queryParamsMixin, {
     theme: Ember.inject.service(),
-    pager: Ember.inject.service('pager'),
     // Todo: Replace the use of hardcoded preprint provider list with an API request.
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
@@ -18,7 +18,7 @@ export default Ember.Route.extend({
         const upstreamPromise = this._super();
         this.store.find('preprint-provider', slugLower).then((provider) =>{
             this.set('theme.id', provider.id);
-            this.set('pager.filter.provider', provider.id);
+            this.set('filter.provider', provider.id);
         }).catch(() =>{
             this.replaceWith('page-not-found');
         });

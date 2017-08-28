@@ -39,15 +39,15 @@
                     </div>
                     {{#if (and (gt model.pendingPreprints.meta.total 1) (eq buttonType 'pending'))}}
                         <div class="pull-right text-right">
-                            {{pagination-pager count=model.pendingPreprints.meta.total current=pager.pendingpage change=(action 'pageChanged')}}
+                            {{pagination-pager count=model.pendingPreprints.meta.total current=pendingpage change=(action 'pageChanged')}}
                         </div>
                     {{else if (and (gt model.acceptedPreprints.meta.total 1) (eq buttonType 'accepted'))}}
                         <div class="pull-right text-right">
-                            {{pagination-pager count=model.acceptedPreprints.meta.total current=pager.acceptedpage change=(action 'pageChanged')}}
+                            {{pagination-pager count=model.acceptedPreprints.meta.total current=acceptedpage change=(action 'pageChanged')}}
                         </div>
                     {{else if (and (gt model.rejectedPreprints.meta.total 1) (eq buttonType 'rejected'))}}
                         <div class="pull-right text-right">
-                            {{pagination-pager count=model.rejectedPreprints.meta.total current=pager.rejectedpage change=(action 'pageChanged')}}
+                            {{pagination-pager count=model.rejectedPreprints.meta.total current=rejectedpage change=(action 'pageChanged')}}
                         </div>
                     {{/if}}
                 {{/if}}
