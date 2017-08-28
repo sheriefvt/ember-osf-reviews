@@ -12,10 +12,6 @@ import queryParamsMixin from '../mixins/query-params-mixin'
 export default Ember.Route.extend(queryParamsMixin, {
     theme: Ember.inject.service(),
     active: 'Moderation',
-    acceptedpage: 1,
-    pendingpage: 1,
-    rejectedpage: 1,
-    // Todo: Replace the use of hardcoded preprint provider list with an API request.
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();
