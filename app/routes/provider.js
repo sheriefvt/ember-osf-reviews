@@ -27,7 +27,7 @@ export default Ember.Route.extend(queryParamsMixin, {
                 return new Ember.RSVP.Promise(function(resolve) {
                     setTimeout(function() {
                         resolve();
-                    }, 1000);
+                    }, 500);
                 });
             });
     },
