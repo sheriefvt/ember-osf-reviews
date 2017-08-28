@@ -14,8 +14,8 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" id="sortByOptionList">
                                 <span>
-                                    <button class="btn" onclick={{action "sortSelected" '-data_created'}}><a class='{{if (eq pager.sort '-data_created') 'fa fa-check'}}'></a> Newest</button>
-                                    <button class="btn" onclick={{action "sortSelected" 'data_created'}}><a class='{{if (eq pager.sort 'data_created') 'fa fa-check'}}'></a> Oldest</button>
+                                    <button class="btn" onclick={{action "sortSelected" '-data_created'}}><a class='{{if (eq sort '-data_created') 'fa fa-check'}}'></a> Newest</button>
+                                    <button class="btn" onclick={{action "sortSelected" 'data_created'}}><a class='{{if (eq sort 'data_created') 'fa fa-check'}}'></a> Oldest</button>
                                 </span>
                             </ul>
                         </div>

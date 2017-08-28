@@ -11,6 +11,10 @@ import queryParamsMixin from '../mixins/query-params-mixin'
  */
 export default Ember.Route.extend(queryParamsMixin, {
     theme: Ember.inject.service(),
+    active: 'Moderation',
+    acceptedpage: 1,
+    pendingpage: 1,
+    rejectedpage: 1,
     // Todo: Replace the use of hardcoded preprint provider list with an API request.
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
@@ -20,7 +24,7 @@ export default Ember.Route.extend(queryParamsMixin, {
             this.set('theme.id', provider.id);
             this.set('filter.provider', provider.id);
         }).catch(() =>{
-            this.replaceWith('page-not-found');
+            this.replaceWith('page-not-found')
         });
         return Ember.RSVP.resolve(upstreamPromise)
             .then(function() {

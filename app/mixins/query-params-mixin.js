@@ -4,9 +4,6 @@ export default Ember.Mixin.create({
     queryParams:  Ember.computed(function() {
         return ['page', 'limit', 'embed', 'sort', 'filter'];
     }),
-    acceptedpage: 1,
-    pendingpage: 1,
-    rejectedpage: 1,
     page: 1,
     limit: 10,
     activeButton: 'pending',
