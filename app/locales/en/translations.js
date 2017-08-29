@@ -40,5 +40,9 @@ export default {
             paragraph: `Create your own branded preprints servers backed by the OSF. Check out the open source code and the requirements and road map. Input welcome!`,
             contact_us: `Contact us`
         }
+    },
+    moderation_base: {
+        moderation_tab: `Moderation`,
+        settings_tab: `Settings`
     }
 };

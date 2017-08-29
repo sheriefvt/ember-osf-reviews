@@ -13,7 +13,7 @@ export default Ember.Route.extend({
     model(params, transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();
-        this.store.find('preprint-provider', slugLower).then((provider) =>{
+        return this.store.find('preprint-provider', slugLower).then((provider) =>{
             this.set('theme.id', provider.id);
         }).catch(() =>{
             this.replaceWith('page-not-found');

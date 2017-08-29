@@ -12,11 +12,13 @@ import Ember from 'ember';
  * @class moderation-base
  **/
 export default Ember.Component.extend({
+    i18n: Ember.inject.service(),
     theme: Ember.inject.service(),
-    tabs: [
-        { name: 'Moderation', route: 'provider.moderation'},
-        { name: 'Settings', route: 'provider.settings'},
-    ],
+    tabs: Ember.computed('i18n.locale', function(){
+        return [
+            { name: this.get('i18n').t('moderation_base.moderation_tab'), route: 'provider.moderation'},
+            { name: this.get('i18n').t('moderation_base.settings_tab'), route: 'provider.settings'},
+        ]}),
     breadCrumbs: Ember.computed('navigator.currentPath', function(){
         let crumbs = this.get('navigator.currentPath').split('.');
         crumbs.popObject();
