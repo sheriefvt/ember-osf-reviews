@@ -10,23 +10,13 @@ import Ember from 'ember';
  */
 export default Ember.Route.extend({
     theme: Ember.inject.service(),
-
-    beforeModel(transition) {
+    model(params, transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();
-        const upstreamPromise = this._super();
         this.store.find('preprint-provider', slugLower).then((provider) =>{
             this.set('theme.id', provider.id);
         }).catch(() =>{
             this.replaceWith('page-not-found');
         });
-        return Ember.RSVP.resolve(upstreamPromise)
-            .then(function() {
-                return new Ember.RSVP.Promise(function(resolve) {
-                    setTimeout(function() {
-                        resolve();
-                    }, 500);
-                });
-            });
     },
 });
