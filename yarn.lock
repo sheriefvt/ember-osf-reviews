@@ -4,7 +4,7 @@
 
 "@centerforopenscience/ember-osf@https://github.com/chrisseto/ember-osf#feature/reviews":
   version "0.8.5"
-  resolved "https://github.com/chrisseto/ember-osf#97d369dbdc4d809d7ddddf36fff9f14b98472294"
+  resolved "https://github.com/chrisseto/ember-osf#132d71d734291c398fd1346b915c0b2b0fa79dca"
   dependencies:
     broccoli-funnel "1.2.0"
     broccoli-merge-trees "2.0.0"
@@ -2765,6 +2765,15 @@ ember-getowner-polyfill@^1.1.0, ember-getowner-polyfill@^1.2.2:
 ember-i18n@5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ember-i18n/-/ember-i18n-5.0.1.tgz#6e20732ff5c825b50ca08aa49025964dacc100c4"
+  dependencies:
+    broccoli-funnel "^1.0.6"
+    ember-cli-babel "^5.1.7"
+    ember-cli-version-checker "^1.2.0"
+    ember-getowner-polyfill "^1.2.2"
+
+ember-i18n@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/ember-i18n/-/ember-i18n-5.0.2.tgz#3de05014e632b53a1b48d84d4a0d2ff261b8ebfc"
   dependencies:
     broccoli-funnel "^1.0.6"
     ember-cli-babel "^5.1.7"
