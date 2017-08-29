@@ -1,8 +1,4 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
-
-const providers = config.Reviews.providers.slice(1);
-const providerIds = providers.map(p => p.id);
 
 /**
  * @module ember-osf-reviews
@@ -18,14 +14,19 @@ export default Ember.Route.extend({
     beforeModel(transition) {
         const {slug = ''} = transition.params.provider;
         const slugLower = slug.toLowerCase();
-        if (providerIds.includes(slugLower)) {
-            if (slugLower !== slug) {
-                const {pathname} = window.location;
-                const pathRegex = new RegExp(`^/preprints/${slug}`);
-                window.location.pathname = pathname.replace(pathRegex, `/preprints/${slugLower}`);
-            }
-        } else {
+        const upstreamPromise = this._super();
+        this.store.find('preprint-provider', slugLower).then((provider) =>{
+            this.set('theme.id', provider.id);
+        }).catch(() =>{
             this.replaceWith('page-not-found');
-        }
+        });
+        return Ember.RSVP.resolve(upstreamPromise)
+            .then(function() {
+                return new Ember.RSVP.Promise(function(resolve) {
+                    setTimeout(function() {
+                        resolve();
+                    }, 500);
+                });
+            });
     },
 });

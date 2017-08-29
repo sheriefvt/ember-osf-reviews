@@ -5,8 +5,6 @@ import Ember from 'ember';
  * Sample usage:
  * ```handlebars
  * {{moderation-base
- *    provider-title='SocArXiv'
- *    provider-id='socarxiv'
  *    unread-count=10
  *    active='Settings'
  * }}
@@ -14,11 +12,12 @@ import Ember from 'ember';
  * @class moderation-base
  **/
 export default Ember.Component.extend({
+    theme: Ember.inject.service(),
     tabs: [
         { name: 'Moderation', route: 'provider.moderation'},
         { name: 'Settings', route: 'provider.settings'},
     ],
-    breadCrumbs: Ember.computed('navigator.currentPath', 'provider-id', function(){
+    breadCrumbs: Ember.computed('navigator.currentPath', function(){
         let crumbs = this.get('navigator.currentPath').split('.');
         crumbs.popObject();
         if(this.get('navigator.isIndexRoute')){
@@ -32,5 +31,14 @@ export default Ember.Component.extend({
             }
         });
         return [{path: 'dashboard', name: 'Reviews Dashboard'}].concat(breadedCrumbs)
-    })
+    }),
+    actions: {
+        toggleTab: function () {
+            if (this.get('active') == 'Moderation'){
+                this.set('active', 'Settings');
+            } else {
+                this.set('active', 'Moderation');
+            }
+        }
+    }
 });

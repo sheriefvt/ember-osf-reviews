@@ -5,7 +5,7 @@
                 <p>
                     {{#each breadCrumbs as |breadCrumb|}}
                         {{#if (eq breadCrumb.name 'provider')}}
-                            <b>{{provider-title}}</b>
+                            <b>{{theme.provider.name}}</b>
                         {{else}}
                             {{#link-to breadCrumb.path}}
                                 {{breadCrumb.name}}
@@ -17,12 +17,12 @@
                     {{/each}}
                 </p>
                 {{!TITLE}}
-                <div class="provider-title"><b>{{provider-title}}</b></div>
+                <div class="provider-title"><b>{{theme.provider.name}}</b></div>
                 <div id="tabTitle">
                     <ul class="nav nav-pills ">
                         {{#each tabs as |tab|}}
-                            {{#link-to tab.route tagName='li' href=false class=(if (eq active tab.name) 'active')}}
-                                {{#link-to tab.route provider-id}}
+                            {{#link-to tab.route tagName='li' href=false class=(if (eq activeTab tab.name) 'active')}}
+                                {{#link-to tab.route theme.provider.id}}
                                     {{tab.name}}
                                     {{#if (eq tab.name 'Moderation')}}
                                         <small class="unread-label">{{unread-count}}</small>

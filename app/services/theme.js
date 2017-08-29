@@ -22,7 +22,6 @@ export default Ember.Service.extend({
     // The id of the current provider
     id: config.Reviews.defaultProvider,
 
-    // Todo: Replace the use of hardcoded preprint provider list with an API request.
     provider: Ember.computed('id', function() {
         return this.get('store').findRecord('preprint-provider', this.get('id'));
     }),
