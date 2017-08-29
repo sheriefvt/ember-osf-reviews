@@ -1,17 +1,17 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>Page not found</h1>
+            <h1>{{t "error_page.title"}}</h1>
             <p>
-                The page you were looking for is not found on the OSF Reviews service.
+                {{t "error_page.details"}}
                 <br>
-                <span>If this should not have occurred and the issue persists, please report it to</span>
+                <span>{{t "error_page.report"}}</span>
                 <a href="mailto:{{supportEmail}}">
                     {{supportEmail}}
                 </a>
             </p>
             <a class="btn btn-primary m-t-md" href='/reviews/'>
-                Go to OSF Reviews
+                {{t "error_page.go_to"}}
             </a>
         </div>
     </div>
