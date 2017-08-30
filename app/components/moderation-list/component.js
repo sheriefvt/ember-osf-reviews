@@ -18,11 +18,13 @@ import queryParamsMixin from '../../mixins/query-params-mixin'
 export default Ember.Component.extend(queryParamsMixin, {
     store: Ember.inject.service(),
     theme: Ember.inject.service(),
+    i18n: Ember.inject.service(),
     screenWidth: 0,
     loading: false,
     sortType: 'date_created',
-    sortOptions: Ember.computed( function() { // Sort options for moderation list
-        return ['Oldest', 'Newest'];
+    sortOptions: Ember.computed('i18n.local', function() { // Sort options for moderation list
+        const i18n = this.get('i18n');
+        return [i18n.t('moderation_list.oldest'), i18n.t('moderation_list.newest')];
     }),
     didInsertElement: function() {
         this._super(...arguments);

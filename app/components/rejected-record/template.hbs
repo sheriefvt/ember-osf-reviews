@@ -11,7 +11,7 @@
                             <a href="/preprints/{{theme.id}}/{{record.id}}">
                                 <p class="record-title">{{shorten-text record.title screenWidth}}</p>
                                 <p class="record-body">
-                                    submitted on {{moment-format record.dateCreated "MMMM DD, YYYY"}} by
+                                    {{t 'moderation_list.record.submitted_on'}} {{moment-format record.dateCreated "MMMM DD, YYYY"}} {{t 'moderation_list.record.by'}}
                                     {{#each record.node.contributors as |contributor index| ~}}
                                         {{#if (and (gt index 0) (lt index 3))}}
                                             {{concat ', ' contributor.users.fullName}}
