@@ -26,6 +26,14 @@ export default Ember.Component.extend(queryParamsMixin, {
         const i18n = this.get('i18n');
         return [i18n.t('moderation_list.oldest'), i18n.t('moderation_list.newest')];
     }),
+    pageCount: Ember.computed('model', 'buttonType', function () {
+        const type = this.get('buttonType');
+        return this.get('model.' +type+ 'Preprints.meta.total');
+    }),
+    currentPage: Ember.computed('buttonType', 'pendingpage', 'acceptedpage', 'rejectedpage', function () {
+        const type = this.get('buttonType');
+        return this.get(type+ 'page');
+    }),
     didInsertElement: function() {
         this._super(...arguments);
         this.set('screenWidth', Math.round(Ember.$('.table tr').width() / 12));

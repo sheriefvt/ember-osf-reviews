@@ -1,51 +1,39 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 reviews-list">
-            <div class="panel panel-default">
-                <div class="moderation-list-heading">
-                    <div class="btn-toolbar">
-                        <button type="button" class="btn moderation-btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} {{t 'moderation_list.pending'}}</button>
-                        <button type="button" class="btn moderation-btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} {{t 'moderation_list.accepted'}}</button>
-                        <button type="button" class="btn moderation-btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} {{t 'moderation_list.rejected'}}</button>
-                        <div class="dropdown pull-right">
-                            <button class="btn dropdown-toggle" type="button" id="sortBy" data-toggle="dropdown">
-                                {{t 'moderation_list.sort'}}
-                                <span class="fa fa-caret-down"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" id="sortByOptionList">
-                                <span>
-                                    <button class="btn" onclick={{action "sortSelected" '-date_created'}}><a class='{{if (eq sort '-date_created') 'fa fa-check'}}'></a> {{t 'moderation_list.newest'}}</button>
-                                    <button class="btn" onclick={{action "sortSelected" 'date_created'}}><a class='{{if (eq sort 'date_created') 'fa fa-check'}}'></a> {{t 'moderation_list.oldest'}}</button>
-                                </span>
-                            </ul>
+            <div class="moderation-list-heading">
+                <div class="btn-toolbar">
+                    <button type="button" class="btn moderation-btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} {{t 'moderation_list.pending'}}</button>
+                    <button type="button" class="btn moderation-btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} {{t 'moderation_list.accepted'}}</button>
+                    <button type="button" class="btn moderation-btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} {{t 'moderation_list.rejected'}}</button>
+                    <div class="dropdown pull-right">
+                        <button class="btn dropdown-toggle" type="button" id="sortBy" data-toggle="dropdown">
+                            {{t 'moderation_list.sort'}}
+                            <span class="fa fa-caret-down"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" id="sortByOptionList">
+                            <span>
+                                <button class="btn" onclick={{action "sortSelected" '-date_created'}}><a class='{{if (eq sort '-date_created') 'fa fa-check'}}'></a> {{t 'moderation_list.newest'}}</button>
+                                <button class="btn" onclick={{action "sortSelected" 'date_created'}}><a class='{{if (eq sort 'date_created') 'fa fa-check'}}'></a> {{t 'moderation_list.oldest'}}</button>
+                            </span>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {{#if loading}}
+                <div class="text-center p-v-md" aria-label="Loading data">
+                    {{fa-icon 'spinner' ariaHidden=false pulse=true size=3}}
+                </div>
+            {{else}}
+                <div class="moderation-list-body">
+                    <div class="table-container">
+                        {{preprint-record data=model screenWidth=screenWidth type=buttonType}}
+                        <div class="pull-right text-right">
+                            {{pagination-pager count=pageCount current=currentPage change=(action 'pageChanged')}}
                         </div>
                     </div>
                 </div>
-                {{#if loading}}
-                    <div class="text-center p-v-md" aria-label="Loading data">
-                        {{fa-icon 'spinner' ariaHidden=false pulse=true size=3}}
-                    </div>
-                {{else}}
-                    <div class="moderation-list-body">
-                        <div class="table-container">
-                            {{preprint-record data=model screenWidth=screenWidth type=buttonType loading=loading}}
-                        </div>
-                    </div>
-                    {{#if (and (gt model.pendingPreprints.meta.total 1) (eq buttonType 'pending'))}}
-                        <div class="pull-right text-right">
-                            {{pagination-pager count=model.pendingPreprints.meta.total current=pendingpage change=(action 'pageChanged')}}
-                        </div>
-                    {{else if (and (gt model.acceptedPreprints.meta.total 1) (eq buttonType 'accepted'))}}
-                        <div class="pull-right text-right">
-                            {{pagination-pager count=model.acceptedPreprints.meta.total current=acceptedpage change=(action 'pageChanged')}}
-                        </div>
-                    {{else if (and (gt model.rejectedPreprints.meta.total 1) (eq buttonType 'rejected'))}}
-                        <div class="pull-right text-right">
-                            {{pagination-pager count=model.rejectedPreprints.meta.total current=rejectedpage change=(action 'pageChanged')}}
-                        </div>
-                    {{/if}}
-                {{/if}}
-            </div>
+            {{/if}}
         </div>
     </div>
 </div>
