@@ -154,8 +154,7 @@
   width: 100%;
 }
 
-
-.btn-filter {
+.moderation-btn-filter {
   background-color: Transparent;
   background-repeat:no-repeat;
   cursor:pointer;
@@ -163,12 +162,12 @@
   outline:none;
 }
 
-.panel-body {
+.moderation-list-body {
   padding: 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.heading {
+.moderation-list-heading {
   padding-bottom: 10px;
   height: 50px;
   background-color: #dddddd;
@@ -252,7 +251,7 @@ li.active > a {
   height: 120px;
 }
 
-.state {
+.moderation-record-state {
   .fa-hourglass-o {
     color: #F5A623;
     padding-top: 16px;
@@ -315,8 +314,8 @@ li.active > a {
   }
 }
 
-@media screen and (max-width: 480px) {
-  .heading {
+@media screen and (max-width: $screen-sm) {
+  .moderation-list-heading {
    .btn {
       font-size: 12px;
       padding-left: 2px;

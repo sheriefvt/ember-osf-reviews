@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col-md-12 reviews-list">
             <div class="panel panel-default">
-                <div class="heading">
+                <div class="moderation-list-heading">
                     <div class="btn-toolbar">
-                        <button type="button" class="btn btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} {{t 'moderation_list.pending'}}</button>
-                        <button type="button" class="btn btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} {{t 'moderation_list.accepted'}}</button>
-                        <button type="button" class="btn btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} {{t 'moderation_list.rejected'}}</button>
+                        <button type="button" class="btn moderation-btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} {{t 'moderation_list.pending'}}</button>
+                        <button type="button" class="btn moderation-btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} {{t 'moderation_list.accepted'}}</button>
+                        <button type="button" class="btn moderation-btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} {{t 'moderation_list.rejected'}}</button>
                         <div class="dropdown pull-right">
                             <button class="btn dropdown-toggle" type="button" id="sortBy" data-toggle="dropdown">
                                 {{t 'moderation_list.sort'}}
@@ -22,19 +22,13 @@
                     </div>
                 </div>
                 {{#if loading}}
-                    <div class="text-center p-v-md" aria-label='Loading data'>
+                    <div class="text-center p-v-md" aria-label="Loading data">
                         {{fa-icon 'spinner' ariaHidden=false pulse=true size=3}}
                     </div>
                 {{else}}
-                    <div class="panel-body">
+                    <div class="moderation-list-body">
                         <div class="table-container">
-                            {{#if (eq buttonType 'accepted')}}
-                                {{accepted-record model=model screenWidth=screenWidth}}
-                            {{else if (eq buttonType 'pending')}}
-                                {{pending-record model=model screenWidth=screenWidth}}
-                            {{else}}
-                                {{rejected-record model=model screenWidth=screenWidth}}
-                            {{/if}}
+                            {{preprint-record data=model screenWidth=screenWidth type=buttonType loading=loading}}
                         </div>
                     </div>
                     {{#if (and (gt model.pendingPreprints.meta.total 1) (eq buttonType 'pending'))}}

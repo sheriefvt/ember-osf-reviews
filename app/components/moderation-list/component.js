@@ -56,9 +56,9 @@ export default Ember.Component.extend(queryParamsMixin, {
             this.set(state +'page', current);
             this.set('sort', this.get('sortType'));
             this.get('store').query('preprint', this.get('params'))
-                .then((results) => {
-                    const records = 'model.'+ state +'Preprints.records';
-                    this.set(records, results);
+            .then((results) => {
+                const records = 'model.'+ state +'Preprints.records';
+                this.set(records, results);
             }).then(() => {
                 this.send('buttonPressed', state);
                 this.set('loading', false);

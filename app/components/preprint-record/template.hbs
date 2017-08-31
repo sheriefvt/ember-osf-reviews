@@ -1,9 +1,9 @@
 <table class="table table-filter">
     <tbody>
-        {{#each model.acceptedPreprints.records as |record|}}
+        {{#each preprintRecords as |record|}}
             <tr data-status={{record.reviewsState}}>
-                <td class="state">
-                    <a class="fa fa-check-circle-o fa-lg"> </a>
+                <td class="moderation-record-state">
+                    <a class={{iconClass}}> </a>
                 </td>
                 <td>
                     <div class="media">
@@ -18,7 +18,7 @@
                                         {{else if (eq index 0)}}
                                             {{contributor.users.fullName}}
                                         {{else}}
-                                            ....
+                                            + {{decrement-value record.node.contributors.length 3}}
                                         {{/if}}
                                     {{/each}}
                                 </p>
