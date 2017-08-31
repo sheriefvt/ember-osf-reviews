@@ -42,7 +42,7 @@ module.exports = function(defaults) {
         'ember-bootstrap': {
             importBootstrapCSS: false,
             'bootstrapVersion': 3,
-            'importBootstrapFont': true
+            'importBootstrapFont': false
         },
         // Needed for branded themes
         fingerprint: {

@@ -196,7 +196,7 @@
   color: #333333;
 }
 
-@media (max-device-width: 400px) {
+@media (max-width: $screen-xs){
   #tabTitle .nav > li > a {
     padding-left: 5px;
     padding-right: 5px;
