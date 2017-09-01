@@ -33,20 +33,8 @@ module.exports = function(environment) {
             outputFormat: 'YYYY-MM-DD hh:mm a'
         },
         Reviews: {
-            defaultProvider: 'osf',
+            defaultProvider: 'osf'
         },
-        providers: [
-            // OSF must be the first provider
-            {
-                id: 'osf',
-                logoSharing: {
-                    path: '/assets/img/provider_logos/osf-dark.png',
-                    type: 'image/png',
-                    width: 363,
-                    height: 242
-                }
-            }
-        ],
         i18n: {
             defaultLocale: 'en'
         },

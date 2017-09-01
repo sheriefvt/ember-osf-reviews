@@ -32,7 +32,7 @@
   padding-top: 60px;
   padding-bottom: 20px;
   border-bottom: 1px solid #dddddd;
-  height: 194px;
+  height: 204px;
   color: white;
   h1 {
     font-size: 41px;
@@ -123,6 +123,10 @@
   }
 }
 
+.column-offset {
+  height: 120px;
+}
+
 .reviews-contact{
   background: white;
   padding-top: 30px;
@@ -175,38 +179,60 @@
   border-bottom: 1px solid #d6dbdc;
 }
 
-
-#Tab .tab-content {
-  color : black;
-  background-color: white;
-  padding : 5px 15px;
-}
-
 #Tab h3 {
-  color : black;
+  color: #333333;
 }
 
 #tabTitle .nav > li > a {
   border-radius: 0;
+  font-size: 24px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 #tabTitle .nav > li > a:hover {
-  color: black;
+  color: #333333;
+}
+
+@media (max-width: $screen-xs){
+  #tabTitle .nav > li > a {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 li.active > a {
   background-color: white !important;
-  color: black !important;
+  color: #333333 !important;
 }
 
 .unread-label {
   background-color: #c7c7c7;
-  color: black;
+  color: #333333;
   padding: 2px;
   border-radius: 5px;
   font-weight: bold;
+  width: 24px;
+  height: 27.3px;
 }
 
-.column-offset {
-  height: 120px;
+.separator {
+  content: url('img/separator.png');
+  vertical-align:middle;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.provider-title {
+  font-weight: bold;
+  font-size: 36px;
+  color: #FCFCFC;
+}
+
+.reviews-error-page {
+  padding: 70px 0 120px 0;
+  background-color: #ecf2f3;
+  border-bottom: 1px solid #d6dbdc;
 }

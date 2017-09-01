@@ -12,4 +12,5 @@ import OSFAgnosticAuthControllerMixin from 'ember-osf/mixins/osf-agnostic-auth-c
  */
 export default Ember.Controller.extend(OSFAgnosticAuthControllerMixin, {
     theme: Ember.inject.service(),
+    navigator: Ember.inject.service()
 });
