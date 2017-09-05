@@ -52,5 +52,15 @@ export default {
             submitted_on: `submitted on`,
             by: `by`
         }
+    },
+    moderation_base: {
+        moderation_tab: `Moderation`,
+        settings_tab: `Settings`
+    },
+    error_page: {
+        title: `Page not found`,
+        details: `The page you were looking for is not found on the OSF Reviews service.`,
+        report: `If this should not have occurred and the issue persists, please report it to`,
+        go_to: `Go to OSF Reviews`
     }
 };

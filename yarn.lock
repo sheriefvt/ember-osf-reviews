@@ -2766,6 +2766,12 @@ ember-get-config@0.2.1:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^5.1.6"
 
+ember-getowner-polyfill@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-1.0.1.tgz#f60a31d25d642461dac4b4746184afaf7f5084ae"
+  dependencies:
+    ember-cli-babel "^5.1.5"
+
 ember-getowner-polyfill@^1.1.0, ember-getowner-polyfill@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-1.2.3.tgz#ea70f4a48b1c05b91056371d1878bbafe018222e"
@@ -6873,6 +6879,13 @@ uglify-js@^2.6, uglify-js@^2.7.0:
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
+
+ui-navigator-service@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/ui-navigator-service/-/ui-navigator-service-0.3.11.tgz#ccac599273969283fecd0d017539ae97664205db"
+  dependencies:
+    ember-cli-babel "^5.1.5"
+    ember-getowner-polyfill "1.0.1"
 
 uid-number@0.0.6, uid-number@^0.0.6:
   version "0.0.6"
