@@ -2286,18 +2286,6 @@ ember-cli-dependency-checker@^1.2.0:
     is-git-url "^0.2.0"
     semver "^4.1.0"
 
-ember-cli-deprecation-workflow@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-deprecation-workflow/-/ember-cli-deprecation-workflow-0.2.3.tgz#c8cb7aa029f2d30ca24143138f4664964108c5da"
-  dependencies:
-    broccoli-funnel "^1.0.1"
-    broccoli-kitchen-sink-helpers "^0.3.1"
-    broccoli-merge-trees "^1.1.1"
-    ember-cli-babel "^5.1.5"
-    ember-debug-handlers-polyfill "^1.0.2"
-    quick-temp "^0.1.5"
-    rimraf "^2.5.2"
-
 ember-cli-eslint@3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/ember-cli-eslint/-/ember-cli-eslint-3.0.3.tgz#620abced2984be96a8747a47bfd41c5adbb9b968"
@@ -2710,12 +2698,6 @@ ember-data@2.7.0:
     npm-git-info "^1.0.0"
     semver "^5.1.0"
     silent-error "^1.0.0"
-
-ember-debug-handlers-polyfill@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/ember-debug-handlers-polyfill/-/ember-debug-handlers-polyfill-1.0.3.tgz#ffd4a4b80688e0929537d9ccd70f12e2ee442714"
-  dependencies:
-    ember-cli-babel "^5.0.0"
 
 ember-export-application-global@1.0.5:
   version "1.0.5"

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import queryParamsMixin from '../mixins/query-params-mixin'
 
 /**
  * @module ember-osf-reviews
@@ -7,9 +6,9 @@ import queryParamsMixin from '../mixins/query-params-mixin'
  */
 
 /**
- * @class Provider Route Handler
+ * @class provider Route Handler
  */
-export default Ember.Route.extend(queryParamsMixin, {
+export default Ember.Route.extend({
     theme: Ember.inject.service(),
     active: 'Moderation',
     model(params, transition) {
