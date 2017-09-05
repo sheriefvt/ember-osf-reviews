@@ -15,9 +15,10 @@ export default Ember.Component.extend({
     i18n: Ember.inject.service(),
     theme: Ember.inject.service(),
     tabs: Ember.computed('i18n.locale', function(){
+        const i18n = this.get('i18n');
         return [
-            { name: this.get('i18n').t('moderation_base.moderation_tab'), route: 'provider.moderation'},
-            { name: this.get('i18n').t('moderation_base.settings_tab'), route: 'provider.settings'},
+            { id: 1, name: i18n.t('moderation_base.moderation_tab'), route: 'provider.moderation'},
+            { id: 2, name: i18n.t('moderation_base.settings_tab'), route: 'provider.settings'},
         ]}),
     breadCrumbs: Ember.computed('navigator.currentPath', function(){
         let crumbs = this.get('navigator.currentPath').split('.');
@@ -33,14 +34,5 @@ export default Ember.Component.extend({
             }
         });
         return [{path: 'dashboard', name: 'Reviews Dashboard'}].concat(breadedCrumbs)
-    }),
-    actions: {
-        toggleTab: function () {
-            if (this.get('active') == 'Moderation'){
-                this.set('active', 'Settings');
-            } else {
-                this.set('active', 'Moderation');
-            }
-        }
-    }
+    })
 });

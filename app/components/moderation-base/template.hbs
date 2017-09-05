@@ -21,10 +21,10 @@
                 <div id="tabTitle">
                     <ul class="nav nav-pills ">
                         {{#each tabs as |tab|}}
-                            {{#link-to tab.route tagName='li' href=false class=(if (eq activeTab tab.name) 'active')}}
+                            {{#link-to tab.route tagName='li' href=false}}
                                 {{#link-to tab.route theme.provider.id}}
                                     {{tab.name}}
-                                    {{#if (eq tab.name 'Moderation')}}
+                                    {{#if (eq tab.id 1)}}
                                         <small class="unread-label">{{unread-count}}</small>
                                     {{/if}}
                                 {{/link-to}}
