@@ -1,0 +1,6 @@
+files:
+  include:
+    - 'app/styles/**/*.s+(a|c)ss'
+    - 'app/components/**/*.s+(a|c)ss'
+options:
+  indentation: [2, {size: 4}]
