@@ -1,0 +1,11 @@
+:9090/reviews/
+
+gzip
+
+index index.html
+
+root ./dist/
+
+rewrite /reviews/ {
+  to {path} /index.html
+}
