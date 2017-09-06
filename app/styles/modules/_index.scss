@@ -218,9 +218,10 @@ column-offset {
 
 /* Dashboard header */
 .reviews-dashboard-header{
-    background: #214661 url('img/reviews-dashboard-bg.jpg') top center;
-    padding-top: 50px;
+    background-size: cover;
+    background: #214661 url('img/reviews-dashboard-bg.jpg');
     padding-bottom: 46px;
+    padding-top: 50px;
 }
 
 .review-log-feed {
