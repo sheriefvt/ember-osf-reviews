@@ -1,5 +1,7 @@
 :9090/reviews/
 
+startup yarn run -- ember build --prod
+
 gzip
 
 index index.html
