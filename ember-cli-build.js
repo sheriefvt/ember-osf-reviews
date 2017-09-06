@@ -55,7 +55,7 @@ module.exports = function(defaults) {
                 enabled: LEAN_BUILD,
                 content: `
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/${JQUERY_VERSION}/jquery.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/ember.js/${EMBER_VERSION}/ember.prod.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/ember.js/${EMBER_VERSION}/ember.min.js"></script>
                 `
                 // TODO Figure out how to CDN ember-data
                 // The CDN version appears to load a deprecated interface that breaks stuff
