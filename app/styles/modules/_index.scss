@@ -70,20 +70,6 @@
   }
 }
 
-.reviews-contact{
-  background: white;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  color: #333333;
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  h4 {
-    font-size: 21px;
-  }
-}
-
 .reviews-workflow-figure1 {
   content: url('img/post-moderation-workflow.png');
   display: block;
@@ -222,106 +208,6 @@ column-offset {
     background: #214661 url('img/reviews-dashboard-bg.jpg');
     padding-bottom: 46px;
     padding-top: 50px;
-}
-
-.review-log-feed {
-    padding: 20px 0;
-
-    .loading {
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .more-logs {
-        margin-top: 30px;
-    }
-}
-
-.review-log-feed-entry {
-    clear: both;
-
-    .entry-body {
-        padding: 20px 15px;
-    }
-
-    :hover {
-        background: $color-bg-light-grey;
-        cursor: pointer;
-    }
-
-    .submit-icon {
-        color: $color-action-submit;
-    }
-    .accept-icon {
-        color: $color-action-accept;
-    }
-    .reject-icon {
-        color: $color-action-reject;
-    }
-    .edit-comment-icon {
-        color: $color-action-edit-comment;
-    }
-
-    .icon {
-        float: left;
-        font-size: 20px;
-    }
-
-    .log-date {
-        color: $color-text-light-grey;
-        font-size: 16px;
-        margin-left: 30px;
-    }
-
-    .log-heading {
-        color: $color-text-black;
-        font-size: 18px;
-        font-weight: bold;
-        margin-left: 30px;
-        line-height: 23px;
-    }
-
-    .log-detail {
-        color: $color-text-dark-grey;
-        font-size: 16px;
-        margin-left: 30px;
-    }
-}
-
-.dashboard-sidebar {
-    padding-top: 41px;
-
-    .sidebar-header {
-        font-size: 24px;
-        color: $color-text-black;
-        background: $color-bg-light-grey;
-        border: 1px solid $color-border-light-grey;
-        padding: 11px 0 16px 27px;
-    }
-
-    .sidebar-body {
-        background: white;
-        border: 1px solid $color-border-light-grey;
-        padding: 25px 29px;
-        font-size: 20px;
-
-        .moderation-enabled {
-            color: $color-text-black;
-        }
-
-        .moderation-disabled {
-            color: $color-text-light-grey;
-        }
-
-        .provider-links {
-            list-style-type: none;
-            padding-left: 14px;
-        }
-
-        .provider-name {
-            font-weight: bold;
-        }
-    }
 }
 
 // Opaque toast notifications
