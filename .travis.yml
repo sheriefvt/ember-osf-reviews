@@ -5,6 +5,9 @@ dist: trusty
 addons:
   chrome: stable
 
+node_js:
+    8
+
 env:
   global:
   - SUPPRESS_NO_CONFIG_WARNING=true
@@ -19,7 +22,6 @@ install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
 - yarn --prefer-offline --pure-lockfile
-- ./node_modules/bower/bin/bower install --config.interactive=false
 
 script:
   - yarn test:cover

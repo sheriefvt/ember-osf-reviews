@@ -11,6 +11,9 @@ export default Ember.Mixin.create({
     filter: {},
     embed: 'node',
     buttonType: 'pending',
+    acceptedpage: 1,
+    pendingpage: 1,
+    rejectedpage: 1,
     params:  Ember.computed('page', 'sort', 'filter', 'embed', 'limit', function() {
         return {'page': this.get('page'), 'limit':this.get('limit'), 'embed':this.get('embed'), 'sort':this.get('sort'),
             'filter':this.get('filter')};

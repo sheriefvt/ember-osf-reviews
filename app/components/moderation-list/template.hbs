@@ -6,23 +6,22 @@
                     <button type="button" class="btn moderation-btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} {{t 'moderation_list.pending'}}</button>
                     <button type="button" class="btn moderation-btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} {{t 'moderation_list.accepted'}}</button>
                     <button type="button" class="btn moderation-btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} {{t 'moderation_list.rejected'}}</button>
-                    <div class="dropdown pull-right">
-                        <button class="btn dropdown-toggle" type="button" id="sortBy" data-toggle="dropdown">
-                            {{t 'moderation_list.sort'}}
-                            <span class="fa fa-caret-down"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" id="sortByOptionList">
-                            <span>
+                    {{#bs-dropdown tagName="span" classNames="dropdown pull-right" as |dd|}}
+                        {{#dd.toggle classNames="btn dropdown-toggle"}}{{t 'moderation_list.sort'}} <span class="fa fa-caret-down"></span>{{/dd.toggle}}
+                        {{#dd.menu classNames="dropdown-menu dropdown-menu-right" as |menu|}}
+                            {{#menu.item}}
                                 <button class="btn" onclick={{action "sortSelected" '-date_created'}}><a class='{{if (eq sort '-date_created') 'fa fa-check'}}'></a> {{t 'moderation_list.newest'}}</button>
+                            {{/menu.item}}
+                            {{#menu.item}}
                                 <button class="btn" onclick={{action "sortSelected" 'date_created'}}><a class='{{if (eq sort 'date_created') 'fa fa-check'}}'></a> {{t 'moderation_list.oldest'}}</button>
-                            </span>
-                        </ul>
-                    </div>
+                            {{/menu.item}}
+                        {{/dd.menu}}
+                    {{/bs-dropdown}}
                 </div>
             </div>
             {{#if loading}}
                 <div class="text-center p-v-md" aria-label="Loading data">
-                    {{fa-icon 'spinner' ariaHidden=false pulse=true size=3}}
+                    <i class='fa fa-spinner fa-pulse fa-3x' aria-hidden='true'></i>
                 </div>
             {{else}}
                 <div class="moderation-list-body">

@@ -111,16 +111,13 @@ body {
 }
 
 .dropdown-menu-right {
-    span {
-    display: inline-block;
-    width: 70px;
-    button {
-      border: 0;
-      background: transparent;
-      width: 100%;
-      padding: 0;
-    }
-  }
+  background: #dddddd;
+
+}
+
+.dropdown-toggle {
+  text-decoration: none;
+  color: #333333;
 }
 
 .record-title {
