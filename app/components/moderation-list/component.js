@@ -23,6 +23,16 @@ export default Ember.Component.extend(queryParamsMixin, {
     sortType: 'date_created',
     activeButton: 'pending',
 
+    pendingCount: Ember.computed('theme', function () {
+        return this.get('theme.provider.reviewableStatusCounts.pending');
+    }),
+    acceptedCount: Ember.computed('theme', function () {
+    return this.get('theme.provider.reviewableStatusCounts.accepted');
+    }),
+    rejectedCount: Ember.computed('theme', function () {
+        return this.get('theme.provider.reviewableStatusCounts.rejected');
+    }),
+
     preprintRecords: Ember.computed('theme.provider', 'params', 'buttonType', function () {
         const type = this.get('buttonType');
         return DS.PromiseObject.create({
@@ -59,6 +69,7 @@ export default Ember.Component.extend(queryParamsMixin, {
 
     actions: {
         buttonPressed: function(target){
+            this.set('page', this.get(target + 'page'));
             Ember.$('.btn-toolbar button[data-target="' +  this.get('activeButton') + '"]').removeClass('activated');
             this.set('buttonType', target);
             this.set('activeButton', target);
