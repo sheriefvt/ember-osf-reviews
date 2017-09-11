@@ -34,7 +34,7 @@ export default Ember.Service.extend({
     }),
 
     loadProvider(id) {
-        return this.get('store').findRecord('preprint-provider', id.toLowerCase()).then(provider => {
+        return this.get('store').findRecord('preprint-provider', id.toLowerCase(), {reload: true, backgroundReload: false, adapterOptions: {query: {related_counts: true}}}).then(provider => {
             this.set('provider', provider);
             return provider
         });

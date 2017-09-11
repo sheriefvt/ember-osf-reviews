@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
             this.transitionToRoute('preprints.provider.preprint_detail', [reviewable.get('provider'), reviewable]);
         },
         setupProvider(provider) {
-            this.transitionToRoute('preprints.provider.setup', provider);
+            this.transitionToRoute('preprints.provider.setup', provider.id);
         },
     }
 });
