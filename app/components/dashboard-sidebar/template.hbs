@@ -2,7 +2,7 @@
     {{t 'dashboard.sidebar.providers'}}
 </div>
 <div class="sidebar-body">
-    <ul class="fa-ul">
+    <ul class="fa-ul provider-list">
         {{#each providers as |provider|}}
             <li class="{{if provider.reviewsWorkflow "moderation-enabled" "moderation-disabled"}}">
                 <span class="provider-name">
@@ -11,10 +11,10 @@
                 </span>
                 <ul class="provider-links">
                     {{#if provider.reviewsWorkflow}}
-                        <li>{{#link-to 'provider.moderation' provider}}{{t 'dashboard.sidebar.moderation'}}{{/link-to}}</li>
-                        <li>{{#link-to 'provider.settings' provider}}{{t 'dashboard.sidebar.settings'}}{{/link-to}}</li>
+                        <li>{{#link-to 'preprints.provider.moderation' provider}}{{t 'dashboard.sidebar.moderation'}}{{/link-to}}</li>
+                        <li>{{#link-to 'preprints.provider.settings' provider}}{{t 'dashboard.sidebar.settings'}}{{/link-to}}</li>
                     {{else}}
-                        <li>{{#link-to 'provider.setup' provider}}{{t 'dashboard.sidebar.set_up'}}{{/link-to}}</li>
+                        <li>{{#link-to 'preprints.provider.setup' provider}}{{t 'dashboard.sidebar.set_up'}}{{/link-to}}</li>
                     {{/if}}
                 </ul>
             </li>

@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import config from 'ember-get-config';
-import { pluralize } from 'ember-inflector';
 
 
 export default Ember.Service.extend({

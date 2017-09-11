@@ -1,35 +1,34 @@
-<div class="reviews-page"> {{!INDEX}}
-    {{#if showDashboard}}
-        <div class='reviews-dashboard'>
-            <div class='reviews-dashboard-header'>
-                <div class='container'>
-                    <div class='row'>
-                        <div class='text-center m-t-lg col-xs-12'>
-                            <h1>{{t 'dashboard.title'}}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{#if showDashboard}}
+    <div class='reviews-dashboard'>
+        <div class='reviews-dashboard-header'>
             <div class='container'>
                 <div class='row'>
-                    <div class='col-sm-4 col-sm-push-8'>
-                        {{dashboard-sidebar providers=model}}
-                    </div>
-                    <div class='col-sm-8 col-sm-pull-4'>
-                        {{review-log-feed toDetail=(action 'transitionToDetail')}}
+                    <div class='text-center m-t-lg col-xs-12'>
+                        <h1>{{t 'dashboard.title'}}</h1>
                     </div>
                 </div>
             </div>
         </div>
-    {{else}} {{!not showDashboard}}
+        <div class='container'>
+            <div class='row'>
+                <div class='col-sm-4 col-sm-push-8'>
+                    {{dashboard-sidebar providers=model}}
+                </div>
+                <div class='col-sm-8 col-sm-pull-4'>
+                    {{review-log-feed toDetail=(action 'transitionToDetail')}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}} {{!not showDashboard}}
     <div class="reviews-header"> {{!HEADER}}
         <div class="container"> {{!CONTAINER}}
             <div class="row">{{!HEADER ROW}}
                 {{!TITLE}}
                 <div class="text-center m-t-lg col-xs-12">
                     <div class="m-b-lg reviews-brand"></div>
-                    {{#if model}}
-                        {{start-moderating action=(action 'setupProvider') providers=model}}
+                    {{#if showSetup}}
+                        {{start-moderating action=(action 'setupProvider') providers=providersToSetup}}
                     {{/if}}
                 </div>
             </div> {{!END ROW}}
@@ -77,16 +76,6 @@
             </div>
         </div> {{!END CONTAINER}}
     </div> {{!END MIDDLE}}
-    <div class="reviews-contact"> {{!CONTACT}}
-        <div class="container"> {{!CONTAINER}}
-            <div class="col-md-3"></div>
-            <div class="text-center col-md-6">
-                <h2>{{t "index.contact.title"}}</h2>
-                <h4>{{t "index.contact.paragraph"}}</h4>
-                <a href="mailto:contact@osf.io" class="btn btn-info btn-lg">{{t "index.contact.contact_us"}}</a>
-            </div>
-            <div class="col-md-3"></div>
-        </div> {{!END CONTAINER}}
-    </div> {{!END CONTACT}}
-    {{/if}} {{!END not showDashboard}}
-</div> {{!END INDEX}}
+{{/if}} {{!END not showDashboard}}
+
+{{contact-bar feedback=(or showSetup showDashboard)}}

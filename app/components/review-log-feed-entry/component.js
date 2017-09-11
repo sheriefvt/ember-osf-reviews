@@ -31,8 +31,6 @@ const CLASS_NAMES = Object.freeze({
 export default Ember.Component.extend({
     i18n: Ember.inject.service(),
 
-    classNames: ['review-log-feed-entry'],
-
     click(event) {
         if (!event.originalEvent.target.href) {
             this.get('toDetail')(this.get('log.reviewable'));
@@ -48,11 +46,11 @@ export default Ember.Component.extend({
         return ICONS[this.get('log.action')];
     }),
 
-    messageKey: Ember.computed('log.action', function() {
-        return `dashboard.log_message.${this.get('log.action')}`;
-    }),
-
-    documentType: Ember.computed('log.provider.preprintWord', function() {
-        return this.get('i18n').t(`documentType.${this.get('log.provider.preprintWord')}.singular`);
+    message: Ember.computed('log.action', 'log.provider', function() {
+        const i18n = this.get('i18n');
+        return i18n.t(`dashboard.log_message.${this.get('log.action')}`, {
+            providerName: this.get('log.provider.name'),
+            documentType: i18n.t(`documentType.${this.get('log.provider.preprintWord')}.singular`),
+        });
     }),
 });

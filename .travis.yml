@@ -16,7 +16,6 @@ cache:
   yarn: true
   directories:
   - node_modules
-  - $HOME/.cache # includes bowers cache
 
 install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
