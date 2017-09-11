@@ -6,8 +6,9 @@ import Ember from 'ember';
  * Sample usage:
  * ```handlebars
  * {{preprint-record
- *    model=model
+ *    preprintRecords=preprintRecords.records
  *    screenWidth=screenWidth
+ *    type=buttonType
  * }}
  * ```
  * @class accepted-record
@@ -18,10 +19,5 @@ export default Ember.Component.extend({
         accepted: "fa fa-check-circle-o fa-lg",
         pending: "fa fa-hourglass-o fa-lg",
         rejected: "fa fa-times-circle-o fa-lg"
-    },
-    preprintRecords: Ember.computed('i18n.locale', 'data', 'type', function () {
-        const type = this.get('type');
-        return type == 'accepted' ? this.get('data.acceptedPreprints.records') : type == 'pending' ?
-                this.get('data.pendingPreprints.records') : this.get('data.rejectedPreprints.records')
-    })
+    }
 });

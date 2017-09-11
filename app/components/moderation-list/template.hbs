@@ -3,9 +3,9 @@
         <div class="col-md-12 reviews-list">
             <div class="moderation-list-heading">
                 <div class="btn-toolbar">
-                    <button type="button" class="btn moderation-btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> {{model.pendingPreprints.meta.pagination.total}} {{t 'moderation_list.pending'}}</button>
-                    <button type="button" class="btn moderation-btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> {{model.acceptedPreprints.meta.pagination.total}} {{t 'moderation_list.accepted'}}</button>
-                    <button type="button" class="btn moderation-btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> {{model.rejectedPreprints.meta.pagination.total}} {{t 'moderation_list.rejected'}}</button>
+                    <button type="button" class="btn moderation-btn-filter" data-target="pending" onclick={{action "buttonPressed" 'pending'}}><a class="fa fa-hourglass-o"></a> 1 {{t 'moderation_list.pending'}}</button>
+                    <button type="button" class="btn moderation-btn-filter" data-target="accepted" onclick={{action "buttonPressed" 'accepted'}}><a class="fa fa-check-circle-o"></a> 12 {{t 'moderation_list.accepted'}}</button>
+                    <button type="button" class="btn moderation-btn-filter" data-target="rejected" onclick={{action "buttonPressed" 'rejected'}}><a class="fa fa-times-circle-o"></a> 1 {{t 'moderation_list.rejected'}}</button>
                     {{#bs-dropdown tagName="span" classNames="dropdown pull-right" as |dd|}}
                         {{#dd.toggle classNames="btn dropdown-toggle"}}{{t 'moderation_list.sort'}} <span class="fa fa-caret-down"></span>{{/dd.toggle}}
                         {{#dd.menu classNames="dropdown-menu dropdown-menu-right" as |menu|}}
@@ -26,10 +26,20 @@
             {{else}}
                 <div class="moderation-list-body">
                     <div class="table-container">
-                        {{preprint-record data=model screenWidth=screenWidth type=buttonType}}
-                        <div class="pull-right text-right">
-                            {{pagination-pager count=pageCount current=currentPage change=(action 'pageChanged')}}
-                        </div>
+                        {{#if preprintRecords.isPending}}
+                            <div class="text-center p-v-md" aria-label="Loading data">
+                                <i class='fa fa-spinner fa-pulse fa-3x' aria-hidden='true'></i>
+                            </div>
+                        {{else}}
+                            {{preprint-record
+                                preprintRecords=preprintRecords.records
+                                screenWidth=screenWidth
+                                type=buttonType
+                            }}
+                            <div class="pull-right text-right">
+                                {{pagination-pager count=preprintRecords.meta.total current=currentPage change=(action 'pageChanged')}}
+                            </div>
+                        {{/if}}
                     </div>
                 </div>
             {{/if}}

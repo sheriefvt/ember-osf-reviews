@@ -10,7 +10,7 @@ Router.map(function() {
     this.route('preprints', function() {
         this.route('provider', {path: ':provider_id'}, function() {
             this.route('setup');
-            this.route('moderation');
+            this.route('moderation', {path: '/'});
             this.route('settings');
             this.route('preprint_detail', {path:':preprint_id'}); // TODO replace with actual route when merging
         });
