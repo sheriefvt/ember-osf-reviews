@@ -5,7 +5,6 @@ import Ember from 'ember';
  * Sample usage:
  * ```handlebars
  * {{moderation-base
- *    unread-count=10
  *    active='Settings'
  * }}
  * ```
@@ -14,13 +13,16 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     i18n: Ember.inject.service(),
     theme: Ember.inject.service(),
+    unreadCount: Ember.computed('theme', function () {
+        return this.get('theme.provider.reviewableStatusCounts.pending');
+    }),
     tabs: Ember.computed('i18n.locale', function(){
+        const i18n = this.get('i18n');
         return [
-            { name: this.get('i18n').t('moderation_base.moderation_tab'), route: 'preprints.provider.moderation'},
-            { name: this.get('i18n').t('moderation_base.settings_tab'), route: 'preprints.provider.settings'},
+            { id: 1, name: i18n.t('moderation_base.moderation_tab'), route: 'preprints.provider.moderation'},
+            { id: 2, name: i18n.t('moderation_base.settings_tab'), route: 'preprints.provider.settings'},
         ];
     }),
-
     breadcrumbs: Ember.computed('navigator.currentPath', function(){
         // Always include the dashboard breadcrumb
         const breadcrumbs = [{
@@ -36,6 +38,9 @@ export default Ember.Component.extend({
 
             // Prefer model name or title, fall back to the route name
             r.name = (r.context.get && (r.context.get('name') || r.context.get('title'))) || r.part;
+
+            // Remove moderation or settings crumbs from the route
+            if (r.name == 'moderation' || r.name == 'settings') continue;
             breadcrumbs.push(r);
         }
         return breadcrumbs;

@@ -14,6 +14,7 @@
     "start": "ember server",
     "check-style": "eslint .",
     "test": "yarn run check-style && ember test",
+    "postinstall": "npm rebuild node-sass",
     "test:cover": "COVERAGE=true yarn test"
   },
   "devDependencies": {
@@ -62,6 +63,7 @@
     "bootstrap-sass": "^3.3.7",
     "cssnano": "^3.10.0",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "pagination-pager": "^3.0.0"
   }
 }
