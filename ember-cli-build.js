@@ -48,7 +48,7 @@ module.exports = function(defaults) {
                 // Only include raven in production builds, because why not
                 enabled: EmberApp.env() === 'production',
                 content: `
-                <script src="https://cdn.ravenjs.com/3.5.1/ember/raven.min.js"></script>
+                <script src="https://cdn.ravenjs.com/3.17.0/ember/raven.min.js"></script>
                 <script>Raven.config("${config.sentryDSN}", {}).install();</script>`
             },
             cdn: {
@@ -64,6 +64,11 @@ module.exports = function(defaults) {
             assets: {
                 enabled: true
             }
+        },
+        minifyHTML: {
+            enabled: LEAN_BUILD,
+            htmlFiles: ['index.html'],
+            minifierOptions: {},
         },
         'ember-bootstrap': {
             bootstrapVersion: 3,

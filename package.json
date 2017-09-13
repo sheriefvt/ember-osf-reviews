@@ -61,6 +61,7 @@
     "autoprefixer": "^7.1.2",
     "bootstrap-sass": "^3.3.7",
     "cssnano": "^3.10.0",
+    "ember-cli-html-minifier": "^0.2.1",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "pagination-pager": "^3.0.0",

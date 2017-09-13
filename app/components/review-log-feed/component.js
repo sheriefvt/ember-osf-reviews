@@ -32,7 +32,7 @@ export default Ember.Component.extend({
     loadPage() {
         const page = this.get('page');
         this.set('loadingPage', page);
-        this.get('store').query('review-log', {page, embed: 'reviewable'}).then((response) => {
+        this.get('store').query('review-log', {page, embed: ['reviewable', 'provider']}).then((response) => {
             if (this.get('loadingPage') === page) {
                 this.setProperties({
                     logs: this.get('logs').concat(response.toArray()),

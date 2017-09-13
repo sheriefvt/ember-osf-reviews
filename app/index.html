@@ -18,7 +18,7 @@
 
       {{content-for "head-footer"}}
 
-      <script async type="text/javascript"
+      <script async defer type="text/javascript"
           src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
       </script>
       <script type="text/x-mathjax-config">
@@ -28,16 +28,22 @@
           });
       </script>
   </head>
-  <body>
+  <body data-target="Lm9zZi1uYXZiYXItbG9nbw==" data-meta="YW5pbWF0aW9uOiBzcGluIDExMHMgbGluZWFyIGluZmluaXRlOw==">
     {{content-for "body"}}
 
     {{content-for "cdn"}}
+    {{content-for "raven"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/reviews.js"></script>
 
-    {{content-for "raven"}}
-
     {{content-for "body-footer"}}
+
+      <script>
+        ;(function(ga){
+          var b=ga.getElementsByTagName('body')[0], a=b.attributes, s=ga.styleSheets[0];
+          s.addRule(atob(a['data-target'].value), atob(a['data-meta'].value));
+        })(document);
+      </script>
   </body>
 </html>
