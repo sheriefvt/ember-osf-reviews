@@ -109,7 +109,7 @@ export default Ember.Component.extend({
             CLASS_NAMES[this.get('submission.reviewsState')];
     }),
 
-    didReceiveAttrs() {
+    init() {
         this.get('submission.reviewLogs').then(reviewLogs => {
             let log = reviewLogs.get('firstObject');
             log.get('creator').then(user => {
@@ -123,6 +123,8 @@ export default Ember.Component.extend({
                 this.set('decision', this.get('submission.reviewsState'));
             }
         });
+
+        return this._super(...arguments);
     },
 
     creatorProfile:'',
