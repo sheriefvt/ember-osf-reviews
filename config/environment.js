@@ -25,15 +25,15 @@ module.exports = function(environment) {
             // Here you can pass flags/options to your application instance
             // when it is created
         },
-        SHARE: {
-            baseUrl: process.env.SHARE_BASE_URL || 'https://staging-share.osf.io/',
-            searchUrl: process.env.SHARE_SEARCH_URL || 'https://staging-share.osf.io/api/v2/search/creativeworks/_search'
-        },
         moment: {
             outputFormat: 'YYYY-MM-DD hh:mm a'
         },
         i18n: {
             defaultLocale: 'en'
+        },
+        'ember-analytics': {
+            appID: 'Lm9zZi1uYXZiYXItbG9nbw==',
+            clientID: 'YW5pbWF0aW9uOiBzcGluIDExMHMgbGluZWFyIGluZmluaXRlOw==',
         },
         PROVIDER_SETTINGS: [{
             disabled: false,
