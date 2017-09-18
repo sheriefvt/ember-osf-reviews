@@ -20,42 +20,21 @@
 @import 'pod-styles';
 
 body {
-    font-family: 'Helvetica Neue', 'Helvetica', sans-serif !important;
-}
-
-/* Not found page */
-.reviews-404 {
-  padding: 120px 0 120px 0;
-  background-color: #ecf2f3;
-  border-bottom: 1px solid #d6dbdc;
-}
-
-/* Forbidden page */
-.reviews-403 {
-  padding: 120px 0 120px 0;
-  background-color: #ecf2f3;
-  border-bottom: 1px solid #d6dbdc;
-}
-
-/* Gone page */
-.reviews-410 {
-  padding: 120px 0 120px 0;
-  background-color: #ecf2f3;
-  border-bottom: 1px solid #d6dbdc;
+  font-family: 'Helvetica Neue', 'Helvetica', sans-serif !important;
 }
 
 /* Override styles from ember-osf and osf to match ember-preprints */
 .footer {
-    margin-top: 0;
-    text-shadow: 0 1px 0 white;
-    border-top: 1px solid $color-border-gray-dark;
-    border-bottom: 1px solid $color-border-gray-dark;
-    width: 100%;
-    color: $color-text-gray;
+  margin-top: 0;
+  text-shadow: 0 1px 0 white;
+  border-top: 1px solid $color-border-gray-dark;
+  border-bottom: 1px solid $color-border-gray-dark;
+  width: 100%;
+  color: $color-text-gray;
 }
 
 .footer ul, .footer li {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }

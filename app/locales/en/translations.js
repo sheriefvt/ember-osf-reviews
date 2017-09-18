@@ -11,6 +11,8 @@ export default {
         none: `None`,
         pre_moderation: `pre-moderation`,
         post_moderation: `post-moderation`,
+        settings: `Settings`,
+        moderation: `Moderation`,
     },
     documentType: {
         preprint: {
@@ -38,22 +40,6 @@ export default {
                 post_moderation: `Post-moderation`
             }
         },
-    },
-    moderation_list: {
-        newest: `Newest`,
-        oldest: `Oldest`,
-        pending: `Pending`,
-        accepted: `Accepted`,
-        rejected: `Rejected`,
-        sort: `Sort`,
-        record: {
-            submitted_on: `submitted on`,
-            by: `by`
-        }
-    },
-    moderation_base: {
-        moderation_tab: `Moderation`,
-        settings_tab: `Settings`
     },
     error_page: {
         title: `Page not found`,
@@ -122,20 +108,6 @@ export default {
     },
     dashboard: {
         title: `Reviews Dashboard`,
-        action_message: {
-            submit: `submitted a {{documentType}} to {{providerName}}`,
-            accept: `accepted a {{documentType}} in {{providerName}}`,
-            reject: `rejected a {{documentType}} from {{providerName}}`,
-            edit_comment: `edited the comment for a {{documentType}} in {{providerName}}`,
-        },
-        see_more: `See more`,
-        error_loading: `Error fetching more events`,
-        sidebar: {
-            providers: `Providers`,
-            moderation: `Moderation`,
-            settings: `Settings`,
-            set_up: `Set up moderation`,
-        },
     },
     contactBar: {
         startService: {
@@ -238,5 +210,38 @@ export default {
             },
             error: `Error submitting decision.`
         },
+        'moderation-list': {
+            newest: `Newest`,
+            oldest: `Oldest`,
+            pending: `Pending`,
+            accepted: `Accepted`,
+            rejected: `Rejected`,
+            sort: `Sort`,
+
+            no_submissions: `No submissions.`,
+        },
+        'moderation-list-row': {
+            submission: {
+                submitted_on: `submitted on`,
+                by: `by`
+            },
+        },
+        'action-feed': {
+            no_actions: `No recent activity.`,
+            see_more: `See more`,
+            error_loading: `Error fetching more events.`,
+        },
+        'action-feed-entry': {
+            action_message: {
+                submit: `submitted a {{documentType}} to {{providerName}}`,
+                accept: `accepted a {{documentType}} in {{providerName}}`,
+                reject: `rejected a {{documentType}} from {{providerName}}`,
+                edit_comment: `edited the comment for a {{documentType}} in {{providerName}}`,
+            },
+        },
+        'dashboard-sidebar': {
+            providers: `Providers`,
+            set_up: `Set up moderation`,
+        }
     }
 };
