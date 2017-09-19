@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import resetscroll from '../../../mixins/reset-scroll';
 
-export default Ember.Route.extend({
+
+export default Ember.Route.extend(resetscroll, {
     afterModel(model/*, transition */) {
         if (model.get('reviewsWorkflow')) return this.replaceWith('preprints.provider', model);
     },

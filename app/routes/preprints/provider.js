@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import resetscroll from '../../mixins/reset-scroll';
 
 /**
  * @module ember-osf-reviews
@@ -8,7 +9,7 @@ import Ember from 'ember';
 /**
  * @class Provider Route Handler
  */
-export default Ember.Route.extend({
+export default Ember.Route.extend(resetscroll, {
     theme: Ember.inject.service(),
     model(params) {
         return this.get('theme').loadProvider(params.provider_id).catch(() => {
