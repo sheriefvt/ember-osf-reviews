@@ -72,17 +72,17 @@
                     </button>
                 </div>
 
-                {{#if model.links.preprint_doi}}
+                {{#if model.preprintDoiUrl}}
                     <section class="p-t-xs">
                         <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
-                        <a href={{model.links.preprint_doi}}>{{extract-doi model.links.preprint_doi}}</a>
+                        <a href={{model.preprintDoiUrl}}>{{extract-doi model.preprintDoiUrl}}</a>
                     </section>
                 {{/if}}
 
-                {{#if model.doi}}
+                {{#if model.articleDoiUrl}}
                     <section class="p-t-xs">
                         <h4 class="p-v-md f-w-md"><strong>{{t "content.article_doi"}}</strong></h4>
-                        <a href={{model.doiUrl}}>{{model.doi}}</a>
+                        <a href={{model.articleDoiUrl}}>{{model.doi}}</a>
                     </section>
                 {{/if}}
 
