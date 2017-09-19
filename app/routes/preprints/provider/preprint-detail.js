@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import Base from '../../base'
 
-export default Ember.Route.extend({
+export default Base.extend({
     theme: Ember.inject.service(),
     currentUser: Ember.inject.service(),
 
