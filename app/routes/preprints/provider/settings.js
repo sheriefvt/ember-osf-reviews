@@ -1,8 +1,6 @@
-import Ember from 'ember';
-import resetscroll from '../../../mixins/reset-scroll';
+import Base from '../../base'
 
-
-export default Ember.Route.extend(resetscroll, {
+export default Base.extend({
     model() {
         return this.modelFor('preprints.provider');
     },

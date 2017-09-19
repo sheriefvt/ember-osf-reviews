@@ -6,7 +6,14 @@ module('Unit | Mixin | reset scroll');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  let ResetScrollObject = Ember.Object.extend(ResetScrollMixin);
-  let subject = ResetScrollObject.create();
-  assert.ok(subject);
+  let RouteObject = Ember.Route.extend(ResetScrollMixin);
+  let TestedRoute = RouteObject.create();
+  TestedRoute.set('scrollTarget', {
+      scrollTo() {
+          return [...arguments];
+      }
+  });
+  assert.ok(TestedRoute);
+  assert.ok(ResetScrollMixin.detect(TestedRoute));
+  assert.deepEqual(TestedRoute.activate(), [0, 0]);
 });

@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import resetscroll from '../../../mixins/reset-scroll';
+import Base from '../../base'
 
-export default Ember.Route.extend(resetscroll, {
+export default Base.extend({
     theme: Ember.inject.service(),
     currentUser: Ember.inject.service(),
 

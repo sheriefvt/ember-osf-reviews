@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import resetscroll from '../../../mixins/reset-scroll';
+import Base from '../../base'
 /**
  * @module ember-osf-reviews
  * @submodule routes
@@ -8,7 +8,7 @@ import resetscroll from '../../../mixins/reset-scroll';
 /**
  * @class provider Route Handler
  */
-export default Ember.Route.extend(resetscroll, {
+export default Base.extend({
     theme: Ember.inject.service(),
 
     queryParams: {
