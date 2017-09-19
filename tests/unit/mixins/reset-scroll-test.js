@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 
 module('Unit | Mixin | reset scroll');
 
-// Replace this with your real tests.
 test('it works', function(assert) {
   let RouteObject = Ember.Route.extend(ResetScrollMixin);
   let TestedRoute = RouteObject.create();
