@@ -4,7 +4,6 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
-const configFunc = require('./config/environment');
 
 
 module.exports = function(defaults) {
@@ -14,9 +13,6 @@ module.exports = function(defaults) {
 
     // Values chosen abritrarily, feel free to change
     const LEAN_BUILD = ['production'].includes(EmberApp.env());
-
-    // EmberApp.env() will pull from the envvar EMBER_ENV or the command line flags
-    const config = configFunc(EmberApp.env());
 
     // Reference: https://github.com/travis-ci/travis-web/blob/master/ember-cli-build.js
     const app = new EmberApp(defaults, {
