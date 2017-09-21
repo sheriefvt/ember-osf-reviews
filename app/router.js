@@ -1,18 +1,18 @@
 import Ember from 'ember';
 import config from './config/environment';
 
+// Disable the reset scroll behaviour on transitions between the two given routes.
+const SCROLL_RESET_DISABLED_ROUTES = ['preprints.provider.moderation', 'preprints.provider.settings'];
+
 const Router = Ember.Router.extend({
     location: config.locationType,
     rootURL: config.rootURL,
     willTransition(oldInfos, newInfos) {
-        const disableList = ['settings', 'moderation'];
-        const prevRoute = oldInfos.length ? oldInfos[oldInfos.length - 1].name.split('.') : null;
-        const prevName = prevRoute != null ? prevRoute[prevRoute.length - 1] : null;
-        const currentRoute = newInfos.length ? newInfos[newInfos.length - 1].name.split('.') : null;
-        const currentName = currentRoute != null ? currentRoute[currentRoute.length - 1] : null;
-        const disableResetScroll = disableList.includes(prevName) && disableList.includes(currentName);
+        this._super(...arguments);
+        const prevPath = Ember.Router._routePath(oldInfos);  //Previous route
+        const newPath = Ember.Router._routePath(newInfos);   //New route
+        const disableResetScroll = SCROLL_RESET_DISABLED_ROUTES.includes(prevPath) && SCROLL_RESET_DISABLED_ROUTES.includes(newPath);
         if (!disableResetScroll) {
-            this._super(...arguments);
             window.scrollTo(0, 0);
         }
     }
