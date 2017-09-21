@@ -9,9 +9,9 @@ const Router = Ember.Router.extend({
     rootURL: config.rootURL,
     willTransition(oldInfos, newInfos) {
         this._super(...arguments);
-        const prevPath = Ember.Router._routePath(oldInfos);  //Previous route
-        const newPath = Ember.Router._routePath(newInfos);   //New route
-        const disableResetScroll = SCROLL_RESET_DISABLED_ROUTES.includes(prevPath) && SCROLL_RESET_DISABLED_ROUTES.includes(newPath);
+        const oldRoute = Ember.Router._routePath(oldInfos);
+        const newRoute = Ember.Router._routePath(newInfos);
+        const disableResetScroll = SCROLL_RESET_DISABLED_ROUTES.includes(oldRoute) && SCROLL_RESET_DISABLED_ROUTES.includes(newRoute);
         if (!disableResetScroll) {
             window.scrollTo(0, 0);
         }
