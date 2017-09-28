@@ -7,6 +7,8 @@ const SCROLL_RESET_DISABLED_ROUTES = ['preprints.provider.moderation', 'preprint
 const Router = Ember.Router.extend({
     location: config.locationType,
     rootURL: config.rootURL,
+    metrics: Ember.inject.service(),
+
     willTransition(oldInfos, newInfos) {
         this._super(...arguments);
         const oldRoute = Ember.Router._routePath(oldInfos);
@@ -15,7 +17,22 @@ const Router = Ember.Router.extend({
         if (!disableResetScroll) {
             window.scrollTo(0, 0);
         }
+    },
+
+    didTransition(){
+        this._super(...arguments);
+        this._trackPage()
+    },
+
+    // Track page/route views
+    _trackPage() {
+        Ember.run.scheduleOnce('afterRender', this, () => {
+            const page = document.location.pathname;
+            const routeName = this.getWithDefault('currentRouteName', 'unknown');
+            Ember.get(this, 'metrics').trackPage({ page, routeName });
+        });
     }
+
 });
 
 Router.map(function() {

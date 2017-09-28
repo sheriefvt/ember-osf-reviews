@@ -3,7 +3,8 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('controller:preprints/provider/moderation', 'Unit | Controller | preprints/provider/moderation', {
   // Specify the other units that are required for this test.
   needs: [
-    'service:theme',
+      'service:theme',
+      'service:metrics'
   ]
 });
 
