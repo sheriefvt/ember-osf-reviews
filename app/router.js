@@ -19,7 +19,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+    this.route('page-not-found', {path: '/*bad_url'});
+
     this.route('preprints', function() {
+        this.route('page-not-found', { path: '/' });
         this.route('provider', {path: ':provider_id'}, function() {
             this.route('setup');
             this.route('moderation', {path: '/'});
@@ -29,6 +32,8 @@ Router.map(function() {
     });
     this.route('dashboard');
     this.route('page-not-found');
+    this.route('not-authenticated');
+    this.route('forbidden');
 });
 
 export default Router;
