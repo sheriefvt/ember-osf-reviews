@@ -36,8 +36,9 @@ module.exports = function(environment) {
                 name: 'GoogleAnalytics',
                 environments: ['production'], // Add development to try/inspect in development.
                 config: {
-                    // Remove id before committing.
-                    id: '',
+                    // Replace test id with process.env.GOOGLE_ANALYTICS_ID before committing.
+                    // Use test id for local testing.
+                    id: process.env.GOOGLE_ANALYTICS_ID,
                     // Use `analytics_debug.js` in development.
                     debug: environment === 'development',
                     // Use verbose tracing of GA events
