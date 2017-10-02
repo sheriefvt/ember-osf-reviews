@@ -5,7 +5,7 @@ export default Ember.Controller.extend(Analytics, {
     queryParams: ['page', 'sort', 'status'],
     page: 1,
     status: 'pending',
-    sort: 'date_created',
+    sort: '-date_last_transitioned',
 
     actions: {
         statusChanged(status) {
