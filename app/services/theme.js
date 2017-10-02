@@ -9,9 +9,12 @@ export default Ember.Service.extend({
     provider: null,
 
     id: Ember.computed.alias('provider.id'),
+    domain: Ember.computed.alias('provider.domain'),
     isLoaded: Ember.computed.empty('provider'),
     isProvider: Ember.computed.not('isNotProvider'),
     isNotProvider: Ember.computed.equal('provider.id', 'OSF'),
+
+    isDomain: window.isProviderDomain,
 
     signupUrl: Ember.computed('id', function() {
         const query = Ember.$.param({
@@ -22,9 +25,22 @@ export default Ember.Service.extend({
         return `${config.OSF.url}register?${query}`;
     }),
 
+    pathPrefix: Ember.computed('isProvider', 'domain', 'id', function() {
+        let pathPrefix = '/';
+
+        if (!this.get('domain')) {
+            pathPrefix += 'preprints/';
+            if (this.get('provider.id')) {
+                pathPrefix += `${this.get('provider.id')}/`;
+            }
+        }else {
+            pathPrefix = this.get('domain')
+        }
+        return pathPrefix;
+    }),
+
     onProviderLoad: Ember.observer('provider', function() {
         const locale = Ember.getOwner(this).factoryFor(`locale:${this.get('i18n.locale')}/translations`).class;
-
         this.get('i18n').addGlobals({
             provider: {
                 id: this.get('provider.id'),
