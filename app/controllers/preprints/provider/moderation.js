@@ -18,7 +18,7 @@ export default Ember.Controller.extend(Analytics, {
                 .trackEvent({
                     category: 'button',
                     action: 'click',
-                    label: `Request page ` + this.get('page') + ` of ` + this.get('status') + ` list`
+                    label: `Moderation List - Request page ` + this.get('page') + ` of ` + this.get('status') + ` list`
                 });
         },
         sortChanged(sort) {

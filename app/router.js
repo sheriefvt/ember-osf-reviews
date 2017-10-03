@@ -25,15 +25,10 @@ const Router = Ember.Router.extend({
 
     didTransition() {
         this._super(...arguments);
-
+        this._trackPage()
         if (!this.get('disableResetScroll')) {
             window.scrollTo(0, 0);
         }
-    },
-
-    didTransition(){
-        this._super(...arguments);
-        this._trackPage()
     },
 
     // Track page/route views
