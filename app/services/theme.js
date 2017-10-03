@@ -14,8 +14,6 @@ export default Ember.Service.extend({
     isProvider: Ember.computed.not('isNotProvider'),
     isNotProvider: Ember.computed.equal('provider.id', 'OSF'),
 
-    isDomain: window.isProviderDomain,
-
     signupUrl: Ember.computed('id', function() {
         const query = Ember.$.param({
             campaign: `${this.get('id')}-reviews`,
@@ -33,7 +31,7 @@ export default Ember.Service.extend({
             if (this.get('provider.id')) {
                 pathPrefix += `${this.get('provider.id')}/`;
             }
-        }else {
+        } else {
             pathPrefix = this.get('domain')
         }
         return pathPrefix;
