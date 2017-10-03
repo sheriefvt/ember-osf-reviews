@@ -5,9 +5,9 @@ import config from './config/environment';
 const SCROLL_RESET_DISABLED_ROUTES = ['preprints.provider.moderation', 'preprints.provider.settings'];
 
 const Router = Ember.Router.extend({
+    metrics: Ember.inject.service(),
     location: config.locationType,
     rootURL: config.rootURL,
-    metrics: Ember.inject.service(),
     transitioningFrom: '',
     transitioningTo: '',
 
