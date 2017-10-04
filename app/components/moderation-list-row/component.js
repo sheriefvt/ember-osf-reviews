@@ -44,10 +44,20 @@ export default Ember.Component.extend({
         return moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
     }),
 
+    fewSeconds: Ember.computed('submission.dateLastTransitioned', function() {
+        const timeDiff = Math.abs(moment().diff(this.get('submission.dateLastTransitioned')));
+        if (timeDiff < 70000) { // 70000 milliseconds
+            return 'a few seconds ago';
+        } else {
+            return moment(this.get('submission.dateLastTransitioned')).fromNow();
+        }
+    }),
+
+
     relevantDate: Ember.computed('submission.dateLastTransitioned', 'gtDay', function() {
         return this.get('gtDay') ?
             moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
-            moment(this.get('submission.dateLastTransitioned')).fromNow();
+            this.get('fewSeconds');
     }),
 
     //translations
