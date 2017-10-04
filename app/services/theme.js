@@ -23,18 +23,18 @@ export default Ember.Service.extend({
         return `${config.OSF.url}register?${query}`;
     }),
 
-    addPreprintUrl: Ember.computed('isProvider', 'domain', 'id', function() {
-        let pathPrefix = '/';
+    baseServiceUrl: Ember.computed('isProvider', 'domain', 'id', function() {
+        let baseURL = '/';
 
         if (!this.get('domain')) {
-            pathPrefix += 'preprints/';
+            baseURL += 'preprints/';
             if (this.get('provider.id')) {
-                pathPrefix += `${this.get('provider.id')}/`;
+                baseURL += `${this.get('provider.id')}/`;
             }
         } else {
-            pathPrefix = this.get('domain')
+            baseURL = this.get('domain')
         }
-        return pathPrefix;
+        return baseURL;
     }),
 
     onProviderLoad: Ember.observer('provider', function() {
