@@ -47,7 +47,7 @@ export default Ember.Component.extend({
     relevantDate: Ember.computed('submission.dateLastTransitioned', 'gtDay', function() {
         return this.get('gtDay') ?
             moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
-            moment(this.get('submission.dateLastTransitioned')).fromNow();
+            moment(Math.min(Date.parse(this.get('submission.dateLastTransitioned')), Date.now())).fromNow();
     }),
 
     //translations
