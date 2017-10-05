@@ -126,7 +126,7 @@ export default Ember.Component.extend({
             action.get('creator').then(user => {
                 this.set('creatorName', user.get('fullName'));
                 this.set('creatorProfile', user.get('profileURL'));
-            })
+            });
 
             if (this.get('submission.reviewsState') !== PENDING) {
                 this.set('initialReviewerComment', action.get('comment'));
