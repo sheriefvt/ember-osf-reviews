@@ -191,11 +191,11 @@ export default {
         'moderation-list-row': {
             submission: {
                 submitted_on: `submitted on`,
-                was_accepted_on: `was accepted on`,
-                was_rejected_on: `was rejected on`,
+                accepted_on: `accepted on`,
+                rejected_on: `rejected on`,
                 submitted: `submitted`,
-                was_accepted: `was accepted`,
-                was_rejected: `was rejected`,
+                accepted: `accepted`,
+                rejected: `rejected`,
                 by: `by`,
                 submission_by: `submission by`,
             },

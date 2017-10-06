@@ -13,17 +13,24 @@
                 <div class="submission-body">
                     {{#if (eq submission.reviewsState 'pending')}}
                         {{t dateLabel}} {{relevantDate}} {{t submittedByLabel}}
+                        {{#each firstContributors as |contributor index| ~}}
+                            <li>{{contributor.users.fullName}}</li>
+                        {{/each}}
+                        {{#if (gt additionalContributors 0)}}
+                            + {{additionalContributors}}
+                        {{/if}}
                     {{else}}
-                        {{t submittedByLabel}}
-                    {{/if}}
-                    {{#each firstContributors as |contributor index| ~}}
-                        <li>{{contributor.users.fullName}}</li>
-                    {{/each}}
-                    {{#if (gt additionalContributors 0)}}
-                        + {{additionalContributors}}
-                    {{/if}}
-                    {{#if (not-eq submission.reviewsState 'pending')}}
-                        {{t dateLabel}} {{relevantDate}}
+                        {{#if lastAction.creator.isPending}}
+                            <span class="ball-pulse ball-dark" aria-label="Loading data">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </span>
+                        {{else}}
+                            {{t dateLabel}} {{relevantDate}}
+                            {{t 'components.moderation-list-row.submission.by'}}
+                            {{lastAction.creator.fullName}}
+                        {{/if}}
                     {{/if}}
                 </div>
             {{/if}}

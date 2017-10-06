@@ -11,12 +11,12 @@ const ACTION_LABELS = Object.freeze({
         ltDay: 'components.moderation-list-row.submission.submitted',
     },
     [ACCEPTED]: {
-        gtDay: 'components.moderation-list-row.submission.was_accepted_on',
-        ltDay: 'components.moderation-list-row.submission.was_accepted',
+        gtDay: 'components.moderation-list-row.submission.accepted_on',
+        ltDay: 'components.moderation-list-row.submission.accepted',
     },
     [REJECTED]: {
-        gtDay: 'components.moderation-list-row.submission.was_rejected_on',
-        ltDay: 'components.moderation-list-row.submission.was_rejected',
+        gtDay: 'components.moderation-list-row.submission.rejected_on',
+        ltDay: 'components.moderation-list-row.submission.rejected',
     }
 });
 
@@ -38,6 +38,10 @@ export default Ember.Component.extend({
 
     additionalContributors: Ember.computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
+    }),
+
+    lastAction: Ember.computed('submission.actions', function(){
+        return this.get('submission.actions').slice(0, 1)[0];
     }),
 
     gtDay: Ember.computed('submission.dateLastTransitioned', function() {
