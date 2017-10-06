@@ -9,6 +9,7 @@ export default Ember.Service.extend({
     provider: null,
 
     id: Ember.computed.alias('provider.id'),
+    domain: Ember.computed.alias('provider.domain'),
     isLoaded: Ember.computed.empty('provider'),
     isProvider: Ember.computed.not('isNotProvider'),
     isNotProvider: Ember.computed.equal('provider.id', 'OSF'),
@@ -22,9 +23,22 @@ export default Ember.Service.extend({
         return `${config.OSF.url}register?${query}`;
     }),
 
+    baseServiceUrl: Ember.computed('isProvider', 'domain', 'id', function() {
+        let baseURL = '/';
+
+        if (!this.get('domain')) {
+            baseURL += 'preprints/';
+            if (this.get('provider.id')) {
+                baseURL += `${this.get('provider.id')}/`;
+            }
+        } else {
+            baseURL = this.get('domain')
+        }
+        return baseURL;
+    }),
+
     onProviderLoad: Ember.observer('provider', function() {
         const locale = Ember.getOwner(this).factoryFor(`locale:${this.get('i18n.locale')}/translations`).class;
-
         this.get('i18n').addGlobals({
             provider: {
                 id: this.get('provider.id'),
