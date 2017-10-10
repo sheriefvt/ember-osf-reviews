@@ -56,7 +56,7 @@ export default Ember.Route.extend({
         }).then(response => {
             return {
                 submissions: response.toArray(),
-                totalPages: Math.ceil(response.meta.reviews_state_counts[params.status] / 10),
+                totalPages: Math.ceil(response.links.meta.total / response.links.meta.per_page),
                 statusCounts: response.meta.reviews_state_counts,
             };
         });
