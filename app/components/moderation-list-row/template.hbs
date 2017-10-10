@@ -1,9 +1,9 @@
-{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id}}
+{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id disabled=dataLoading}}
     <div data-status={{submission.reviewsState}} class="flex-container">
         <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
         <div title={{submission.title}} class="submission-info">
             <div class="submission-title">{{submission.title}}</div>
-            {{#if (or submission.node.isPending submission.node.contributors.isPending)}}
+            {{#if dataLoading}}
                 {{loading-indicator classes='ball-dark'}}
             {{else}}
                 <div class="submission-body">

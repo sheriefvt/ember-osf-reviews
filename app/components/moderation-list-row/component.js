@@ -36,6 +36,10 @@ export default Ember.Component.extend({
         return this.get('submission.node.contributors').slice(0, 3);
     }),
 
+    dataLoading: Ember.computed('firstContributors', function () {
+        return this.get('firstContributors.length') == 0
+    }),
+
     additionalContributors: Ember.computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
     }),
