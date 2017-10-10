@@ -27,11 +27,6 @@ const MESSAGE = {
     [REJECTED]: 'components.preprint-status-banner.message.rejected'
 };
 
-const WORKFLOW = {
-    [PRE_MODERATION]: 'global.pre_moderation',
-    [POST_MODERATION]: 'global.post_moderation'
-};
-
 const CLASS_NAMES = {
     [PRE_MODERATION]: 'preprint-status-pending-pre',
     [POST_MODERATION]: 'preprint-status-pending-post',
@@ -83,7 +78,11 @@ const DECISION_EXPLANATION = {
 const RECENT_ACTIVITY = {
     [PENDING]: 'components.preprint-status-banner.recent_activity.pending',
     [ACCEPTED]: 'components.preprint-status-banner.recent_activity.accepted',
-    [REJECTED]: 'components.preprint-status-banner.recent_activity.rejected'
+    [REJECTED]: 'components.preprint-status-banner.recent_activity.rejected',
+    automatic: {
+        [PENDING]: 'components.preprint-status-banner.recent_activity.automatic.pending',
+        [ACCEPTED]: 'components.preprint-status-banner.recent_activity.automatic.accepted',
+    },
 };
 
 export default Ember.Component.extend({
@@ -93,12 +92,14 @@ export default Ember.Component.extend({
     // translations
     moderator: 'components.preprint-status-banner.decision.moderator',
     feedbackBaseMessage: 'components.preprint-status-banner.decision.base',
-    baseMessage: 'components.preprint-status-banner.message.base',
     commentPlaceholder:'components.preprint-status-banner.decision.comment_placeholder',
     labelAccept: 'components.preprint-status-banner.decision.accept.label',
     labelReject: 'components.preprint-status-banner.decision.reject.label',
 
     classNames: ['preprint-status-component'],
+
+    loadingActions: true,
+    noActions: false,
 
     reviewsWorkflow: Ember.computed.alias('submission.provider.reviewsWorkflow'),
     reviewsCommentsPrivate: Ember.computed.alias('submission.provider.reviewsCommentsPrivate'),
@@ -110,44 +111,41 @@ export default Ember.Component.extend({
             CLASS_NAMES[this.get('submission.reviewsState')];
     }),
 
-    creatorProfile:'',
-    creatorName: '',
+    latestAction: Ember.computed('submission.actions.[]', function() {
+        if (!this.get('submission.actions.length')) {
+            return null;
+        }
+        // on create, Ember puts the new object at the end of the array
+        // https://stackoverflow.com/questions/15210249/ember-data-insert-new-item-at-beginning-of-array-instead-of-at-the-end
+        const first = this.get('submission.actions.firstObject');
+        const last = this.get('submission.actions.lastObject');
+        return moment(first.get('dateModified')) > moment(last.get('dateModified')) ? first : last;
+    }),
+    creatorProfile: Ember.computed.alias('latestAction.creator.profileURL'),
+    creatorName: Ember.computed.alias('latestAction.creator.fullName'),
 
     init() {
         this.get('submission.actions').then(actions => {
-            // on create, ember puts new object at the end of the array
-            // https://stackoverflow.com/questions/15210249/ember-data-insert-new-item-at-beginning-of-array-instead-of-at-the-end
-            const firstObjectModified = moment(actions.get('firstObject').get('dateModified'));
-            const lastObjectModified = moment(actions.get('lastObject').get('dateModified'));
-            const action = firstObjectModified > lastObjectModified ?
-                actions.get('firstObject') :
-                actions.get('lastObject');
-
-            action.get('creator').then(user => {
-                this.set('creatorName', user.get('fullName'));
-                this.set('creatorProfile', user.get('profileURL'));
-            });
-
-            if (this.get('submission.reviewsState') !== PENDING) {
-                this.set('initialReviewerComment', action.get('comment'));
-                this.set('reviewerComment', action.get('comment'));
-                this.set('decision', this.get('submission.reviewsState'));
+            if (actions.length) {
+                if (this.get('submission.reviewsState') !== PENDING) {
+                    const comment = actions.get('firstObject.comment');
+                    this.set('initialReviewerComment', comment);
+                    this.set('reviewerComment', comment);
+                    this.set('decision', this.get('submission.reviewsState'));
+                } else {
+                    this.set('initialReviewerComment', '');
+                    this.set('reviewerComment', '');
+                    this.set('decision', null);
+                }
+                this.set('noActions', false);
+            } else {
+                this.set('noActions', true);
             }
+            this.set('loadingActions', false);
         });
 
         return this._super(...arguments);
     },
-
-    bannerContent: Ember.computed('statusExplanation', 'workflow', function() {
-        let tName = this.get('theme.isProvider') ?
-            this.get('theme.provider.name') :
-            this.get('i18n').t('global.brand_name');
-
-        let tWorkflow = this.get('i18n').t(this.get('workflow'));
-        let tStatusExplanation = this.get('i18n').t(this.get('statusExplanation'));
-
-        return `${this.get('i18n').t(this.get('baseMessage'), {name: tName, reviewsWorkflow: tWorkflow})} ${tStatusExplanation}.`;
-    }),
 
     statusExplanation: Ember.computed('reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
@@ -163,12 +161,12 @@ export default Ember.Component.extend({
         return ICONS[this.get('submission.reviewsState')];
     }),
 
-    workflow: Ember.computed('reviewsWorkflow', function () {
-        return WORKFLOW[this.get('reviewsWorkflow')];
-    }),
-
-    recentActivityLanguage: Ember.computed('submission.reviewsState', function() {
-        return RECENT_ACTIVITY[this.get('submission.reviewsState')];
+    recentActivityLanguage: Ember.computed('noActions', 'submission.reviewsState', function() {
+        if (this.get('noActions')) {
+            return RECENT_ACTIVITY.automatic[this.get('submission.reviewsState')];
+        } else {
+            return RECENT_ACTIVITY[this.get('submission.reviewsState')];
+        }
     }),
 
     /* Submission Form */
@@ -259,12 +257,11 @@ export default Ember.Component.extend({
             }
 
             let comment = this.get('reviewerComment').trim();
-            this.sendAction('submitDecision', trigger, comment, this.get('decision'));
+            this.get('submitDecision')(trigger, comment, this.get('decision'));
         },
         cancel() {
             this.set('decision', this.get('submission.reviewsState'));
             this.set('reviewerComment', this.get('initialReviewerComment'));
         }
     }
-
 });

@@ -4,6 +4,36 @@ import Ember from 'ember';
  * @submodule routes
  */
 
+// TODO: add this to osf-model, remove ember-data-has-many-query dependency?
+function query(model, propertyName, params) {
+    const reference = model.hasMany(propertyName);
+    const store = reference.store;
+    const promise = new Ember.RSVP.Promise((resolve, reject) => {
+        // HACK: ember-data discards/ignores the link if an object on the belongsTo side came first.
+        // In that case, grab the link where we expect it from OSF's API
+        const url = reference.link() || model.get(`links.relationships.${propertyName}.links.related.href`);
+        if (url) {
+            Ember.$.ajax(url, {
+                data: params,
+                xhrFields: {
+                    withCredentials: true
+                },
+            }).then(payload => {
+                store.pushPayload(payload);
+                const records = payload.data.map(datum => store.peekRecord(datum.type, datum.id));
+                records.meta = payload.meta;
+                records.links = payload.links;
+                resolve(records);
+            }, reject);
+        } else {
+            reject(`Could not find a link for '${propertyName}' relationship`);
+        }
+    });
+
+    const ArrayPromiseProxy = Ember.ArrayProxy.extend(Ember.PromiseProxyMixin);
+    return ArrayPromiseProxy.create({ promise });
+}
+
 /**
  * @class provider Route Handler
  */
@@ -18,17 +48,16 @@ export default Ember.Route.extend({
 
     model(params) {
         const provider = this.modelFor('preprints.provider');
-        // Pass `true` to force reloading (added in cos-forks/ember-data-has-many-query)
-        return provider.query('preprints', {
+        return query(provider, 'preprints', {
             'filter[reviews_state]': params.status,
             'meta[reviews_state_counts]': true,
             sort: params.sort,
-            page: params.page
-        }, true).then((results) => {
+            page: params.page,
+        }).then(response => {
             return {
-                submissions: results.toArray(),
-                totalPages: results.get('meta.total'),
-                statusCounts: results.get('meta.reviews_state_counts'),
+                submissions: response.toArray(),
+                totalPages: response.meta.total,
+                statusCounts: response.meta.reviews_state_counts,
             };
         });
     },
@@ -36,6 +65,7 @@ export default Ember.Route.extend({
     setupController(controller, model) {
         this._super(controller, model);
         this.controllerFor('preprints.provider').set('pendingCount', model.statusCounts.pending);
+        controller.set('loading', false);
     },
 
     actions: {
