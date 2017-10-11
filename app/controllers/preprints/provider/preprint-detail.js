@@ -1,11 +1,14 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { alias, bool } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 import permissions from 'ember-osf/const/permissions';
 
 
 const DATE_LABEL = {
     created: 'content.date_label.created_on',
-    submitted: 'content.date_label.submitted_on'
-}
+    submitted: 'content.date_label.submitted_on',
+};
 const PRE_MODERATION = 'pre-moderation';
 
 /**
@@ -16,13 +19,13 @@ const PRE_MODERATION = 'pre-moderation';
 /**
  * @class Moderation Detail Controller
  */
-export default Ember.Controller.extend({
-    currentUser: Ember.inject.service(),
-    i18n: Ember.inject.service(),
-    theme: Ember.inject.service(),
-    toast: Ember.inject.service(),
+export default Controller.extend({
+    currentUser: service(),
+    i18n: service(),
+    theme: service(),
+    toast: service(),
 
-    node: Ember.computed.alias('model.node'),
+    queryParams: { chosenFile: 'file' },
 
     fullScreenMFR: false,
     savingAction: false,
@@ -31,53 +34,53 @@ export default Ember.Controller.extend({
     _activeFile: null,
     chosenFile: null,
 
-    queryParams: { chosenFile: 'file' },
-
-    hasTags: Ember.computed.bool('node.tags.length'),
+    hasTags: bool('node.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
+    node: alias('model.node'),
+
     // The currently selected file (defaults to primary)
-    activeFile: Ember.computed('model', {
+    activeFile: computed('model', {
         get() {
             return this.getWithDefault('_activeFile', this.get('model.primaryFile'));
         },
         set(key, value) {
             return this.set('_activeFile', value);
-        }
+        },
     }),
 
-    fileDownloadURL: Ember.computed('model', function() {
-        const {location: {origin}} = window;
+    fileDownloadURL: computed('model', function() {
+        const { location: { origin } } = window;
         return [
             origin,
             this.get('theme.isSubRoute') ? `preprints/${this.get('theme.id')}` : null,
             this.get('model.id'),
-            'download'
+            'download',
         ].filter(part => !!part).join('/');
     }),
 
-    actionDateLabel: Ember.computed('model.provider.reviewsWorkflow', function() {
+    actionDateLabel: computed('model.provider.reviewsWorkflow', function() {
         return this.get('model.provider.reviewsWorkflow') === PRE_MODERATION ?
-            DATE_LABEL['submitted'] :
-            DATE_LABEL['created'];
+            DATE_LABEL.submitted :
+            DATE_LABEL.created;
     }),
 
-    isAdmin: Ember.computed('node', function() {
+    isAdmin: computed('node', function() {
         // True if the current user has admin permissions for the node that contains the preprint
         return (this.get('node.currentUserPermissions') || []).includes(permissions.ADMIN);
     }),
 
-    hasShortenedDescription: Ember.computed('node.description', function() {
+    hasShortenedDescription: computed('node.description', function() {
         const nodeDescription = this.get('node.description');
 
         return nodeDescription && nodeDescription.length > 350;
     }),
 
-    useShortenedDescription: Ember.computed('expandedAbstract', 'hasShortenedDescription', function() {
+    useShortenedDescription: computed('expandedAbstract', 'hasShortenedDescription', function() {
         return this.get('hasShortenedDescription') && !this.get('expandedAbstract');
     }),
 
-    description: Ember.computed('node.description', function() {
+    description: computed('node.description', function() {
         // Get a shortened version of the abstract, but doesn't cut in the middle of word by going
         // to the last space.
         return this.get('node.description')
@@ -98,15 +101,15 @@ export default Ember.Controller.extend({
         chooseFile(fileItem) {
             this.setProperties({
                 chosenFile: fileItem.get('id'),
-                activeFile: fileItem
+                activeFile: fileItem,
             });
         },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
 
-            let action = this.store.createRecord('action', {
-               actionTrigger: trigger,
-               target: this.get('model'),
+            const action = this.store.createRecord('action', {
+                actionTrigger: trigger,
+                target: this.get('model'),
             });
 
             if (comment) {
@@ -114,17 +117,17 @@ export default Ember.Controller.extend({
             }
 
             return action.save()
-                .then(() => {
-                    this.toggleProperty('savingAction');
-                    this.transitionToRoute('preprints.provider.moderation', {
-                        queryParams: { status: filter, page: 1, sort: '-date_last_transitioned'},
-                    });
-                })
-                .catch(() => {
-                    this.toggleProperty('savingAction');
-                    return this.get('toast')
-                        .error(this.get('i18n').t(`components.preprint-status-banner.error`));
-                });
+                .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
+                .catch(this._notifySubmitFailure.bind(this))
+                .finally(() => this.toggleProperty('savingAction'));
         },
+    },
+
+    _toModerationList(queryParams) {
+        this.transitionToRoute('preprints.provider.moderation', { queryParams });
+    },
+
+    _notifySubmitFailure() {
+        this.get('toast').error(this.get('i18n').t('components.preprint-status-banner.error'));
     },
 });

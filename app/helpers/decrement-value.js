@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 /**
  * Decrement the first parameter by second parameter value.
  *
@@ -9,9 +9,9 @@ import Ember from 'ember';
  * This should return 8
  *
  * @class decrement-value
- **/
-export function decrementValue(params/*, hash*/) {
-  return params[0] - params[1];
+ * */
+export function decrementValue(params/* , hash */) {
+    return params[0] - params[1];
 }
 
-export default Ember.Helper.helper(decrementValue);
+export default helper(decrementValue);
