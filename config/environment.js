@@ -34,11 +34,11 @@ module.exports = function(environment) {
         metricsAdapters: [
             {
                 name: 'GoogleAnalytics',
-                environments: ['development', 'production'], // Add development to try/inspect in development.
+                environments: ['production'], // Add development to try/inspect in development.
                 config: {
                     // Replace test id with process.env.GOOGLE_ANALYTICS_ID before committing.
                     // Use test id for local testing.
-                    id: 'UA-84580271-1',
+                    id: process.env.GOOGLE_ANALYTICS_ID,
                     // Use `analytics_debug.js` in development.
                     debug: environment === 'development',
                     // Use verbose tracing of GA events
