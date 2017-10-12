@@ -40,9 +40,7 @@ export default Ember.Component.extend({
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
     }),
 
-    lastAction: Ember.computed('submission.actions', function(){
-        return this.get('submission.actions').slice(0, 1)[0];
-    }),
+    lastAction: Ember.computed.alias('submission.actions.firstObject'),
 
     gtDay: Ember.computed('submission.dateLastTransitioned', function() {
         return moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
