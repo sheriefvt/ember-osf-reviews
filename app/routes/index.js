@@ -1,32 +1,36 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-    currentUser: Ember.inject.service(),
-    session: Ember.inject.service(),
-    store: Ember.inject.service(),
+export default Route.extend({
+    currentUser: service(),
+    session: service(),
+    store: service(),
 
     queryParams: {
-        page: { refreshModel: true }
+        page: { refreshModel: true },
     },
 
     model(params) {
-        const emptyModels = {
-            providers: [],
-            actionsList: []
-        };
-
         if (!this.get('session.isAuthenticated')) {
-            return emptyModels;
+            return this._emptyModels();
         }
-        return Ember.RSVP.hash({
+        return hash({
             providers: this.get('store').query('preprint-provider', {
-                'filter[permissions]': 'view_actions,set_up_moderation'
+                'filter[permissions]': 'view_actions,set_up_moderation',
             }),
-            actionsList: this.get('currentUser.user').then(user => {
-                return user.query('actions', { page: params.page, include: 'target,provider' });
-            }),
-        }).catch(() => {
-             return emptyModels;
-        });  // On any error, assume no permissions to anything.
+            actionsList: this.get('currentUser.user').then(this._getActions.bind(this, params.page)),
+        }).catch(this._emptyModels.bind(this)); // On any error, assume no permissions to anything.
+    },
+
+    _getActions(page, user) {
+        return user.query('actions', { page, include: 'target,provider' });
+    },
+
+    _emptyModels() {
+        return {
+            providers: [],
+            actionsList: [],
+        };
     },
 });

@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import { isBlank } from '@ember/utils';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import moment from 'moment';
 
 const PENDING = 'pending';
@@ -11,219 +15,195 @@ const POST_MODERATION = 'post-moderation';
 const ICONS = {
     [PENDING]: 'fa-hourglass-o',
     [ACCEPTED]: 'fa-check-circle-o',
-    [REJECTED]: 'fa-times-circle-o'
+    [REJECTED]: 'fa-times-circle-o',
 };
 
 const STATUS = {
     [PENDING]: 'components.preprint-status-banner.pending',
     [ACCEPTED]: 'components.preprint-status-banner.accepted',
-    [REJECTED]: 'components.preprint-status-banner.rejected'
+    [REJECTED]: 'components.preprint-status-banner.rejected',
 };
 
 const MESSAGE = {
     [PRE_MODERATION]: 'components.preprint-status-banner.message.pending_pre',
     [POST_MODERATION]: 'components.preprint-status-banner.message.pending_post',
     [ACCEPTED]: 'components.preprint-status-banner.message.accepted',
-    [REJECTED]: 'components.preprint-status-banner.message.rejected'
-};
-
-const WORKFLOW = {
-    [PRE_MODERATION]: 'global.pre_moderation',
-    [POST_MODERATION]: 'global.post_moderation'
+    [REJECTED]: 'components.preprint-status-banner.message.rejected',
 };
 
 const CLASS_NAMES = {
     [PRE_MODERATION]: 'preprint-status-pending-pre',
     [POST_MODERATION]: 'preprint-status-pending-post',
     [ACCEPTED]: 'preprint-status-accepted',
-    [REJECTED]: 'preprint-status-rejected'
+    [REJECTED]: 'preprint-status-rejected',
 };
 
 const SETTINGS = {
-    'comments': {
-        'public': 'components.preprint-status-banner.settings.comments.public',
-        'private': 'components.preprint-status-banner.settings.comments.private'
+    comments: {
+        public: 'components.preprint-status-banner.settings.comments.public',
+        private: 'components.preprint-status-banner.settings.comments.private',
     },
-    'names': {
-        'anonymous': 'components.preprint-status-banner.settings.names.anonymous',
-        'named': 'components.preprint-status-banner.settings.names.named'
+    names: {
+        anonymous: 'components.preprint-status-banner.settings.names.anonymous',
+        named: 'components.preprint-status-banner.settings.names.named',
     },
-    'moderation': {
+    moderation: {
         [PRE_MODERATION]: 'components.preprint-status-banner.settings.moderation.pre',
-        [POST_MODERATION]: 'components.preprint-status-banner.settings.moderation.post'
-    }
-}
+        [POST_MODERATION]: 'components.preprint-status-banner.settings.moderation.post',
+    },
+};
 
 const SETTINGS_ICONS = {
-    'comments': {
-        'public': 'fa-eye',
-        'private': 'fa-eye-slash'
+    comments: {
+        public: 'fa-eye',
+        private: 'fa-eye-slash',
     },
-    'names': {
-        'anonymous': 'fa-user-secret',
-        'named': 'fa-user'
+    names: {
+        anonymous: 'fa-user-secret',
+        named: 'fa-user',
     },
-    'moderation': {
+    moderation: {
         [PRE_MODERATION]: 'fa-key',
-        [POST_MODERATION]: 'fa-globe'
-    }
+        [POST_MODERATION]: 'fa-globe',
+    },
 };
 
 const DECISION_EXPLANATION = {
-    'accept': {
+    accept: {
         [PRE_MODERATION]: 'components.preprint-status-banner.decision.accept.pre',
-        [POST_MODERATION]: 'components.preprint-status-banner.decision.accept.post'
+        [POST_MODERATION]: 'components.preprint-status-banner.decision.accept.post',
     },
-    'reject': {
+    reject: {
         [PRE_MODERATION]: 'components.preprint-status-banner.decision.reject.pre',
-        [POST_MODERATION]: 'components.preprint-status-banner.decision.reject.post'
-    }
+        [POST_MODERATION]: 'components.preprint-status-banner.decision.reject.post',
+    },
 };
 
 const RECENT_ACTIVITY = {
     [PENDING]: 'components.preprint-status-banner.recent_activity.pending',
     [ACCEPTED]: 'components.preprint-status-banner.recent_activity.accepted',
-    [REJECTED]: 'components.preprint-status-banner.recent_activity.rejected'
+    [REJECTED]: 'components.preprint-status-banner.recent_activity.rejected',
+    automatic: {
+        [PENDING]: 'components.preprint-status-banner.recent_activity.automatic.pending',
+        [ACCEPTED]: 'components.preprint-status-banner.recent_activity.automatic.accepted',
+    },
 };
 
-export default Ember.Component.extend({
-    i18n: Ember.inject.service(),
-    theme: Ember.inject.service(),
+export default Component.extend({
+    i18n: service(),
+    theme: service(),
 
     // translations
     moderator: 'components.preprint-status-banner.decision.moderator',
     feedbackBaseMessage: 'components.preprint-status-banner.decision.base',
-    baseMessage: 'components.preprint-status-banner.message.base',
-    commentPlaceholder:'components.preprint-status-banner.decision.comment_placeholder',
+    commentPlaceholder: 'components.preprint-status-banner.decision.comment_placeholder',
     labelAccept: 'components.preprint-status-banner.decision.accept.label',
     labelReject: 'components.preprint-status-banner.decision.reject.label',
 
     classNames: ['preprint-status-component'],
 
-    reviewsWorkflow: Ember.computed.alias('submission.provider.reviewsWorkflow'),
-    reviewsCommentsPrivate: Ember.computed.alias('submission.provider.reviewsCommentsPrivate'),
-    reviewsCommentsAnonymous: Ember.computed.alias('submission.provider.reviewsCommentsAnonymous'),
+    loadingActions: true,
+    noActions: false,
 
-    getClassName: Ember.computed('reviewsWorkflow', 'submission.reviewsState', function() {
-        return this.get('submission.reviewsState') === PENDING ?
-            CLASS_NAMES[this.get('reviewsWorkflow')] :
-            CLASS_NAMES[this.get('submission.reviewsState')];
-    }),
+    // Submission form
+    initialReviewerComment: '',
+    reviewerComment: '',
+    decision: 'accepted',
 
-    creatorProfile:'',
-    creatorName: '',
+    reviewsWorkflow: alias('submission.provider.reviewsWorkflow'),
+    reviewsCommentsPrivate: alias('submission.provider.reviewsCommentsPrivate'),
+    reviewsCommentsAnonymous: alias('submission.provider.reviewsCommentsAnonymous'),
 
-    init() {
-        this.get('submission.actions').then(actions => {
-            // on create, ember puts new object at the end of the array
-            // https://stackoverflow.com/questions/15210249/ember-data-insert-new-item-at-beginning-of-array-instead-of-at-the-end
-            const firstObjectModified = moment(actions.get('firstObject').get('dateModified'));
-            const lastObjectModified = moment(actions.get('lastObject').get('dateModified'));
-            const action = firstObjectModified > lastObjectModified ?
-                actions.get('firstObject') :
-                actions.get('lastObject');
+    creatorProfile: alias('latestAction.creator.profileURL'),
+    creatorName: alias('latestAction.creator.fullName'),
 
-            action.get('creator').then(user => {
-                this.set('creatorName', user.get('fullName'));
-                this.set('creatorProfile', user.get('profileURL'));
-            })
-
-            if (this.get('submission.reviewsState') !== PENDING) {
-                this.set('initialReviewerComment', action.get('comment'));
-                this.set('reviewerComment', action.get('comment'));
-                this.set('decision', this.get('submission.reviewsState'));
-            }
-        });
-
-        return this._super(...arguments);
-    },
-
-    bannerContent: Ember.computed('statusExplanation', 'workflow', function() {
-        let tName = this.get('theme.isProvider') ?
-            this.get('theme.provider.name') :
-            this.get('i18n').t('global.brand_name');
-
-        let tWorkflow = this.get('i18n').t(this.get('workflow'));
-        let tStatusExplanation = this.get('i18n').t(this.get('statusExplanation'));
-
-        return `${this.get('i18n').t(this.get('baseMessage'), {name: tName, reviewsWorkflow: tWorkflow})} ${tStatusExplanation}.`;
-    }),
-
-    statusExplanation: Ember.computed('reviewsWorkflow', 'submission.reviewsState', function() {
+    statusExplanation: computed('reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
             MESSAGE[this.get('reviewsWorkflow')] :
             MESSAGE[this.get('submission.reviewsState')];
     }),
 
-    status: Ember.computed('submission.reviewsState', function() {
+    status: computed('submission.reviewsState', function() {
         return STATUS[this.get('submission.reviewsState')];
     }),
 
-    icon: Ember.computed('submission.reviewsState', function() {
+    icon: computed('submission.reviewsState', function() {
         return ICONS[this.get('submission.reviewsState')];
     }),
 
-    workflow: Ember.computed('reviewsWorkflow', function () {
-        return WORKFLOW[this.get('reviewsWorkflow')];
+    recentActivityLanguage: computed('noActions', 'submission.reviewsState', function() {
+        if (this.get('noActions')) {
+            return RECENT_ACTIVITY.automatic[this.get('submission.reviewsState')];
+        } else {
+            return RECENT_ACTIVITY[this.get('submission.reviewsState')];
+        }
     }),
 
-    recentActivityLanguage: Ember.computed('submission.reviewsState', function() {
-        return RECENT_ACTIVITY[this.get('submission.reviewsState')];
+
+    getClassName: computed('reviewsWorkflow', 'submission.reviewsState', function() {
+        return this.get('submission.reviewsState') === PENDING ?
+            CLASS_NAMES[this.get('reviewsWorkflow')] :
+            CLASS_NAMES[this.get('submission.reviewsState')];
     }),
 
-    /* Submission Form */
-
-    initialReviewerComment: '',
-    reviewerComment: '',
-    decision: 'accepted',
-
-    noComment: Ember.computed('reviewerComment', function() {
-        return Ember.isBlank(this.get('reviewerComment'));
+    latestAction: computed('submission.actions.[]', function() {
+        if (!this.get('submission.actions.length')) {
+            return null;
+        }
+        // on create, Ember puts the new object at the end of the array
+        // https://stackoverflow.com/questions/15210249/ember-data-insert-new-item-at-beginning-of-array-instead-of-at-the-end
+        const first = this.get('submission.actions.firstObject');
+        const last = this.get('submission.actions.lastObject');
+        return moment(first.get('dateModified')) > moment(last.get('dateModified')) ? first : last;
     }),
 
-    settingsComments: Ember.computed('reviewsCommentsPrivate', function() {
-        let commentType = this.get('reviewsCommentsPrivate') ? 'private' : 'public';
-        return SETTINGS['comments'][commentType];
-    }),
-    settingsNames: Ember.computed('reviewsCommentsAnonymous', function() {
-        let commentType = this.get('reviewsCommentsAnonymous') ? 'anonymous' : 'named';
-        return SETTINGS['names'][commentType];
-    }),
-    settingsModeration: Ember.computed('reviewsWorkflow', function() {
-        return SETTINGS['moderation'][this.get('reviewsWorkflow')];
+    noComment: computed('reviewerComment', function() {
+        return isBlank(this.get('reviewerComment'));
     }),
 
-    settingsCommentsIcon: Ember.computed('reviewsCommentsPrivate', function() {
-        let commentType = this.get('reviewsCommentsPrivate') ? 'private' : 'public';
-        return SETTINGS_ICONS['comments'][commentType];
+    settingsComments: computed('reviewsCommentsPrivate', function() {
+        const commentType = this.get('reviewsCommentsPrivate') ? 'private' : 'public';
+        return SETTINGS.comments[commentType];
     }),
-    settingsNamesIcon: Ember.computed('reviewsCommentsAnonymous', function() {
-        let commentType = this.get('reviewsCommentsAnonymous') ? 'anonymous' : 'named';
-        return SETTINGS_ICONS['names'][commentType];
+    settingsNames: computed('reviewsCommentsAnonymous', function() {
+        const commentType = this.get('reviewsCommentsAnonymous') ? 'anonymous' : 'named';
+        return SETTINGS.names[commentType];
     }),
-    settingsModerationIcon: Ember.computed('reviewsWorkflow', function() {
-        return SETTINGS_ICONS['moderation'][this.get('reviewsWorkflow')];
-    }),
-
-    acceptExplanation: Ember.computed('reviewsWorkflow', function() {
-        return DECISION_EXPLANATION['accept'][this.get('reviewsWorkflow')];
-    }),
-    rejectExplanation: Ember.computed('reviewsWorkflow', function() {
-        return DECISION_EXPLANATION['reject'][this.get('reviewsWorkflow')];
+    settingsModeration: computed('reviewsWorkflow', function() {
+        return SETTINGS.moderation[this.get('reviewsWorkflow')];
     }),
 
-    labelDecisionDropdown: Ember.computed('submission.reviewsState', function() {
+    settingsCommentsIcon: computed('reviewsCommentsPrivate', function() {
+        const commentType = this.get('reviewsCommentsPrivate') ? 'private' : 'public';
+        return SETTINGS_ICONS.comments[commentType];
+    }),
+    settingsNamesIcon: computed('reviewsCommentsAnonymous', function() {
+        const commentType = this.get('reviewsCommentsAnonymous') ? 'anonymous' : 'named';
+        return SETTINGS_ICONS.names[commentType];
+    }),
+    settingsModerationIcon: computed('reviewsWorkflow', function() {
+        return SETTINGS_ICONS.moderation[this.get('reviewsWorkflow')];
+    }),
+
+    acceptExplanation: computed('reviewsWorkflow', function() {
+        return DECISION_EXPLANATION.accept[this.get('reviewsWorkflow')];
+    }),
+    rejectExplanation: computed('reviewsWorkflow', function() {
+        return DECISION_EXPLANATION.reject[this.get('reviewsWorkflow')];
+    }),
+
+    labelDecisionDropdown: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
             'components.preprint-status-banner.decision.make_decision' :
-            'components.preprint-status-banner.decision.modify_decision'
+            'components.preprint-status-banner.decision.modify_decision';
     }),
-    labelDecisionHeader: Ember.computed('submission.reviewsState', function() {
+    labelDecisionHeader: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
             'components.preprint-status-banner.decision.header.submit_decision' :
-            'components.preprint-status-banner.decision.header.modify_decision'
+            'components.preprint-status-banner.decision.header.modify_decision';
     }),
-    labelDecisionBtn: Ember.computed('submission.reviewsState', 'decision', 'reviewerComment', function() {
-        if (this.get('submission.reviewsState') === PENDING ) {
+    labelDecisionBtn: computed('submission.reviewsState', 'decision', 'reviewerComment', function() {
+        if (this.get('submission.reviewsState') === PENDING) {
             return 'components.preprint-status-banner.decision.btn.submit_decision';
         } else if (this.get('submission.reviewsState') !== this.get('decision')) {
             return 'components.preprint-status-banner.decision.btn.modify_decision';
@@ -231,23 +211,27 @@ export default Ember.Component.extend({
             return 'components.preprint-status-banner.decision.btn.update_comment';
         }
         return 'components.preprint-status-banner.decision.btn.modify_decision';
-
     }),
 
-    commentEdited: Ember.computed('reviewerComment', 'initialReviewerComment', function() {
+    commentEdited: computed('reviewerComment', 'initialReviewerComment', function() {
         return this.get('reviewerComment').trim() !== this.get('initialReviewerComment');
     }),
 
-    decisionChanged: Ember.computed('submission.reviewsState', 'decision', function() {
+    decisionChanged: computed('submission.reviewsState', 'decision', function() {
         return this.get('submission.reviewsState') !== this.get('decision');
     }),
 
-    btnDisabled: Ember.computed('decisionChanged', 'commentEdited', 'saving', function() {
+    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', function() {
         if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited'))) {
             return true;
         }
         return false;
     }),
+
+    init() {
+        this.get('submission.actions').then(this._handleActions.bind(this));
+        return this._super(...arguments);
+    },
 
     actions: {
         submit() {
@@ -258,13 +242,31 @@ export default Ember.Component.extend({
                 trigger = this.get('decision') === ACCEPTED ? 'accept' : 'reject';
             }
 
-            let comment = this.get('reviewerComment').trim();
-            this.sendAction('submitDecision', trigger, comment, this.get('decision'));
+            const comment = this.get('reviewerComment').trim();
+            this.get('submitDecision')(trigger, comment, this.get('decision'));
         },
         cancel() {
             this.set('decision', this.get('submission.reviewsState'));
             this.set('reviewerComment', this.get('initialReviewerComment'));
-        }
-    }
+        },
+    },
 
+    _handleActions(actions) {
+        if (actions.length) {
+            if (this.get('submission.reviewsState') !== PENDING) {
+                const comment = actions.get('firstObject.comment');
+                this.set('initialReviewerComment', comment);
+                this.set('reviewerComment', comment);
+                this.set('decision', this.get('submission.reviewsState'));
+            } else {
+                this.set('initialReviewerComment', '');
+                this.set('reviewerComment', '');
+                this.set('decision', ACCEPTED);
+            }
+            this.set('noActions', false);
+        } else {
+            this.set('noActions', true);
+        }
+        this.set('loadingActions', false);
+    },
 });

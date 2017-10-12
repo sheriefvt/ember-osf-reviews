@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
 const SUBMIT = 'submit';
 const ACCEPT = 'accept';
@@ -28,8 +30,24 @@ const CLASS_NAMES = Object.freeze({
  * ```
  * @class action-feed-entry
  */
-export default Ember.Component.extend({
-    i18n: Ember.inject.service(),
+export default Component.extend({
+    i18n: service(),
+
+    iconClass: computed('action.actionTrigger', function() {
+        return CLASS_NAMES[this.get('action.actionTrigger')];
+    }),
+
+    icon: computed('action.actionTrigger', function() {
+        return ICONS[this.get('action.actionTrigger')];
+    }),
+
+    message: computed('action.{actionTrigger,provider}', function() {
+        const i18n = this.get('i18n');
+        return i18n.t(`components.action-feed-entry.action_message.${this.get('action.actionTrigger')}`, {
+            providerName: this.get('action.provider.name'),
+            documentType: i18n.t(`documentType.${this.get('action.provider.preprintWord')}.singular`),
+        });
+    }),
 
     click(event) {
         if (!event.originalEvent.target.href) {
@@ -37,20 +55,4 @@ export default Ember.Component.extend({
             return true;
         }
     },
-
-    iconClass: Ember.computed('action.actionTrigger', function() {
-        return CLASS_NAMES[this.get('action.actionTrigger')];
-    }),
-
-    icon: Ember.computed('action.actionTrigger', function() {
-        return ICONS[this.get('action.actionTrigger')];
-    }),
-
-    message: Ember.computed('action.actionTrigger', 'action.provider', function() {
-        const i18n = this.get('i18n');
-        return i18n.t(`components.action-feed-entry.action_message.${this.get('action.actionTrigger')}`, {
-            providerName: this.get('action.provider.name'),
-            documentType: i18n.t(`documentType.${this.get('action.provider.preprintWord')}.singular`),
-        });
-    }),
 });

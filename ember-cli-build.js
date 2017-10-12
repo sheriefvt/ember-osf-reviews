@@ -1,15 +1,17 @@
 /* eslint-env node */
 
-'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
+const jQueryPackage = require('jquery/package.json');
+const Autoprefixer = require('autoprefixer');
+const CSSNano = require('cssnano');
 
 
 module.exports = function(defaults) {
     // const EMBER_DATA_VERSION = defaults.project.addonPackages['ember-data'].pkg.version;
     const EMBER_VERSION = defaults.project.addonPackages['ember-source'].pkg.version;
-    const JQUERY_VERSION = require('jquery/package.json').version;
+    const JQUERY_VERSION = jQueryPackage.version;
 
     // Values chosen abritrarily, feel free to change
     const LEAN_BUILD = ['production'].includes(EmberApp.env());
@@ -18,13 +20,13 @@ module.exports = function(defaults) {
     const app = new EmberApp(defaults, {
         sourcemaps: {
             enabled: true,
-            extensions: ['js']
+            extensions: ['js'],
         },
         fingerprint: {
-            extensions: ['js', 'css', 'map']
+            extensions: ['js', 'css', 'map'],
         },
-        minifyJS: {enabled: LEAN_BUILD},
-        minifyCSS: {enabled: LEAN_BUILD},
+        minifyJS: { enabled: LEAN_BUILD },
+        minifyCSS: { enabled: LEAN_BUILD },
         vendorFiles: !LEAN_BUILD ? {} : {
             // These will be CDN'd in via "inlineContent"
             // Ember doesn't like it when these are set to true for some reason
@@ -37,7 +39,7 @@ module.exports = function(defaults) {
                 'node_modules/@centerforopenscience/osf-style/sass',
                 'node_modules/font-awesome/scss',
                 'node_modules/toastr',
-            ]
+            ],
         },
         inlineContent: {
             raven: {
@@ -49,21 +51,21 @@ module.exports = function(defaults) {
                     var encodedConfig = document.head.querySelector("meta[name$='/config/environment']").content;
                     var config = JSON.parse(unescape(encodedConfig));
                     Raven.config(config.sentryDSN, {}).install();
-                </script>`
+                </script>`,
             },
             cdn: {
                 enabled: LEAN_BUILD,
                 content: `
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/${JQUERY_VERSION}/jquery.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/ember.js/${EMBER_VERSION}/ember.min.js"></script>
-                `
+                `,
                 // TODO Figure out how to CDN ember-data
                 // The CDN version appears to load a deprecated interface that breaks stuff
-                // <script src="//cdnjs.cloudflare.com/ajax/libs/ember-data.js/${EMBER_DATA_VERSION}/ember-data.js"></script>
+                // cdnjs.cloudflare.com/ajax/libs/ember-data.js/${EMBER_DATA_VERSION}/ember-data.js
             },
             assets: {
-                enabled: true
-            }
+                enabled: true,
+            },
         },
         minifyHTML: {
             enabled: LEAN_BUILD,
@@ -77,16 +79,16 @@ module.exports = function(defaults) {
         },
         postcssOptions: {
             // Doesn't agree with SCSS; must be disabled
-            compile: {enabled: false},
+            compile: { enabled: false },
             filter: {
                 browsers: ['last 4 versions'],
                 enabled: LEAN_BUILD,
                 include: ['**/*.css'],
                 plugins: [{
-                    module: require('autoprefixer')
+                    module: Autoprefixer,
                 }, {
-                    module: require('cssnano')
-                }]
+                    module: CSSNano,
+                }],
             },
         },
     });
@@ -104,7 +106,7 @@ module.exports = function(defaults) {
     // please specify an object with the list of modules as keys
     // along with the exports of each module as its value.
 
-    let assets = [
+    const assets = [
         new Funnel('node_modules/font-awesome/fonts', {
             srcDir: '/',
             destDir: '/assets/fonts',
@@ -112,7 +114,7 @@ module.exports = function(defaults) {
         new Funnel('node_modules/@centerforopenscience/osf-style/img', {
             srcDir: '/',
             destDir: '/img',
-        })
+        }),
     ];
 
     return app.toTree(assets);

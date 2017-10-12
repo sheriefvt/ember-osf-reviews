@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
 /**
  * @module ember-osf-reviews
@@ -8,30 +9,19 @@ import Ember from 'ember';
 /**
  * @class Provider Route Handler
  */
-export default Ember.Route.extend({
-    theme: Ember.inject.service(),
-    session: Ember.inject.service(),
-    currentUser: Ember.inject.service(),
-
-    beforeModel() {
-        if (!this.get('session.isAuthenticated')) {
-            this.replaceWith('not-authenticated');
-        } else {
-            this.get('currentUser.user').then((user) => {
-                if (!user.get('canViewReviews')) {
-                    this.replaceWith('forbidden');
-                }
-            });
-        }
-    },
+export default Route.extend({
+    theme: service(),
 
     model(params) {
-        return this.get('theme').loadProvider(params.provider_id).catch(() => {
-            this.replaceWith('page-not-found')
-        });
+        return this.get('theme').loadProvider(params.provider_id)
+            .catch(() => this.replaceWith('page-not-found'));
     },
 
     afterModel(model, transition) {
-        if (!model.get('reviewsWorkflow') && transition.targetName !== 'preprints.provider.setup') return this.replaceWith('preprints.provider.setup', model);
+        if (!model.get('permissions').includes('view_submissions')) {
+            this.replaceWith('forbidden');
+        } else if (!model.get('reviewsWorkflow') && transition.targetName !== 'preprints.provider.setup') {
+            this.replaceWith('preprints.provider.setup', model);
+        }
     },
 });
