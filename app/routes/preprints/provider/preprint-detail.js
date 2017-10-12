@@ -1,11 +1,31 @@
-import Ember from 'ember';
+import { isArray } from '@ember/array';
+import $ from 'jquery';
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-    theme: Ember.inject.service(),
-    currentUser: Ember.inject.service(),
+export default Route.extend({
+    theme: service(),
+    currentUser: service(),
 
     model(params) {
-        return this.store.findRecord('preprint', params.preprint_id, {include: ['node', 'provider', 'license', 'actions']});
+        return this.store.findRecord('preprint', params.preprint_id, { include: ['node', 'license', 'actions'] });
+    },
+
+    afterModel(model) {
+        if (!model.get('node.public')) {
+            return this.transitionTo('page-not-found');
+        }
+        return this._super(...arguments);
+    },
+
+    setupController() {
+        scheduleOnce('afterRender', this, function() {
+            if (!MathJax) return;
+            MathJax.Hub.Queue(['Typeset', MathJax.Hub, [$('.abstract')[0], $('#preprintTitle')[0]]]); // jshint ignore:line
+        });
+
+        return this._super(...arguments);
     },
 
     renderTemplate(controller, model) {
@@ -18,20 +38,11 @@ export default Ember.Route.extend({
         });
     },
 
-    setupController() {
-        Ember.run.scheduleOnce('afterRender', this, function() {
-            if (!MathJax) return;
-            MathJax.Hub.Queue(['Typeset', MathJax.Hub, [Ember.$('.abstract')[0], Ember.$('#preprintTitle')[0]]]);  // jshint ignore:line
-        });
-
-        return this._super(...arguments);
-    },
-
     actions: {
         error(error) {
-            if (error && error.errors && Ember.isArray(error.errors)) {
+            if (error && error.errors && isArray(error.errors)) {
                 return this.intermediateTransitionTo('page-not-found');
             }
         },
-    }
+    },
 });

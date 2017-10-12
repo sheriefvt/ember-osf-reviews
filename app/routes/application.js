@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
 import OSFAgnosticAuthRouteMixin from 'ember-osf/mixins/osf-agnostic-auth-route';
 
@@ -10,18 +11,18 @@ import OSFAgnosticAuthRouteMixin from 'ember-osf/mixins/osf-agnostic-auth-route'
 /**
  * @class Application Route Handler
  */
-export default Ember.Route.extend(OSFAgnosticAuthRouteMixin, {
-    i18n: Ember.inject.service(),
-    session: Ember.inject.service(),
-    currentUser: Ember.inject.service(),
+export default Route.extend(OSFAgnosticAuthRouteMixin, {
+    i18n: service(),
+    session: service(),
+    currentUser: service(),
 
-    afterModel: function() {
+    afterModel() {
         const availableLocales = this.get('i18n.locales').toArray();
         let locale;
 
         if (navigator.languages && navigator.languages.length) {
             // Works in Chrome and Firefox (editable in settings)
-            for (let lang of navigator.languages) {
+            for (const lang of navigator.languages) {
                 if (availableLocales.includes(lang)) {
                     locale = lang;
                     break;
@@ -40,11 +41,13 @@ export default Ember.Route.extend(OSFAgnosticAuthRouteMixin, {
         if (!this.get('session.isAuthenticated')) {
             this.replaceWith('index');
         } else {
-            return this.get('currentUser.user').then((user) => {
-                if (!user.get('canViewReviews')) {
-                    this.replaceWith('index');
-                }
-            });
+            return this.get('currentUser.user').then(this._checkUserPermission.bind(this));
         }
-    }
+    },
+
+    _checkUserPermission(user) {
+        if (!user.get('canViewReviews')) {
+            this.replaceWith('index');
+        }
+    },
 });

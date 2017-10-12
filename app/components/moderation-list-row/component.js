@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import moment from 'moment';
 
 const PENDING = 'pending';
@@ -17,50 +19,56 @@ const ACTION_LABELS = Object.freeze({
     [REJECTED]: {
         gtDay: 'components.moderation-list-row.submission.rejected_on',
         ltDay: 'components.moderation-list-row.submission.rejected',
-    }
+    },
 });
 
 
-export default Ember.Component.extend({
-    theme: Ember.inject.service(),
+export default Component.extend({
+    theme: service(),
 
     classNames: ['moderation-list-row'],
 
-    iconClass: {
-        accepted: 'fa-check-circle-o accepted',
-        pending: 'fa-hourglass-o pending',
-        rejected: 'fa-times-circle-o rejected'
-    },
+    dataLoading: computed.not('firstContributors.length'),
 
-    firstContributors: Ember.computed('submission.node.contributors', function() {
+    lastAction: computed.alias('submission.actions.firstObject'),
+
+    firstContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors').slice(0, 3);
     }),
 
-    additionalContributors: Ember.computed('submission.node.contributors', function() {
+    additionalContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
     }),
 
-    lastAction: Ember.computed.alias('submission.actions.firstObject'),
-
-    gtDay: Ember.computed('submission.dateLastTransitioned', function() {
+    gtDay: computed('submission.dateLastTransitioned', function() {
         return moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
     }),
 
-    relevantDate: Ember.computed('submission.dateLastTransitioned', 'gtDay', function() {
+    relevantDate: computed('submission.dateLastTransitioned', 'gtDay', function() {
         return this.get('gtDay') ?
             moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
             moment(Math.min(Date.parse(this.get('submission.dateLastTransitioned')), Date.now())).fromNow();
     }),
 
-    //translations
-    dateLabel: Ember.computed('submission.reviewsState', 'gtDay', function() {
+    // translations
+    dateLabel: computed('submission.reviewsState', 'gtDay', function() {
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
         return ACTION_LABELS[this.get('submission.reviewsState')][dayValue];
     }),
 
-    submittedByLabel: Ember.computed('submission.reviewsState', function() {
+    submittedByLabel: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
             'components.moderation-list-row.submission.by' :
             'components.moderation-list-row.submission.submission_by';
     }),
+
+    init() {
+        this._super(...arguments);
+
+        this.iconClass = {
+            accepted: 'fa-check-circle-o accepted',
+            pending: 'fa-hourglass-o pending',
+            rejected: 'fa-times-circle-o rejected',
+        };
+    },
 });

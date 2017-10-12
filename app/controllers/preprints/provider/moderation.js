@@ -1,22 +1,32 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
     queryParams: ['page', 'sort', 'status'],
     page: 1,
     status: 'pending',
     sort: '-date_last_transitioned',
+    loading: true,
 
     actions: {
         statusChanged(status) {
-            this.set('status', status);
-            this.set('page', 1);
+            this.setProperties({
+                status,
+                page: 1,
+                loading: true,
+            });
         },
         pageChanged(page) {
-            this.set('page', page);
+            this.setProperties({
+                page,
+                loading: true,
+            });
         },
         sortChanged(sort) {
-            this.set('sort', sort);
-            this.set('page', 1);
+            this.setProperties({
+                sort,
+                page: 1,
+                loading: true,
+            });
         },
-    }
+    },
 });

@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 /**
  * @module ember-osf-reviews
  * @submodule routes
@@ -7,44 +8,50 @@ import Ember from 'ember';
 /**
  * @class provider Route Handler
  */
-export default Ember.Route.extend({
-    theme: Ember.inject.service(),
+export default Route.extend({
+    theme: service(),
+    store: service(),
 
     queryParams: {
         sort: { refreshModel: true },
         status: { refreshModel: true },
-        page: { refreshModel: true }
+        page: { refreshModel: true },
     },
 
     model(params) {
         const provider = this.modelFor('preprints.provider');
-        // Pass `true` to force reloading (added in cos-forks/ember-data-has-many-query)
-        return provider.query('preprints', {
-            'filter[reviews_state]': params.status,
+        return this.get('store').queryHasMany(provider, 'preprints', {
+            filter: {
+                reviews_state: params.status,
+                node_is_public: true,
+            },
             'meta[reviews_state_counts]': true,
             sort: params.sort,
-            page: params.page
-        }, true).then((results) => {
-            return {
-                submissions: results.toArray(),
-                totalPages: results.get('meta.total'),
-                statusCounts: results.get('meta.reviews_state_counts'),
-            };
-        });
+            page: params.page,
+        }).then(this._resolveModel.bind(this));
     },
 
     setupController(controller, model) {
         this._super(controller, model);
         this.controllerFor('preprints.provider').set('pendingCount', model.statusCounts.pending);
+        controller.set('loading', false);
     },
 
     actions: {
         loading(transition) {
-            let controller = this.controllerFor('preprints.provider.moderation');
+            const controller = this.controllerFor('preprints.provider.moderation');
             controller.set('loading', true);
             transition.promise.finally(function() {
                 controller.set('loading', false);
             });
         },
-    }
+    },
+
+    _resolveModel(response) {
+        return {
+            submissions: response.toArray(),
+            totalPages: Math.ceil(response.links.meta.total / response.links.meta.per_page),
+            statusCounts: response.meta.reviews_state_counts,
+        };
+    },
 });

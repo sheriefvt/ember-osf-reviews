@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-    afterModel(model/*, transition */) {
+export default Route.extend({
+    afterModel(model/* , transition */) {
         if (!model.get('permissions').contains('set_up_moderation')) {
             this.replaceWith('index');
         } else if (model.get('reviewsWorkflow')) {
@@ -12,9 +12,9 @@ export default Ember.Route.extend({
         // We're a special page.
         // Render into the applications outlet rather than the `provider` outlet.
         this.render(this.routeName, {
-            controller: controller,
+            controller,
             into: 'application',
-            model: model,
+            model,
         });
     },
 });

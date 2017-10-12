@@ -1,4 +1,4 @@
-{{new-osf-navbar hostAppName='Preprints' signupUrl=theme.signupUrl loginAction=(action 'login')}}
+{{new-osf-navbar hostAppName='Preprints' signupUrl=theme.signupUrl loginAction=(action 'login') baseServiceUrl=theme.baseServiceUrl}}
 {{maintenance-banner}}
 {{#if (not session.isAuthenticated)}}
     {{error-page error='not-authenticated'}}
