@@ -3,8 +3,8 @@
 
 
 "@centerforopenscience/ember-osf@https://github.com/aaxelb/ember-osf#feature/reviews":
-  version "0.10.2"
-  resolved "https://github.com/aaxelb/ember-osf#7fc25bd4a86740b19f8000bd16c83f42e694ed1e"
+  version "0.11.0"
+  resolved "https://github.com/aaxelb/ember-osf#0d64fadadeadf9ca5fc1695e7c20297529eff4c5"
   dependencies:
     bootstrap-sass "^3.3.7"
     broccoli-funnel "1.2.0"
