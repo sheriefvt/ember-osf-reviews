@@ -1,4 +1,3 @@
-import { hash } from 'rsvp';
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 
@@ -7,19 +6,13 @@ export default Route.extend({
     session: service(),
     store: service(),
 
-    queryParams: {
-        page: { refreshModel: true },
-    },
 
     model() {
         if (!this.get('session.isAuthenticated')) {
             return this._emptyModels();
         }
-        return hash({
-            providers: this.get('store').query('preprint-provider', {
-                'filter[permissions]': 'view_actions,set_up_moderation',
-            }),
-            user: this.get('currentUser.user'),
+        return this.get('store').query('preprint-provider', {
+            'filter[permissions]': 'view_actions,set_up_moderation',
         }).catch(this._emptyModels.bind(this)); // On any error, assume no permissions to anything.
     },
 
