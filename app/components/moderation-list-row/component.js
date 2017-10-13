@@ -28,9 +28,11 @@ export default Component.extend({
 
     classNames: ['moderation-list-row'],
 
-    dataLoading: computed.not('firstContributors.length'),
+    contributorLoading: computed.not('firstContributors.length'),
 
-    lastAction: computed.alias('submission.actions.firstObject'),
+    moderatorLoading: computed.none('lastActionCreator'),
+
+    lastActionCreator: computed.alias('submission.actions.firstObject.creator.fullName'),
 
     firstContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors').slice(0, 3);

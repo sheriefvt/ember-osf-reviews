@@ -3,7 +3,7 @@
         <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
         <div title={{submission.title}} class="submission-info">
             <div class="submission-title">{{submission.title}}</div>
-            {{#if dataLoading}}
+            {{#if (or moderatorLoading contributorLoading)}}
                 {{loading-indicator classes='ball-dark'}}
             {{else}}
                 <div class="submission-body">
@@ -16,17 +16,9 @@
                             + {{additionalContributors}}
                         {{/if}}
                     {{else}}
-                        {{#if lastAction.creator.isPending}}
-                            <span class="ball-pulse ball-dark" aria-label="Loading data">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </span>
-                        {{else}}
-                            {{t dateLabel}} {{relevantDate}}
-                            {{t 'components.moderation-list-row.submission.by'}}
-                            {{lastAction.creator.fullName}}
-                        {{/if}}
+                        {{t dateLabel}} {{relevantDate}}
+                        {{t 'components.moderation-list-row.submission.by'}}
+                        {{lastActionCreator}}
                     {{/if}}
                 </div>
             {{/if}}
