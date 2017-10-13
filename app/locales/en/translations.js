@@ -192,14 +192,14 @@ export default {
         },
         'moderation-list-row': {
             submission: {
-                submitted_on: 'submitted on',
-                accepted_on: 'accepted on',
-                rejected_on: 'rejected on',
-                submitted: 'submitted',
-                accepted: 'accepted',
-                rejected: 'rejected',
-                by: 'by',
-                submission_by: 'submission by',
+                submitted_on: 'submitted on {{timeDate}} by',
+                submitted: 'submitted {{timeDate}} by',
+                accepted_on: 'accepted on {{timeDate}} by {{moderatorName}}',
+                accepted: 'accepted {{timeDate}} by {{moderatorName}}',
+                accepted_automatically_on: 'accepted automatically on {{timeDate}}',
+                accepted_automatically: 'accepted automatically {{timeDate}}',
+                rejected_on: 'rejected on {{timeDate}} by {{moderatorName}}',
+                rejected: 'rejected {{timeDate}} by {{moderatorName}}',
             },
         },
         'preprint-status-banner': {

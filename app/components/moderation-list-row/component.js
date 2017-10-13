@@ -15,6 +15,8 @@ const ACTION_LABELS = Object.freeze({
     [ACCEPTED]: {
         gtDay: 'components.moderation-list-row.submission.accepted_on',
         ltDay: 'components.moderation-list-row.submission.accepted',
+        gtDay_automatic: 'components.moderation-list-row.submission.accepted_automatically_on',
+        ltDay_automatic: 'components.moderation-list-row.submission.accepted_automatically',
     },
     [REJECTED]: {
         gtDay: 'components.moderation-list-row.submission.rejected_on',
@@ -25,6 +27,9 @@ const ACTION_LABELS = Object.freeze({
 
 export default Component.extend({
     theme: service(),
+    i18n: service(),
+
+    noActions: false,
 
     classNames: ['moderation-list-row'],
 
@@ -32,7 +37,18 @@ export default Component.extend({
 
     moderatorLoading: computed.none('lastActionCreator'),
 
-    lastActionCreator: computed.alias('submission.actions.firstObject.creator.fullName'),
+    lastActionCreator: computed.alias('latestAction.creator.fullName'),
+
+    latestAction: computed('submission.actions.[]', function() {
+        if (!this.get('submission.actions.length')) {
+            return null;
+        }
+        // on create, Ember puts the new object at the end of the array
+        // https://stackoverflow.com/questions/15210249/ember-data-insert-new-item-at-beginning-of-array-instead-of-at-the-end
+        const first = this.get('submission.actions.firstObject');
+        const last = this.get('submission.actions.lastObject');
+        return moment(first.get('dateModified')) > moment(last.get('dateModified')) ? first : last;
+    }),
 
     firstContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors').slice(0, 3);
@@ -53,15 +69,11 @@ export default Component.extend({
     }),
 
     // translations
-    dateLabel: computed('submission.reviewsState', 'gtDay', function() {
+    statusTimeDate: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
+        const i18n = this.get('i18n');
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
-        return ACTION_LABELS[this.get('submission.reviewsState')][dayValue];
-    }),
-
-    submittedByLabel: computed('submission.reviewsState', function() {
-        return this.get('submission.reviewsState') === PENDING ?
-            'components.moderation-list-row.submission.by' :
-            'components.moderation-list-row.submission.submission_by';
+        const timeWording = this.get('noAction') ? `${dayValue}_automatic` : dayValue;
+        return i18n.t(ACTION_LABELS[this.get('submission.reviewsState')][timeWording], { timeDate: this.get('relevantDate'), moderatorName: this.get('lastActionCreator') });
     }),
 
     init() {
@@ -72,5 +84,15 @@ export default Component.extend({
             pending: 'fa-hourglass-o pending',
             rejected: 'fa-times-circle-o rejected',
         };
+
+        this.get('submission.actions').then(this._handleActions.bind(this));
+    },
+
+    _handleActions(actions) {
+        if (actions.length) {
+            this.set('noActions', false);
+        } else {
+            this.set('noActions', true);
+        }
     },
 });

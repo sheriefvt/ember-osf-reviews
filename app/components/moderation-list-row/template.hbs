@@ -1,4 +1,4 @@
-{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id disabled=dataLoading}}
+{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id disabled=(or moderatorLoading contributorLoading)}}
     <div data-status={{submission.reviewsState}} class="flex-container">
         <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
         <div title={{submission.title}} class="submission-info">
@@ -8,7 +8,7 @@
             {{else}}
                 <div class="submission-body">
                     {{#if (eq submission.reviewsState 'pending')}}
-                        {{t dateLabel}} {{relevantDate}} {{t submittedByLabel}}
+                        {{statusTimeDate}}
                         {{#each firstContributors as |contributor index| ~}}
                             <li>{{contributor.users.fullName}}</li>
                         {{/each}}
@@ -16,9 +16,7 @@
                             + {{additionalContributors}}
                         {{/if}}
                     {{else}}
-                        {{t dateLabel}} {{relevantDate}}
-                        {{t 'components.moderation-list-row.submission.by'}}
-                        {{lastActionCreator}}
+                        {{statusTimeDate}}
                     {{/if}}
                 </div>
             {{/if}}
