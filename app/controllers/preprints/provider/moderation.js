@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
     queryParams: ['page', 'sort', 'status'],
     page: 1,
     status: 'pending',
@@ -28,5 +28,5 @@ export default Ember.Controller.extend({
                 loading: true,
             });
         },
-    }
+    },
 });

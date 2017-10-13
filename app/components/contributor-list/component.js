@@ -1,13 +1,17 @@
-import Ember from 'ember';
-import {loadRelation} from 'ember-osf/utils/load-relationship';
+import { filterBy } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
+import { loadRelation } from 'ember-osf/utils/load-relationship';
 
-const ContributorListComponent = Ember.Component.extend({
+const ContributorListComponent = Component.extend({
     tagName: 'ul',
     node: null,
-    contributors: Ember.computed('node', function() {
+
+    bibliographicContributors: filterBy('contributors', 'bibliographic', true),
+
+    contributors: computed('node', function() {
         return loadRelation(this.get('node'), 'contributors');
     }),
-    bibliographicContributors: Ember.computed.filterBy('contributors', 'bibliographic', true),
 });
 
 ContributorListComponent.reopenClass({

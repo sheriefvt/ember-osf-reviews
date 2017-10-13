@@ -1,17 +1,48 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 import ENV from 'reviews/config/environment';
 
 
-export default Ember.Controller.extend({
-    i18n: Ember.inject.service(),
-    toast: Ember.inject.service(),
+export default Controller.extend({
+    i18n: service(),
+    toast: service(),
 
     // Defaults
     reviewsWorkflow: 'pre-moderation',
     reviewsCommentsPrivate: true,
     reviewsCommentsAnonymous: true,
 
-    _t(key, tpl={}) {
+    providerSettings: computed('model', 'reviewsCommentsPrivate', function() {
+        const settings = ENV.PROVIDER_SETTINGS.map(this._buildSetting.bind(this));
+        // Tie anon comments to private comments
+        settings[2].disabled = this.get('reviewsCommentsPrivate');
+        return settings;
+    }),
+
+    actions: {
+        cancel() {
+            this.transitionToRoute('index');
+            return false;
+        },
+        submit() {
+            ENV.PROVIDER_SETTINGS.forEach((setting) => {
+                this.set(`model.${setting.name}`, this.get(setting.name));
+            });
+
+            // Ignore the value of anon comments if private comments
+            // are enabled
+            if (this.get('reviewsCommentsPrivate')) {
+                this.set('reviewsCommentsAnonymous', true);
+            }
+
+            this.get('model').save()
+                .then(this._toSettings.bind(this))
+                .catch(this._submitFailed.bind(this));
+        },
+    },
+
+    _t(key, tpl = {}) {
         return this.get('i18n').t(`provider_settings.${key}`, tpl);
     },
 
@@ -33,39 +64,16 @@ export default Ember.Controller.extend({
         };
     },
 
-    providerSettings: Ember.computed('model', 'reviewsCommentsPrivate', function() {
-        let settings = ENV.PROVIDER_SETTINGS.map(this._buildSetting.bind(this));
-        // Tie anon comments to private comments
-        settings[2].disabled = this.get('reviewsCommentsPrivate');
-        return settings;
-    }),
+    _submitFailed() {
+        this.get('model').rollbackAttributes();
 
-    actions: {
-        cancel() {
-            this.transitionToRoute('index');
-            return false;
-        },
-        submit() {
-            ENV.PROVIDER_SETTINGS.forEach(setting => {
-                this.set(`model.${setting.name}`, this.get(setting.name));
-            });
+        this.get('toast').error(
+            this.get('i18n').t('setup.error.message').toString(),
+            this.get('i18n').t('setup.error.title').toString(),
+        );
+    },
 
-            // Ignore the value of anon comments if private comments
-            // are enabled
-            if (this.get('reviewsCommentsPrivate')) {
-                this.set('reviewsCommentsAnonymous', true);
-            }
-
-            this.get('model').save().catch(() => {
-                this.get('model').rollbackAttributes();
-
-                this.get('toast').error(
-                    this.get('i18n').t('setup.error.message').toString(),
-                    this.get('i18n').t('setup.error.title').toString()
-                );
-            }).then(() => {
-                return this.transitionToRoute('preprints.provider.settings', this.get('model'));
-            });
-        }
-    }
+    _toSettings() {
+        this.transitionToRoute('preprints.provider.settings', this.get('model'));
+    },
 });
