@@ -9,7 +9,7 @@ export default Ember.Route.extend({
         page: { refreshModel: true }
     },
 
-    model(params) {
+    model() {
         const emptyModels = {
             providers: [],
             actionsList: []
@@ -22,10 +22,10 @@ export default Ember.Route.extend({
             providers: this.get('store').query('preprint-provider', {
                 'filter[permissions]': 'view_actions,set_up_moderation'
             }),
-            actionsList: this.get('currentUser.user').then(user => {
-                return user.query('actions', { page: params.page, include: 'target,provider' });
+            user: this.get('currentUser.user').then(user => {
+                return user
             }),
-        }).catch(() => {
+            }).catch(() => {
              return emptyModels;
         });  // On any error, assume no permissions to anything.
     },

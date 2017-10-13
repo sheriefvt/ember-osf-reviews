@@ -16,9 +16,8 @@
                 </div>
                 <div class='col-sm-8 col-sm-pull-4'>
                     {{action-feed
-                        actionsList=model.actionsList
+                        user=model.user
                         toDetail=(action 'transitionToDetail')
-                        nextPage=(action 'pageChanged')
                     }}
                 </div>
             </div>

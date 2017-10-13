@@ -32,9 +32,6 @@ export default Ember.Controller.extend({
         },
         setupProvider(provider) {
             this.transitionToRoute('preprints.provider.setup', provider.id);
-        },
-        pageChanged() {
-            this.incrementProperty('page');
         }
     }
 });
