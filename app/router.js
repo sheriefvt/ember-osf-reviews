@@ -1,14 +1,17 @@
 import { computed } from '@ember/object';
 import EmberRouter from '@ember/routing/router';
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import config from './config/environment';
 
 // Disable the reset scroll behaviour on transitions between the two given routes.
 const SCROLL_RESET_DISABLED_ROUTES = ['preprints.provider.moderation', 'preprints.provider.settings'];
 
+
 const Router = EmberRouter.extend({
+    metrics: service(),
     location: config.locationType,
     rootURL: config.rootURL,
-
     transitioningFrom: '',
     transitioningTo: '',
 
@@ -19,18 +22,27 @@ const Router = EmberRouter.extend({
 
     willTransition(oldInfos, newInfos) {
         this._super(...arguments);
-
         this.set('transitioningFrom', EmberRouter._routePath(oldInfos));
         this.set('transitioningTo', EmberRouter._routePath(newInfos));
     },
 
     didTransition() {
         this._super(...arguments);
-
+        this._trackPage();
         if (!this.get('disableResetScroll')) {
             window.scrollTo(0, 0);
         }
     },
+
+    // Track page/route views
+    _trackPage() {
+        scheduleOnce('afterRender', this, () => {
+            const page = document.location.pathname;
+            const routeName = this.getWithDefault('currentRouteName', 'unknown');
+            this.get('metrics').trackPage({ page, routeName });
+        });
+    },
+
 });
 
 Router.map(function() {

@@ -31,6 +31,23 @@ module.exports = function(environment) {
         i18n: {
             defaultLocale: 'en',
         },
+        metricsAdapters: [
+            {
+                name: 'GoogleAnalytics',
+                environments: ['production'], // Add development to try/inspect in development.
+                config: {
+                    // Replace test id with process.env.GOOGLE_ANALYTICS_ID before committing.
+                    // Use test id for local testing.
+                    id: process.env.GOOGLE_ANALYTICS_ID,
+                    // Use `analytics_debug.js` in development.
+                    debug: environment === 'development',
+                    // Use verbose tracing of GA events
+                    trace: environment === 'development',
+                    // Ensure development env hits aren't sent to GA.
+                    sendHitTask: environment !== 'development',
+                },
+            },
+        ],
         PROVIDER_SETTINGS: [{
             disabled: false,
             name: 'reviewsWorkflow',

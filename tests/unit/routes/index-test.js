@@ -5,6 +5,7 @@ moduleFor('route:index', 'Unit | Route | index', {
     needs: [
         'service:currentUser',
         'service:session',
+        'service:metrics',
     ],
 });
 

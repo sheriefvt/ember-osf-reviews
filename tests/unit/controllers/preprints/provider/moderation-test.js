@@ -4,6 +4,7 @@ moduleFor('controller:preprints/provider/moderation', 'Unit | Controller | prepr
     // Specify the other units that are required for this test.
     needs: [
         'service:theme',
+        'service:metrics',
     ],
 });
 
