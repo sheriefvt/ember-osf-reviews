@@ -19,6 +19,8 @@ export default Component.extend({
     currentUser: service(),
     classNames: ['action-feed'],
     page: 1,
+    listLoading: false,
+
     errorMessage: t('components.action-feed.error_loading'),
 
     moreActions: computed('totalPages', 'page', function() {
@@ -29,16 +31,18 @@ export default Component.extend({
         this._super(...arguments);
         this.actionsList = [];
         this.loadPage();
+        this.set('listLoading', true);
+        this.actionsList = [];
     },
 
     loadPage() {
         const page = this.get('page');
         this.set('loadingPage', page);
-        this.get('user').query('actions', { page: this.get('page') }).then(
+        this.get('store').queryHasMany(this.get('user'), 'actions', { page: this.get('page') }).then(
             response => this._setPageProperties(response)
             , () => {
                 // Error
-                this.set('loadingPage', null);
+                this.set('listLoading', false);
                 this.get('toast').error(this.get('errorMessage'));
             },
         );
@@ -48,8 +52,8 @@ export default Component.extend({
         if (this.get('loadingPage') === this.get('page')) {
             this.setProperties({
                 actionsList: this.get('actionsList').concat(response.toArray()),
-                totalPages: response.get('meta.total'),
-                loadingPage: null,
+                totalPages: Math.ceil(response.get('links.meta.total') / response.get('links.meta.per_page')),
+                listLoading: false,
             });
         }
     },
