@@ -3036,6 +3036,19 @@ ember-cookies@^0.0.13:
     ember-cli-babel "^5.1.7"
     ember-getowner-polyfill "^1.2.2"
 
+ember-cp-validations@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.0.tgz#d26ad120e96a85d8ebb5be5294f0ff481256844b"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-version-checker "^2.0.0"
+    ember-getowner-polyfill "^2.0.1"
+    ember-require-module "^0.1.2"
+    ember-string-ishtmlsafe-polyfill "^2.0.0"
+    ember-validators "1.0.3"
+    exists-sync "0.0.4"
+    walk-sync "^0.3.1"
+
 ember-data-has-many-query@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ember-data-has-many-query/-/ember-data-has-many-query-0.2.0.tgz#97ae2c29d6d7f77d3837cca9f165c26bf6e6fb0a"
@@ -3245,6 +3258,12 @@ ember-radio-button@^1.1.1:
     ember-cli-babel "^5.1.7"
     ember-cli-htmlbars "^1.0.10"
 
+ember-require-module@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.1.2.tgz#fdffdcf86745d601009211c1b41907395a4d081e"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+
 ember-resolver@^4.0.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-4.5.0.tgz#9248bf534dfc197fafe3118fff538d436078bf99"
@@ -3336,6 +3355,12 @@ ember-source@2.15.2:
     simple-dom "^0.3.0"
     simple-html-tokenizer "^0.4.1"
 
+ember-string-ishtmlsafe-polyfill@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-string-ishtmlsafe-polyfill/-/ember-string-ishtmlsafe-polyfill-2.0.0.tgz#38f17038c3451999e9f1db748e424d8831e85863"
+  dependencies:
+    ember-cli-version-checker "^1.2.0"
+
 ember-test-helpers@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/ember-test-helpers/-/ember-test-helpers-0.6.3.tgz#f864cdf6f4e75f3f8768d6537785b5ab6e82d907"
@@ -3378,6 +3403,13 @@ ember-try@^0.2.15:
     rimraf "^2.3.2"
     rsvp "^3.0.17"
     semver "^5.1.0"
+
+ember-validators@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.0.3.tgz#cef76b6526d12011ab685238762e3256dad812b4"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+    ember-require-module "^0.1.2"
 
 ember-weakmap@^2.0.0:
   version "2.0.0"

@@ -4,6 +4,8 @@ import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
+import { validator, buildValidations } from 'ember-cp-validations';
+
 
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
@@ -89,7 +91,18 @@ const RECENT_ACTIVITY = {
     },
 };
 
-export default Component.extend({
+const Validations = buildValidations({
+    username: {
+        description: 'comment',
+        validators: [
+            validator('length', {
+                max: 65535
+            })
+        ]
+    }
+});
+
+export default Component.extend(Validations, {
     i18n: service(),
     theme: service(),
 
