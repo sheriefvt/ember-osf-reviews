@@ -21,9 +21,6 @@ export default Route.extend({
     },
 
     _emptyModels() {
-        return {
-            providers: [],
-            actionsList: [],
-        };
+        return [];
     },
 });

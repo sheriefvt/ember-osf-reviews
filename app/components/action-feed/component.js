@@ -31,18 +31,15 @@ export default Component.extend({
         this._super(...arguments);
         this.loadPage();
         this.set('listLoading', true);
-        this.actionsList = [];
+        this.set('actionsList', []);
     },
 
     loadPage() {
         const page = this.get('page');
-        this.get('currentUser.user').then(user => this.get('store').queryHasMany(user, 'actions', { page }).then(
-            response => this._setPageProperties(response)
-            , () => {
-                // Error
-                this._handleLoadError();
-            },
-        ));
+        this.get('currentUser.user')
+            .then(user => this.get('store').queryHasMany(user, 'actions', { page }))
+            .then(this._setPageProperties.bind(this))
+            .catch(this._handleLoadError.bind(this));
     },
 
     _handleLoadError() {
@@ -53,7 +50,7 @@ export default Component.extend({
 
     _setPageProperties(response) {
         this.setProperties({
-            actionsList: this.get('actionsList').concat(response.toArray()),
+            actionsList: this.get('actionsList').pushObjects(response.toArray()),
             totalPages: Math.ceil(response.get('links.meta.total') / response.get('links.meta.per_page')),
             listLoading: false,
             loadingMore: false,
