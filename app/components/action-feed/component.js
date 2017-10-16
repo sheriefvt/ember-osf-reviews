@@ -19,7 +19,6 @@ export default Component.extend({
     currentUser: service(),
     classNames: ['action-feed'],
     page: 1,
-    listLoading: false,
 
     errorMessage: t('components.action-feed.error_loading'),
 
@@ -29,9 +28,9 @@ export default Component.extend({
 
     init() {
         this._super(...arguments);
-        this.loadPage();
         this.set('listLoading', true);
         this.set('actionsList', []);
+        this.loadPage();
     },
 
     loadPage() {
