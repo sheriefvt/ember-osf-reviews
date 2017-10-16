@@ -1,5 +1,5 @@
 {{#if listLoading}}
-    {{loading-indicator classes='ball-dark text-center'}}
+    {{loading-indicator classes='ball-dark text-center loading'}}
 {{else}}
     {{#each actionsList key='id' as |action|}}
         {{action-feed-entry action=action toDetail=toDetail}}
@@ -11,6 +11,6 @@
             <a role='button' {{action nextPage}}>{{t 'components.action-feed.see_more'}}</a>
         </div>
     {{else}}
-        {{loading-indicator classes='ball-dark text-center'}}
+        {{loading-indicator classes='ball-dark text-center loading'}}
     {{/if}}
 {{/if}}
