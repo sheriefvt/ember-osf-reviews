@@ -48,8 +48,8 @@ export default Component.extend({
     },
 
     _setPageProperties(response) {
+        this.get('actionsList').pushObjects(response.toArray());
         this.setProperties({
-            actionsList: this.get('actionsList').pushObjects(response.toArray()),
             totalPages: Math.ceil(response.get('links.meta.total') / response.get('links.meta.per_page')),
             listLoading: false,
             loadingMore: false,
