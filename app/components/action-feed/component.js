@@ -12,15 +12,53 @@ import { translationMacro as t } from 'ember-i18n';
  * ```
  * @class action-feed
  */
+
 export default Component.extend({
     store: service(),
     toast: service(),
-
+    currentUser: service(),
     classNames: ['action-feed'],
+    page: 1,
 
     errorMessage: t('components.action-feed.error_loading'),
 
     moreActions: computed('totalPages', 'page', function() {
         return this.get('page') < this.get('totalPages');
     }),
+
+    init() {
+        this._super(...arguments);
+        this.set('listLoading', true);
+        this.set('actionsList', []);
+        this.loadPage();
+    },
+
+    loadPage() {
+        const page = this.get('page');
+        this.get('currentUser.user')
+            .then(user => this.get('store').queryHasMany(user, 'actions', { page }))
+            .then(this._setPageProperties.bind(this))
+            .catch(this._handleLoadError.bind(this));
+    },
+
+    _handleLoadError() {
+        this.set('listLoading', false);
+        this.set('loadingMore', false);
+        this.get('toast').error(this.get('errorMessage'));
+    },
+
+    _setPageProperties(response) {
+        this.get('actionsList').pushObjects(response.toArray());
+        this.setProperties({
+            totalPages: Math.ceil(response.get('links.meta.total') / response.get('links.meta.per_page')),
+            listLoading: false,
+            loadingMore: false,
+        });
+    },
+
+    nextPage() {
+        this.incrementProperty('page');
+        this.set('loadingMore', true);
+        this.loadPage();
+    },
 });
