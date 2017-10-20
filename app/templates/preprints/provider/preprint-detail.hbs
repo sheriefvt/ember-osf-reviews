@@ -85,7 +85,7 @@
                     <section class="preprint-license p-t-xs">
                         <h4 class="p-v-md f-w-md"><strong>{{t "global.license"}}</strong></h4>
                         {{model.license.name}}
-                        <span  onclick={{action 'toggleShowLicense'}}>
+                        <span  onclick={{action 'toggleShowLicense'}} role="button">
                             <i class="fa fa-caret-{{if showLicense 'down' 'right'}}"></i>
                         </span>
                         {{#if showLicense}}
