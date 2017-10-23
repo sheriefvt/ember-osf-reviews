@@ -4,7 +4,6 @@ import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
-import { validator, buildValidations } from 'ember-cp-validations';
 
 
 const PENDING = 'pending';
@@ -13,6 +12,8 @@ const REJECTED = 'rejected';
 
 const PRE_MODERATION = 'pre-moderation';
 const POST_MODERATION = 'post-moderation';
+
+const COMMENT_LIMIT = 65535;
 
 const ICONS = {
     [PENDING]: 'fa-hourglass-o',
@@ -91,18 +92,7 @@ const RECENT_ACTIVITY = {
     },
 };
 
-const Validations = buildValidations({
-    username: {
-        description: 'comment',
-        validators: [
-            validator('length', {
-                max: 65535
-            })
-        ]
-    }
-});
-
-export default Component.extend(Validations, {
+export default Component.extend({
     i18n: service(),
     theme: service(),
 
@@ -174,6 +164,17 @@ export default Component.extend(Validations, {
         return isBlank(this.get('reviewerComment'));
     }),
 
+    commentExceedsLimit: computed('reviewerComment', function() {
+        return this.get('reviewerComment.length') > COMMENT_LIMIT;
+    }),
+
+    commentLengthErrorMessage: computed(function () {
+        const i18n = this.get('i18n');
+        return i18n.t('components.preprint-status-banner.decision.comment_length_error', {
+            comment_limit: COMMENT_LIMIT,
+        });
+    }),
+
     settingsComments: computed('reviewsCommentsPrivate', function() {
         const commentType = this.get('reviewsCommentsPrivate') ? 'private' : 'public';
         return SETTINGS.comments[commentType];
@@ -234,8 +235,8 @@ export default Component.extend(Validations, {
         return this.get('submission.reviewsState') !== this.get('decision');
     }),
 
-    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', function() {
-        if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited'))) {
+    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentLength', function() {
+        if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit')) {
             return true;
         }
         return false;
