@@ -12,7 +12,7 @@
                     {{else}}
                         {{t submittedByLabel}}
                     {{/if}}
-                    {{#each firstContributors as |contributor index| ~}}
+                    {{#each firstContributors as |contributor| ~}}
                         <li>{{contributor.users.fullName}}</li>
                     {{/each}}
                     {{#if (gt additionalContributors 0)}}
