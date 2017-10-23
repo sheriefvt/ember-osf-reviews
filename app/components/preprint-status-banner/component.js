@@ -235,7 +235,7 @@ export default Component.extend({
         return this.get('submission.reviewsState') !== this.get('decision');
     }),
 
-    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentLength', function() {
+    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
         if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit')) {
             return true;
         }
