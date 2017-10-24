@@ -120,6 +120,17 @@ export default Component.extend({
     creatorProfile: alias('latestAction.creator.profileURL'),
     creatorName: alias('latestAction.creator.fullName'),
 
+    commentExceedsLimit: computed.gt('reviewerComment.length', COMMENT_LIMIT),
+
+    commentLengthErrorMessage: computed('reviewerComment', function () {
+        const i18n = this.get('i18n');
+        return i18n.t('components.preprint-status-banner.decision.comment_length_error', {
+            limit: COMMENT_LIMIT,
+            difference: Math.abs(COMMENT_LIMIT - this.get('reviewerComment.length')).toString(),
+        });
+    }),
+
+
     statusExplanation: computed('reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
             MESSAGE[this.get('reviewsWorkflow')] :
@@ -162,17 +173,6 @@ export default Component.extend({
 
     noComment: computed('reviewerComment', function() {
         return isBlank(this.get('reviewerComment'));
-    }),
-
-    commentExceedsLimit: computed('reviewerComment', function() {
-        return this.get('reviewerComment.length') > COMMENT_LIMIT;
-    }),
-
-    commentLengthErrorMessage: computed(function () {
-        const i18n = this.get('i18n');
-        return i18n.t('components.preprint-status-banner.decision.comment_length_error', {
-            comment_limit: COMMENT_LIMIT,
-        });
     }),
 
     settingsComments: computed('reviewsCommentsPrivate', function() {

@@ -236,7 +236,7 @@ export default {
                     update_comment: 'Update comment',
                 },
                 comment_placeholder: 'Explain the reasoning behind your decision (optional)',
-                comment_length_error: 'Comment is too long (maximum is {{comment_limit}} characters)',
+                comment_length_error: 'Comment exceeded maximum limit of {{limit}} characters by {{difference}}.',
                 accept: {
                     label: 'Accept',
                     pre: 'Submission will appear in search results and be made public.',
