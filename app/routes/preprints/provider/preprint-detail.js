@@ -13,16 +13,13 @@ export default Route.extend({
     },
 
     afterModel(model) {
-        if (!model.get('node.public')) {
-            return this.transitionTo('page-not-found');
-        }
-        return this._super(...arguments);
+        return model.get('node').then(this._checkNodePublic.bind(this));
     },
 
     setupController() {
         scheduleOnce('afterRender', this, function() {
             if (!MathJax) return;
-            MathJax.Hub.Queue(['Typeset', MathJax.Hub, [$('.abstract')[0], $('#preprintTitle')[0]]]); // jshint ignore:line
+            MathJax.Hub.Queue(['Typeset', MathJax.Hub, [$('.abstract')[0], $('#preprintTitle')[0]]]);
         });
 
         return this._super(...arguments);
@@ -44,5 +41,11 @@ export default Route.extend({
                 return this.intermediateTransitionTo('page-not-found');
             }
         },
+    },
+
+    _checkNodePublic(node) {
+        if (!node.get('public')) {
+            this.transitionTo('page-not-found');
+        }
     },
 });

@@ -9,7 +9,7 @@
                 <div class="submission-body">
                     {{#if (eq submission.reviewsState 'pending')}}
                         {{statusTimeDate}}
-                        {{#each firstContributors as |contributor index| ~}}
+                        {{#each firstContributors as |contributor| ~}}
                             <li>{{contributor.users.fullName}}</li>
                         {{/each}}
                         {{#if (gt additionalContributors 0)}}

@@ -4,6 +4,8 @@ moduleFor('route:preprints/provider/moderation', 'Unit | Route | preprints/provi
     // Specify the other units that are required for this test.
     needs: [
         'service:theme',
+        'service:metrics',
+
     ],
 });
 

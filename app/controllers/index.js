@@ -12,18 +12,18 @@ export default Controller.extend({
 
     showSetup: notEmpty('providersToSetup'),
 
-    providersToSetup: computed('model.providers.[]', function() {
-        return this.get('model.providers').filter(provider =>
+    providersToSetup: computed('model.[]', function() {
+        return this.get('model').filter(provider =>
             !provider.get('reviewsWorkflow') && provider.get('permissions').includes('set_up_moderation'));
     }),
 
-    sidebarProviders: computed('model.providers.[]', function() {
-        return this.get('model.providers').filter(provider =>
+    sidebarProviders: computed('model.[]', function() {
+        return this.get('model').filter(provider =>
             provider.get('reviewsWorkflow') || provider.get('permissions').includes('set_up_moderation'));
     }),
 
-    showDashboard: computed('model.providers.[]', function() {
-        const providers = this.get('model.providers');
+    showDashboard: computed('model.[]', function() {
+        const providers = this.get('model');
         return providers.any(p => p.get('reviewsWorkflow'));
     }),
 
@@ -33,9 +33,6 @@ export default Controller.extend({
         },
         setupProvider(provider) {
             this.transitionToRoute('preprints.provider.setup', provider.id);
-        },
-        pageChanged() {
-            this.incrementProperty('page');
         },
     },
 });
