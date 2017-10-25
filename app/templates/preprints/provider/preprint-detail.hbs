@@ -68,11 +68,10 @@
                 </div>
 
                 <section class="p-t-xs">
-                    {{theme.provider.reviewsWorkflow}}
                     {{#if model.preprintDoiUrl}}
                         <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
                         <a href={{model.preprintDoiUrl}}>{{extract-doi model.preprintDoiUrl}}</a>
-                    {{else if (eq theme.provider.reviewsWorkflow 'pre-moderation')}}
+                    {{else if (not model.isPublished)}}
                         <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
                         {{t 'content.preprint_pending_doi'}}
                     {{/if}}
