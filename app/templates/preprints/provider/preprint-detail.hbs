@@ -67,12 +67,16 @@
                     </button>
                 </div>
 
-                {{#if model.preprintDoiUrl}}
-                    <section class="p-t-xs">
+                <section class="p-t-xs">
+                    {{theme.provider.reviewsWorkflow}}
+                    {{#if model.preprintDoiUrl}}
                         <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
                         <a href={{model.preprintDoiUrl}}>{{extract-doi model.preprintDoiUrl}}</a>
-                    </section>
-                {{/if}}
+                    {{else if (eq theme.provider.reviewsWorkflow 'pre-moderation')}}
+                        <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
+                        {{t 'content.preprint_pending_doi'}}
+                    {{/if}}
+                </section>
 
                 {{#if model.articleDoiUrl}}
                     <section class="p-t-xs">
