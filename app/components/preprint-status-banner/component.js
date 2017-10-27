@@ -5,12 +5,15 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
 
+
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
 
 const PRE_MODERATION = 'pre-moderation';
 const POST_MODERATION = 'post-moderation';
+
+const COMMENT_LIMIT = 65535;
 
 const ICONS = {
     [PENDING]: 'fa-hourglass-o',
@@ -117,6 +120,17 @@ export default Component.extend({
     creatorProfile: alias('latestAction.creator.profileURL'),
     creatorName: alias('latestAction.creator.fullName'),
 
+    commentExceedsLimit: computed.gt('reviewerComment.length', COMMENT_LIMIT),
+
+    commentLengthErrorMessage: computed('reviewerComment', function () {
+        const i18n = this.get('i18n');
+        return i18n.t('components.preprint-status-banner.decision.comment_length_error', {
+            limit: COMMENT_LIMIT,
+            difference: Math.abs(COMMENT_LIMIT - this.get('reviewerComment.length')).toString(),
+        });
+    }),
+
+
     statusExplanation: computed('reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
             MESSAGE[this.get('reviewsWorkflow')] :
@@ -221,8 +235,8 @@ export default Component.extend({
         return this.get('submission.reviewsState') !== this.get('decision');
     }),
 
-    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', function() {
-        if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited'))) {
+    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
+        if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit')) {
             return true;
         }
         return false;
