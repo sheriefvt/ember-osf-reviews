@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 ### Removed
 ### Fixed
+- Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 
+- Add loading indicator for preprints titles on the Reviews dashboard.
 
 ## [0.1.0] - 2017-10-26
 ### Added
