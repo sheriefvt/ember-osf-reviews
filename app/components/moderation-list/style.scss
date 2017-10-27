@@ -1,0 +1,111 @@
+.moderation-list-body {
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.moderation-list-heading {
+  padding: 10px 20px 10px 20px;
+  background-color: $color-bg-gray-light;
+  border: 1px solid $color-border;
+
+  .btn {
+    font-size: 20px;
+    background: transparent;
+    outline: none;
+    padding: 6px 0px;
+  }
+  .moderation-btn-filter {
+    margin: 0px;
+    margin-right: 20px;
+  }
+  .btn:hover {
+    text-decoration: none;
+    outline: none;
+  }
+  .btn:focus {
+    font-weight: bold;
+  }
+  .btn:active {
+    box-shadow: none;
+  }
+
+  .icon-accepted {
+    -webkit-text-stroke: 1px $color-bg-gray-light;
+  }
+  .icon-rejected {
+    -webkit-text-stroke: 1px $color-bg-gray-light;
+  }
+
+  .active-filter {
+    font-weight: bold;
+
+    .icon-rejected {
+      -webkit-text-stroke: 0px;
+    }
+    .icon-accepted {
+      -webkit-text-stroke: 0px;
+    }
+    .icon-pending {
+      -webkit-text-stroke: 1px $color-text-gray-dark;
+    }
+  }
+}
+
+@media screen and (max-width: $screen-sm) {
+  .moderation-list-heading {
+    .btn {
+      font-size: 16px;
+    }
+    .moderation-btn-filter {
+      margin-right: 10px;
+    }
+  }
+  .submission-title {
+    font-size: 14px;
+  }
+  .submission-body {
+    font-size: 12px;
+  }
+  .status-icon {
+    font-size: 16px;
+  }
+}
+
+.reviews-list {
+  padding-top: 20px;
+  padding-left: 25px;
+}
+
+.dropdown-menu-right {
+  background: $color-bg-gray-light;
+
+  .btn {
+    width: 100%;
+    text-align: left;
+  }
+  .btn:hover {
+    background-color: $color-border;
+  }
+  .selected {
+    padding-left: 5px;
+  }
+  .not-selected {
+    padding-left: 30px;
+  }
+}
+
+.dropdown-toggle {
+  text-decoration: none;
+  color: $color-text-gray-dark;
+}
+
+/* Moderation List Row */
+
+.moderation-list-row {
+  border: 1px solid $color-border;
+}
+
+.moderation-list-row:hover {
+  background-color: $color-bg-gray-light;
+}
+

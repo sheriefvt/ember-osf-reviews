@@ -1,0 +1,32 @@
+{{t "setup.start"}}
+
+{{#if choiceRequired}}
+
+    {{! Seems to be the best way to style the modal for just this component. Open to new solutions or ideas}}
+    {{! classNames don't apply to the modal itself and renderInPlace seems to break things}}
+    <style>
+        .modal-dialog {
+          max-width: 525px;
+        }
+    </style>
+
+    {{#bs-modal onSubmit=(action "submit") onHide=(action "cancel") as |modal|}}
+        {{#modal.header}}
+            <h4 class="modal-title">{{t "setup.multiple_providers"}}</h4>
+        {{/modal.header}}
+        {{#modal.body}}
+            {{t "setup.which"}}
+            {{#each providers as |provider|}}
+                <div class="radio">
+                    {{#radio-button value=provider groupValue=selectedProvider}}
+                        {{provider.name}}
+                    {{/radio-button}}
+                </div>
+            {{/each}}
+        {{/modal.body}}
+        {{#modal.footer}}
+            {{#bs-button onClick=(action modal.close) type="default"}}{{t "global.cancel"}}{{/bs-button}}
+            {{#bs-button onClick=(action modal.submit) type="success"}}{{t "setup.start"}}{{/bs-button}}
+        {{/modal.footer}}
+    {{/bs-modal}}
+{{/if}}

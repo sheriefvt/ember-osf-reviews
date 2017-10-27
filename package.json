@@ -1,0 +1,72 @@
+{
+  "name": "reviews",
+  "version": "0.1.0",
+  "description": "Center for Open Science Reviews Service",
+  "license": "Apache-2.0",
+  "author": "",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "repository": "",
+  "scripts": {
+    "build": "ember build",
+    "start": "ember server",
+    "check-style": "eslint .",
+    "test": "yarn run check-style && ember test",
+    "test:cover": "COVERAGE=true yarn test"
+  },
+  "devDependencies": {
+    "@centerforopenscience/ember-osf": "https://github.com/CenterForOpenScience/ember-osf#feature/reviews#2017-10-26",
+    "@centerforopenscience/eslint-config": "^2.0.0",
+    "broccoli-asset-rev": "^2.4.5",
+    "ember-bootstrap": "^1.0.0-rc.1",
+    "ember-cli": "~2.15.1",
+    "ember-cli-app-version": "^3.0.0",
+    "ember-cli-babel": "^6.3.0",
+    "ember-cli-dependency-checker": "^2.0.1",
+    "ember-cli-eslint": "^4.2.0",
+    "ember-cli-htmlbars": "^2.0.1",
+    "ember-cli-htmlbars-inline-precompile": "^1.0.2",
+    "ember-cli-inject-live-reload": "^1.4.1",
+    "ember-cli-inline-content": "^0.4.1",
+    "ember-cli-moment-shim": "^3.4.0",
+    "ember-cli-postcss": "^3.5.2",
+    "ember-cli-qunit": "^4.0.0",
+    "ember-cli-sass": "^7.0.0",
+    "ember-cli-shims": "^1.1.0",
+    "ember-cli-sri": "^2.1.0",
+    "ember-cli-template-lint": "^0.7.5",
+    "ember-cli-uglify": "^1.2.0",
+    "ember-component-css": "^0.3.5",
+    "ember-data": "~2.15.3",
+    "ember-export-application-global": "^2.0.0",
+    "ember-font-awesome": "^3.0.0",
+    "ember-i18n": "5.0.2",
+    "ember-load-initializers": "^1.0.0",
+    "ember-moment": "^7.4.1",
+    "ember-radio-button": "^1.1.1",
+    "ember-resolver": "^4.0.0",
+    "ember-source": "2.15.2",
+    "ember-toastr": "^1.7.0",
+    "eslint": "^4.4.1",
+    "loader.js": "^4.2.3",
+    "sass-lint": "^1.11.1",
+    "ui-navigator-service": "^0.3.11"
+  },
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "private": true,
+  "dependencies": {
+    "@centerforopenscience/osf-style": "^1.4.2",
+    "autoprefixer": "^7.1.2",
+    "bootstrap-sass": "^3.3.7",
+    "cssnano": "^3.10.0",
+    "ember-cli-html-minifier": "^0.2.1",
+    "font-awesome": "^4.7.0",
+    "lodash": "^4.17.4",
+    "pagination-pager": "^3.0.0",
+    "toastr": "^2.1.2"
+  }
+}

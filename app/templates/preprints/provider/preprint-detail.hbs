@@ -1,0 +1,136 @@
+<div id="view-page">
+    <div class="p-t-sm p-b-md m-b-md dark-overlay-header-background header-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-11">
+                    {{reviews-breadcrumbs}}
+                    <h1 id="preprintTitle" class="p-t-md p-b-md">{{node.title}}</h1>
+                    <h5>{{contributor-list node}}</h5>
+                    <h6 class="preprint-added-on">
+                        {{t actionDateLabel}}: {{moment-format model.dateLastTransitioned "MMMM DD, YYYY"}} | {{t "content.header.last_edited"}}: {{moment-format model.dateModified "MMMM DD, YYYY"}}
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{preprint-status-banner submission=model saving=savingAction submitDecision=(action 'submitDecision')}}
+
+    <div id="view-page" class="container">
+        <div class="row p-md">
+            <div id="mfr-col" class="col-md-{{if fullScreenMFR '12' '7'}}">
+                {{#if model.isPreprintOrphan}}
+                    <div class="alert alert-danger m-r-md" role="alert">
+                        {{t "content.orphan_preprint"}}
+                    </div>
+                {{else}}
+                    {{preprint-file-browser primaryFile=model.primaryFile preprint=model chooseFile=(action 'chooseFile')}}
+                    <button class="expand-mfr-carrot hidden-xs hidden-sm" {{action 'expandMFR'}}>
+                        <i class="fa fa-chevron-{{if fullScreenMFR 'left' 'right'}}"></i>
+                    </button>
+                {{/if}}
+            </div>
+
+            <div class="col-md-5 {{if fullScreenMFR 'hidden' ''}}">
+
+                <div class="share-row p-sm osf-box-lt clearfix">
+                    <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
+                        {{t "content.share.download_preprint"}}
+                    </a>
+                    <div class=" p-v-xs pull-right">
+                        {{t "content.share.downloads"}}: {{model.primaryFile.extra.downloads}}
+                    </div>
+                </div>
+
+                <div class="p-t-md pull-right">
+                    <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                        <i class="fa fa-2x fa-twitter-square"></i>
+                    </a>
+                    <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                        <i class="fa fa-2x fa-facebook-square"></i>
+                    </a>
+                    <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                        <i class="fa fa-2x fa-linkedin-square"></i>
+                    </a>
+                    <a class="text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                        <i class="fa fa-2x fa-envelope"></i>
+                    </a>
+                </div>
+
+                <div class="p-t-xs">
+                    <h4 class="p-v-md f-w-md"><strong>{{t "global.abstract"}}</strong></h4>
+                    <p class="abstract {{if useShortenedDescription 'abstract-truncated'}}">
+                        {{~if useShortenedDescription description node.description~}}
+                    </p>
+                    <button class='btn-link' hidden={{not hasShortenedDescription}} {{action 'expandAbstract'}}>
+                        {{~t (if expandedAbstract 'content.see_less' 'content.see_more')~}}
+                    </button>
+                </div>
+
+                {{#if model.preprintDoiUrl}}
+                    <section class="p-t-xs">
+                        <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
+                        <a href={{model.preprintDoiUrl}}>{{extract-doi model.preprintDoiUrl}}</a>
+                    </section>
+                {{/if}}
+
+                {{#if model.articleDoiUrl}}
+                    <section class="p-t-xs">
+                        <h4 class="p-v-md f-w-md"><strong>{{t "content.article_doi"}}</strong></h4>
+                        <a href={{model.articleDoiUrl}}>{{model.doi}}</a>
+                    </section>
+                {{/if}}
+
+                {{#if model.license.name}}
+                    <section class="preprint-license p-t-xs">
+                        <h4 class="p-v-md f-w-md"><strong>{{t "global.license"}}</strong></h4>
+                        {{model.license.name}}
+                        <span  onclick={{action 'toggleShowLicense'}} role="button">
+                            <i class="fa fa-caret-{{if showLicense 'down' 'right'}}"></i>
+                        </span>
+                        {{#if showLicense}}
+                            <pre>{{model.licenseText}}</pre>
+                        {{/if}}
+                    </section>
+                {{/if}}
+
+                <div class="p-t-xs">
+                    <h4 class="p-v-md f-w-md"><strong>{{t "content.disciplines"}}</strong></h4>
+                    {{#each model.uniqueSubjects as |subject|}}
+                        <span class='subject-preview'>{{subject.text}}</span>
+                    {{/each}}
+                </div>
+
+                <div class="p-t-xs">
+                    <h4 class=" f-w-md p-v-md"><strong>{{t "global.tags"}}</strong></h4>
+                    {{#if hasTags}}
+                        {{#each node.tags as |tag|}}
+                            <span class="badge">{{fix-special-char tag}}</span>
+                        {{/each}}
+                    {{else}}
+                        {{t "global.none"}}
+                    {{/if}}
+                </div>
+
+                <div class="p-t-xs m-b-lg">
+                    <h4 class="p-v-md f-w-md"><strong>{{t "content.citations"}}</strong></h4>
+                    {{citation-widget node=model}}
+                </div>
+
+                <div class="p-lg osf-box-lt row project-box">
+                    <div class="col-xs-6 text-center">
+                        <div class="content-provider-logo provider-osf-dark"
+                             title={{t "global.open_science_framework"}}></div>
+                    </div>
+                    <div class="col-xs-6 text-left">
+                        <p class="f-w-xs">{{t "content.project_button.paragraph"}}</p>
+                        <a type="button" class="btn btn-info" href={{node.links.html}}>
+                            {{t "content.project_button.button"}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

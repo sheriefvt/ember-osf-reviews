@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 reviews-list">
+            <div class="box-shadow-md">
+                <div class="moderation-list-heading">
+                    {{#each statusButtons as |statusButton|}}
+                        <button class="btn moderation-btn-filter {{if (eq status statusButton.status) 'active-filter'}}"
+                                {{action statusChanged statusButton.status}}>
+                            <i class="fa {{statusButton.iconClass}}"></i>
+                            {{get statusCounts statusButton.status}}
+                            {{t statusButton.labelKey}}
+                        </button>
+                    {{/each}}
+                    {{#bs-dropdown classNames="pull-right" as |dd|}}
+                        {{#dd.toggle classNames="btn"}}
+                            {{t 'components.moderation-list.sort'}}
+                            <span class="fa fa-caret-down"></span>
+                        {{/dd.toggle}}
+                        {{#dd.menu classNames="dropdown-menu-right" as |menu|}}
+                            {{#each sortOptions as |sortOption|}}
+                                {{#menu.item}}
+                                    <button class="btn" {{action sortChanged sortOption.sort}}>
+                                        <i class='{{if (eq sort sortOption.sort) 'fa fa-check selected' 'not-selected'}}'></i>
+                                        {{t sortOption.labelKey}}
+                                    </button>
+                                {{/menu.item}}
+                            {{/each}}
+                        {{/dd.menu}}
+                    {{/bs-dropdown}}
+                </div>
+                {{#if loading}}
+                    {{loading-indicator classes='ball-dark text-center m-b-lg p-v-md'}}
+                {{else}}
+                    <div class="moderation-list-body">
+                        {{#if (eq submissions.length 0)}}
+                            <div class="text-center p-v-md moderation-list-row">
+                                {{t 'components.moderation-list.no_submissions'}}
+                            </div>
+                        {{else}}
+                            {{#each submissions as |submission|}}
+                                {{moderation-list-row submission=submission}}
+                            {{/each}}
+                            <div class="pull-right text-right">
+                                {{pagination-pager
+                                    count=totalPages
+                                    current=page
+                                    change=(action pageChanged)
+                                }}
+                            </div>
+                        {{/if}}
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

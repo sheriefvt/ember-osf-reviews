@@ -1,0 +1,29 @@
+language: node_js
+
+sudo: required
+dist: trusty
+addons:
+  chrome: stable
+
+node_js:
+    8
+
+env:
+  global:
+  - SUPPRESS_NO_CONFIG_WARNING=true
+
+cache:
+  yarn: true
+  directories:
+  - node_modules
+
+install:
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH=$HOME/.yarn/bin:$PATH
+- yarn --prefer-offline --pure-lockfile
+
+script:
+  - yarn test:cover
+
+after_success:
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
