@@ -1,6 +1,6 @@
 {
   "name": "reviews",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Center for Open Science Reviews Service",
   "license": "Apache-2.0",
   "author": "",
@@ -17,7 +17,7 @@
     "test:cover": "COVERAGE=true yarn test"
   },
   "devDependencies": {
-    "@centerforopenscience/ember-osf": "https://github.com/aaxelb/ember-osf#feature/reviews",
+    "@centerforopenscience/ember-osf": "https://github.com/CenterForOpenScience/ember-osf#feature/reviews#2017-10-26",
     "@centerforopenscience/eslint-config": "^2.0.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-bootstrap": "^1.0.0-rc.1",

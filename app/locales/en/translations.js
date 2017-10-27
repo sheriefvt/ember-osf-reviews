@@ -17,11 +17,35 @@ export default {
         },
     },
     documentType: {
+        default: {
+            plural: 'documents',
+            pluralCapitalized: 'Documents',
+            singular: 'document',
+            singularCapitalized: 'Document',
+        },
+        paper: {
+            plural: 'papers',
+            pluralCapitalized: 'Papers',
+            singular: 'paper',
+            singularCapitalized: 'Paper',
+        },
         preprint: {
-            pluralCapitalized: 'Preprints',
             plural: 'preprints',
+            pluralCapitalized: 'Preprints',
             singular: 'preprint',
             singularCapitalized: 'Preprint',
+        },
+        none: {
+            plural: '',
+            pluralCapitalized: '',
+            singular: '',
+            singularCapitalized: '',
+        },
+        thesis: {
+            plural: 'theses',
+            pluralCapitalized: 'Theses',
+            singular: 'thesis',
+            singularCapitalized: 'Thesis',
         },
     },
     index: {
@@ -138,6 +162,7 @@ export default {
         see_less: 'See less',
         version: 'Version',
         preprint_doi: '{{provider.type.singularCapitalized}} DOI',
+        preprint_pending_doi: 'DOI created after moderator approval',
         article_doi: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
         disciplines: 'Disciplines',
@@ -236,6 +261,7 @@ export default {
                     update_comment: 'Update comment',
                 },
                 comment_placeholder: 'Explain the reasoning behind your decision (optional)',
+                comment_length_error: 'Comment is {{difference}} character(s) too long (maximum is {{limit}}).',
                 accept: {
                     label: 'Accept',
                     pre: 'Submission will appear in search results and be made public.',
