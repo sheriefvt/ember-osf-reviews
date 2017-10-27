@@ -162,6 +162,7 @@ export default {
         see_less: 'See less',
         version: 'Version',
         preprint_doi: '{{provider.type.singularCapitalized}} DOI',
+        preprint_pending_doi: 'DOI created after moderator approval',
         article_doi: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
         disciplines: 'Disciplines',

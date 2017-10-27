@@ -6,12 +6,11 @@
     {{else}}
         <div class="text-center">{{t 'components.action-feed.no_actions'}}</div>
     {{/each}}
-    {{#if (and moreActions (not loadingMore))}}
+    {{#if loadingMore}}
+        {{loading-indicator classes='ball-dark text-center loading'}}
+    {{else if moreActions}}
         <div class='see-more'>
             <a role='button' {{action nextPage}}>{{t 'components.action-feed.see_more'}}</a>
         </div>
-    {{/if}}
-    {{#if loadingMore}}
-        {{loading-indicator classes='ball-dark text-center loading'}}
     {{/if}}
 {{/if}}
