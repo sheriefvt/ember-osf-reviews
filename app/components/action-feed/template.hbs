@@ -10,7 +10,8 @@
         <div class='see-more'>
             <a role='button' {{action nextPage}}>{{t 'components.action-feed.see_more'}}</a>
         </div>
-    {{else if loadingMore}}
+    {{/if}}
+    {{#if loadingMore}}
         {{loading-indicator classes='ball-dark text-center loading'}}
     {{/if}}
 {{/if}}

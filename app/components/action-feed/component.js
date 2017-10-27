@@ -22,8 +22,8 @@ export default Component.extend({
 
     errorMessage: t('components.action-feed.error_loading'),
 
-    moreActions: computed('totalPages', 'page', function() {
-        return this.get('page') < this.get('totalPages');
+    moreActions: computed('totalPages', 'page', 'loadingMore', function() {
+        return this.get('loadingMore') ?  false : this.get('page') < this.get('totalPages');
     }),
 
     init() {
