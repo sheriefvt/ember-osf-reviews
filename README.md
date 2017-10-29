@@ -7,17 +7,17 @@ This README outlines the details of collaborating on this OSF Reviews Ember appl
 You will need the following software properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Bower](https://bower.io/)
+* [Node.js](https://nodejs.org/)
+* [Yarn](https://yarnpkg.com/)
 * [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+* [Chrome](https://www.google.com/chrome/)
+* [Firefox](https://www.mozilla.org/firefox/)
 
 ## Installation
 
 * `git clone <repository-url>` this repository
-* `cd reviews`
-* `npm install`
-* `bower install`
+* `cd ember-osf-reviews`
+* `yarn --frozen-lockfile`
 
 ## Running / Development
 
