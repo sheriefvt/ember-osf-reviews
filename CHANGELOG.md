@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- Headless Firefox for tests
 ### Changed
+- Remove global eslint rule and inline in router
+- Update travis to use Firefox
+- Update README
+- Use .nvmrc file (for travis and local)
+- Update yarn.lock
+- Update Dockerfile
 ### Removed
 ### Fixed
 - Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 
