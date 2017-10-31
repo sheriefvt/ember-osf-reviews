@@ -135,3 +135,16 @@
     }
   }
 }
+@media (max-width: $screen-small-tablet) {
+  .recent-activity {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+@media (max-width: $screen-medium-small) {
+  .dropdown-menu {
+    max-width: 300px;
+  }
+}
+

@@ -51,13 +51,14 @@
   }
 }
 
-@media screen and (max-width: $screen-sm) {
+@media screen and (max-width: $screen-small-tablet) {
   .moderation-list-heading {
+    padding-left: 20px;
     .btn {
       font-size: 16px;
     }
     .moderation-btn-filter {
-      margin-right: 10px;
+      margin-right: 1px;
     }
   }
   .submission-title {
@@ -68,6 +69,29 @@
   }
   .status-icon {
     font-size: 16px;
+  }
+}
+
+@media screen and (max-width: $screen-medium-small) {
+  .moderation-list-heading {
+    .btn {
+      font-size: 14px;
+    }
+  }
+}
+
+@media screen and (max-width: $screen-xs) {
+  .moderation-list-heading {
+    display: flex;
+    .status-count {
+      display: none;
+    }
+    .moderation-btn-filter {
+      margin-right: 4px;
+    }
+    .btn {
+      font-size: 13px;
+    }
   }
 }
 

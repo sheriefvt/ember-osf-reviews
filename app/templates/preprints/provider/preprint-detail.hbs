@@ -37,25 +37,27 @@
                     <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
                         {{t "content.share.download_preprint"}}
                     </a>
-                    <div class=" p-v-xs pull-right">
+                    <div class="p-v-xs pull-right">
                         {{t "content.share.downloads"}}: {{model.primaryFile.extra.downloads}}
                     </div>
                 </div>
-
-                <div class="p-t-md pull-right">
-                    <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                        <i class="fa fa-2x fa-twitter-square"></i>
-                    </a>
-                    <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                        <i class="fa fa-2x fa-facebook-square"></i>
-                    </a>
-                    <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                        <i class="fa fa-2x fa-linkedin-square"></i>
-                    </a>
-                    <a class="text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                        <i class="fa fa-2x fa-envelope"></i>
-                    </a>
-                </div>
+                <section class="p-t-xs">
+                    <h4 class="p-v-md f-w-md"><strong>Share</strong></h4>
+                    <div class="social-media p-t-md">
+                        <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                            <i class="fa fa-2x fa-twitter-square"></i>
+                        </a>
+                        <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                            <i class="fa fa-2x fa-facebook-square"></i>
+                        </a>
+                        <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                            <i class="fa fa-2x fa-linkedin-square"></i>
+                        </a>
+                        <a class="text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                            <i class="fa fa-2x fa-envelope"></i>
+                        </a>
+                    </div>
+                </section>
 
                 <div class="p-t-xs">
                     <h4 class="p-v-md f-w-md"><strong>{{t "global.abstract"}}</strong></h4>
