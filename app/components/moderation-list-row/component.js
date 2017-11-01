@@ -2,7 +2,7 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
-import latestAction from '../../utils/latest-action';
+import latestAction from 'reviews/utils/latest-action';
 
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
@@ -36,7 +36,7 @@ export default Component.extend({
 
     latestActionCreator: computed.alias('latestAction.creator.fullName'),
 
-    moderatorLoading: computed('noActions', 'submission.actions.[]', function () {
+    moderatorLoading: computed('noActions', 'latestActionCreator', function () {
         return !(this.get('noActions') || this.get('latestActionCreator'));
     }),
 
@@ -44,7 +44,7 @@ export default Component.extend({
         return latestAction(this.get('submission.actions'));
     }),
 
-    noActions: computed('submission.actions.{[],isPending}', function () {
+    noActions: computed('submission.actions.{length,isPending}', function () {
         return !this.get('submission.actions.length') || this.get('submission.actions.isPending');
     }),
 

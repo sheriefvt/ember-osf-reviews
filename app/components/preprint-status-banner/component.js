@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import latestAction from '../../utils/latest-action';
+import latestAction from 'reviews/utils/latest-action';
 
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
