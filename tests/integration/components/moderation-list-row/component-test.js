@@ -86,5 +86,5 @@ test('it renders moderation-list-row pending with actions and more than three co
     });
     this.set('submission.node.contributors.content', { meta: { pagination: { total: this.get('submission.node.contributors.length') } } });
     this.render(hbs`{{moderation-list-row submission=submission}}`);
-    assert.equal(this.$('[data-status=pending]').text().replace(/\s+/g,' ').trim(), 'submitted on October 27, 2017 by Mr. Ping Mantis Crane + 1');
+    assert.equal(this.$('[data-status=pending]').text().replace(/\s+/g, ' ').trim(), 'submitted on October 27, 2017 by Mr. Ping Mantis Crane + 1');
 });
