@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import moment from 'moment';
+import latestAction from 'reviews/utils/latest-action';
 
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
@@ -147,14 +147,7 @@ export default Component.extend({
     }),
 
     latestAction: computed('submission.actions.[]', function() {
-        if (!this.get('submission.actions.length')) {
-            return null;
-        }
-        // on create, Ember puts the new object at the end of the array
-        // https://stackoverflow.com/questions/15210249/ember-data-insert-new-item-at-beginning-of-array-instead-of-at-the-end
-        const first = this.get('submission.actions.firstObject');
-        const last = this.get('submission.actions.lastObject');
-        return moment(first.get('dateModified')) > moment(last.get('dateModified')) ? first : last;
+        return latestAction(this.get('submission.actions'));
     }),
 
     noComment: computed('reviewerComment', function() {
@@ -229,7 +222,9 @@ export default Component.extend({
     }),
 
     init() {
-        this.get('submission.actions').then(this._handleActions.bind(this));
+        this.get('submission.actions')
+            .then(latestAction)
+            .then(this._handleActions.bind(this));
         return this._super(...arguments);
     },
 
@@ -251,10 +246,11 @@ export default Component.extend({
         },
     },
 
-    _handleActions(actions) {
-        if (actions.length) {
+    _handleActions(action) {
+        if (action) {
             if (this.get('submission.reviewsState') !== PENDING) {
-                const comment = actions.get('firstObject.comment');
+                const comment = action.get('comment');
+
                 this.set('initialReviewerComment', comment);
                 this.set('reviewerComment', comment);
                 this.set('decision', this.get('submission.reviewsState'));
