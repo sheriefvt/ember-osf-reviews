@@ -235,7 +235,9 @@ export default Component.extend({
     }),
 
     init() {
-        this.get('submission.actions').then(this._handleActions.bind(this));
+        this.get('submission.actions')
+            .then(latestAction)
+            .then(this._handleActions.bind(this));
         return this._super(...arguments);
     },
 
@@ -257,10 +259,11 @@ export default Component.extend({
         },
     },
 
-    _handleActions(actions) {
-        if (actions.length) {
+    _handleActions(action) {
+        if (action) {
             if (this.get('submission.reviewsState') !== PENDING) {
-                const comment = actions.get('firstObject.comment');
+                const comment = action.get('comment');
+
                 this.set('initialReviewerComment', comment);
                 this.set('reviewerComment', comment);
                 this.set('decision', this.get('submission.reviewsState'));
