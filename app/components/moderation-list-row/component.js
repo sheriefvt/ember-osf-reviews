@@ -32,8 +32,6 @@ export default Component.extend({
 
     classNames: ['moderation-list-row'],
 
-    contributorLoading: computed.not('firstContributors.length'),
-
     latestActionCreator: computed.alias('latestAction.creator.fullName'),
 
     moderatorLoading: computed('noActions', 'latestActionCreator', function () {
