@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update README
 - Use .nvmrc file (for travis and local)
 - Update yarn.lock
-- Update Dockerfile
+- Use COS ember-base image and multi-stage build
+  - Notify DevOps prior to merging into master to update Jenkins
 ### Removed
 ### Fixed
 - Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 

@@ -19,6 +19,7 @@ export default Store.extend({
      * @returns {ArrayPromiseProxy} Promise-like array proxy, resolves to the records fetched
      */
     queryHasMany(model, propertyName, queryParams) {
+        // TODO: move queryHasMany to ember-osf (MOD-176)
         const reference = model.hasMany(propertyName);
         const promise = new EmberPromise((resolve, reject) => {
             // HACK: ember-data discards/ignores the link if an object on the belongsTo side
@@ -27,6 +28,9 @@ export default Store.extend({
             if (url) {
                 $.ajax(url, {
                     data: queryParams,
+                    headers: {
+                        ACCEPT: 'application/vnd.api+json; version=2.5',
+                    },
                     xhrFields: {
                         withCredentials: true,
                     },
