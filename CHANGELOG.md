@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Headless Firefox for tests
+- Add integration test for moderation-list-row component   
 ### Changed
 - Remove global eslint rule and inline in router
 - Update travis to use Firefox
@@ -15,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update yarn.lock
 - Use COS ember-base image and multi-stage build
   - Notify DevOps prior to merging into master to update Jenkins
+- Show moderator name (instead of creator) in the accepted/rejected records in the moderation list
 ### Removed
 ### Fixed
 - Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 
