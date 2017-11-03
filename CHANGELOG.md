@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Headless Firefox for tests
+- Integration tests for
+  - action-feed component
+  - action-feed-entry component
+  
 ### Changed
 - Remove global eslint rule and inline in router
 - Update travis to use Firefox
@@ -16,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use COS ember-base image and multi-stage build
   - Notify DevOps prior to merging into master to update Jenkins
 ### Removed
+- Remove name link from action logs in the dashboard view
+
 ### Fixed
 - Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 
 - Add loading indicator for preprints titles on the Reviews dashboard.
