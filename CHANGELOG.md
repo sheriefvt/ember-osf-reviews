@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update yarn.lock
 - Use COS ember-base image and multi-stage build
   - Notify DevOps prior to merging into master to update Jenkins
+- Update style/layout for Reviews to be more mobile friendly 
+ 
 ### Removed
 ### Fixed
 - Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 
