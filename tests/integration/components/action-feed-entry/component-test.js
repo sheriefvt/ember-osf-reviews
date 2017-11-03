@@ -13,10 +13,13 @@ test('it renders action-feed-entry', function(assert) {
         creator: { fullName: 'Po' },
         provider: { name: 'viperXiv', preprintWord: 'preprint' },
         actionTrigger: 'submit',
-        target: { title: 'the archive of all vipers' },
+        target: { title: 'Using machine learning for better bambo taste' },
     }));
     this.set('toDetail', () => {});
     this.render(hbs`{{action-feed-entry action=action toDetail=toDetail}}`);
     assert.ok(this.$('.entry-body').length);
-    assert.equal(this.$('.entry-body').text().replace(/\s+/g, ' ').trim(), 'October 28, 2017 Po submitted a preprint to viperXiv the archive of all vipers');
+    assert.equal(
+        this.$('.entry-body').text().replace(/\s+/g, ' ').trim(),
+        'October 28, 2017 Po submitted a preprint to viperXiv Using machine learning for better bambo taste',
+    );
 });
