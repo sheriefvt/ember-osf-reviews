@@ -22,8 +22,12 @@
         </div>
         <div class="dropdown reviewer-feedback">
             {{#bs-dropdown closeOnMenuClick=false as |dd|}}
-                {{#dd.button type="success"}}
-                    {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                {{#dd.button type="success" disabled=submission.actions.isPending}}
+                    {{#if submission.actions.isPending}}
+                        <i class='fa fa-circle-o-notch fa-spin'></i> {{t 'components.preprint-status-banner.loading'}}
+                    {{else}}
+                        {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    {{/if}}
                 {{/dd.button}}
                 {{#dd.menu}}
                     <div class="feedback-header">
