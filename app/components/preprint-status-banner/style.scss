@@ -64,6 +64,9 @@
     .reviewer-feedback {
       padding-right: 15px;
 
+      i {
+        padding: 5px;
+      }
       .dropdown-menu {
         font-size:62.5%;
         background-color: $color-bg-gray-lighter;
