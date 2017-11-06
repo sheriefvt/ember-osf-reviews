@@ -10,18 +10,18 @@ const REJECTED = 'rejected';
 
 const ACTION_LABELS = Object.freeze({
     [PENDING]: {
-        gtDay: 'components.moderation-list-row.submission.submitted_on',
-        ltDay: 'components.moderation-list-row.submission.submitted',
+        gtDay: 'components.moderationListRow.submission.submittedOn',
+        ltDay: 'components.moderationListRow.submission.submitted',
     },
     [ACCEPTED]: {
-        gtDay: 'components.moderation-list-row.submission.accepted_on',
-        ltDay: 'components.moderation-list-row.submission.accepted',
-        gtDay_automatic: 'components.moderation-list-row.submission.accepted_automatically_on',
-        ltDay_automatic: 'components.moderation-list-row.submission.accepted_automatically',
+        gtDay: 'components.moderationListRow.submission.acceptedOn',
+        ltDay: 'components.moderationListRow.submission.accepted',
+        gtDay_automatic: 'components.moderationListRow.submission.acceptedAutomaticallyOn',
+        ltDay_automatic: 'components.moderationListRow.submission.acceptedAutomatically',
     },
     [REJECTED]: {
-        gtDay: 'components.moderation-list-row.submission.rejected_on',
-        ltDay: 'components.moderation-list-row.submission.rejected',
+        gtDay: 'components.moderationListRow.submission.rejectedOn',
+        ltDay: 'components.moderationListRow.submission.rejected',
     },
 });
 

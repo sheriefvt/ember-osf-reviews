@@ -20,7 +20,7 @@ export default Component.extend({
     classNames: ['action-feed'],
     page: 1,
 
-    errorMessage: t('components.action-feed.error_loading'),
+    errorMessage: t('components.actionFeed.errorLoading'),
 
     moreActions: computed('totalPages', 'page', function() {
         return this.get('page') < this.get('totalPages');
