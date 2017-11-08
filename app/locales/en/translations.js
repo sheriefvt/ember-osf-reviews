@@ -241,6 +241,7 @@ export default {
             pending: 'pending',
             accepted: 'accepted',
             rejected: 'rejected',
+            loading: 'Loading...',
             decision: {
                 makeDecision: 'Make decision',
                 modifyDecision: 'Modify decision',
