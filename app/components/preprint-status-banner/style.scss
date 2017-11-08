@@ -40,8 +40,8 @@
   .flex-container {
     font-size: 16px;
     display: flex;
+    flex-flow: row;
     align-items: center;
-    flex-direction: row;
     justify-content: space-between;
 
     #statusBadge {
@@ -135,14 +135,23 @@
     }
   }
 }
-@media (max-width: $screen-small-tablet) {
-  .recent-activity {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-}
 @media (max-width: $screen-medium-small) {
+  #preprint-status {
+    .flex-container {
+      flex-wrap: wrap;
+      .status-explanation {
+        order: 1;
+      }
+      .reviewer-feedback {
+        order: 2;
+        padding: 0;
+      }
+      .recent-activity {
+        order: 3;
+        text-align: center;
+      }
+    }
+  }
   .dropdown-menu {
     max-width: 300px;
   }
