@@ -7,7 +7,7 @@
             {{moment-format action.dateCreated 'MMMM D, Y'}}
         </div>
         <div class="action-heading">
-            <a href={{action.creator.links.html}}>{{action.creator.fullName}}</a>
+            {{action.creator.fullName}}
             {{#if action.provider.isPending}}
                 {{loading-indicator classes='ball-dark'}}
             {{else}}

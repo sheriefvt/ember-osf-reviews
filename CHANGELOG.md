@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Headless Firefox for tests
-- Add integration test for moderation-list-row component   
+- Integration tests for
+  - moderation-list-row component
+  - action-feed component
+  - action-feed-entry component
+  
 ### Changed
 - Remove global eslint rule and inline in router
 - Update travis to use Firefox
@@ -18,9 +22,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Notify DevOps prior to merging into master to update Jenkins
 - Show moderator name (instead of creator) in the accepted/rejected records in the moderation list
 ### Removed
+- Remove name link from action logs in the dashboard view
+
 ### Fixed
 - Fix Loading indicator on Reviews dashboard which was not displaying when user clicks on see more link button. 
 - Add loading indicator for preprints titles on the Reviews dashboard.
+
+## [0.1.1] - 2017-11-02
+### Fixed
+* Show most recent data after moderator makes a decision and looks at it immediately.
+* Fix timezone issue on moderation list page.
 
 ## [0.1.0] - 2017-10-26
 ### Added
