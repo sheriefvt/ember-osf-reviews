@@ -34,28 +34,28 @@ export default Component.extend({
             {
                 status: 'pending',
                 iconClass: 'fa-hourglass-o icon-pending',
-                labelKey: 'components.moderation-list.pending',
+                labelKey: 'components.moderationList.pending',
             },
             {
                 status: 'accepted',
                 iconClass: 'fa-check-circle-o icon-accepted',
-                labelKey: 'components.moderation-list.accepted',
+                labelKey: 'components.moderationList.accepted',
             },
             {
                 status: 'rejected',
                 iconClass: 'fa-times-circle-o icon-rejected',
-                labelKey: 'components.moderation-list.rejected',
+                labelKey: 'components.moderationList.rejected',
             },
         ];
 
         this.sortOptions = [
             {
                 sort: '-date_last_transitioned',
-                labelKey: 'components.moderation-list.newest',
+                labelKey: 'components.moderationList.newest',
             },
             {
                 sort: 'date_last_transitioned',
-                labelKey: 'components.moderation-list.oldest',
+                labelKey: 'components.moderationList.oldest',
             },
         ];
     },

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Headless Firefox for tests
 - Integration tests for
+  - moderation-list-row component
   - action-feed component
   - action-feed-entry component
   
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update yarn.lock
 - Use COS ember-base image and multi-stage build
   - Notify DevOps prior to merging into master to update Jenkins
+- Show moderator name (instead of creator) in the accepted/rejected records in the moderation list
 ### Removed
 - Remove name link from action logs in the dashboard view
 

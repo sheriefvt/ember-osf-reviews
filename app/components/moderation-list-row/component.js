@@ -2,6 +2,7 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
+import latestAction from 'reviews/utils/latest-action';
 
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
@@ -9,26 +10,41 @@ const REJECTED = 'rejected';
 
 const ACTION_LABELS = Object.freeze({
     [PENDING]: {
-        gtDay: 'components.moderation-list-row.submission.submitted_on',
-        ltDay: 'components.moderation-list-row.submission.submitted',
+        gtDay: 'components.moderationListRow.submission.submittedOn',
+        ltDay: 'components.moderationListRow.submission.submitted',
     },
     [ACCEPTED]: {
-        gtDay: 'components.moderation-list-row.submission.was_accepted_on',
-        ltDay: 'components.moderation-list-row.submission.was_accepted',
+        gtDay: 'components.moderationListRow.submission.acceptedOn',
+        ltDay: 'components.moderationListRow.submission.accepted',
+        gtDay_automatic: 'components.moderationListRow.submission.acceptedAutomaticallyOn',
+        ltDay_automatic: 'components.moderationListRow.submission.acceptedAutomatically',
     },
     [REJECTED]: {
-        gtDay: 'components.moderation-list-row.submission.was_rejected_on',
-        ltDay: 'components.moderation-list-row.submission.was_rejected',
+        gtDay: 'components.moderationListRow.submission.rejectedOn',
+        ltDay: 'components.moderationListRow.submission.rejected',
     },
 });
 
 
 export default Component.extend({
     theme: service(),
+    i18n: service(),
 
     classNames: ['moderation-list-row'],
 
-    dataLoading: computed.not('firstContributors.length'),
+    latestActionCreator: computed.alias('latestAction.creator.fullName'),
+
+    moderatorLoading: computed('noActions', 'latestActionCreator', function () {
+        return !(this.get('noActions') || this.get('latestActionCreator'));
+    }),
+
+    latestAction: computed('submission.actions.[]', function() {
+        return latestAction(this.get('submission.actions'));
+    }),
+
+    noActions: computed('submission.actions.{length,isPending}', function () {
+        return !this.get('submission.actions.length') || this.get('submission.actions.isPending');
+    }),
 
     firstContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors').slice(0, 3);
@@ -49,15 +65,12 @@ export default Component.extend({
     }),
 
     // translations
-    dateLabel: computed('submission.reviewsState', 'gtDay', function() {
+    statusTimeDate: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
+        const i18n = this.get('i18n');
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
-        return ACTION_LABELS[this.get('submission.reviewsState')][dayValue];
-    }),
-
-    submittedByLabel: computed('submission.reviewsState', function() {
-        return this.get('submission.reviewsState') === PENDING ?
-            'components.moderation-list-row.submission.by' :
-            'components.moderation-list-row.submission.submission_by';
+        const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
+        const labels = ACTION_LABELS[this.get('submission.reviewsState')][timeWording];
+        return i18n.t(labels, { timeDate: this.get('relevantDate'), moderatorName: this.get('latestActionCreator') });
     }),
 
     init() {

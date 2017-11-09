@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import latestAction from 'reviews/utils/latest-action';
 
-
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
@@ -22,16 +21,16 @@ const ICONS = {
 };
 
 const STATUS = {
-    [PENDING]: 'components.preprint-status-banner.pending',
-    [ACCEPTED]: 'components.preprint-status-banner.accepted',
-    [REJECTED]: 'components.preprint-status-banner.rejected',
+    [PENDING]: 'components.preprintStatusBanner.pending',
+    [ACCEPTED]: 'components.preprintStatusBanner.accepted',
+    [REJECTED]: 'components.preprintStatusBanner.rejected',
 };
 
 const MESSAGE = {
-    [PRE_MODERATION]: 'components.preprint-status-banner.message.pending_pre',
-    [POST_MODERATION]: 'components.preprint-status-banner.message.pending_post',
-    [ACCEPTED]: 'components.preprint-status-banner.message.accepted',
-    [REJECTED]: 'components.preprint-status-banner.message.rejected',
+    [PRE_MODERATION]: 'components.preprintStatusBanner.message.pendingPre',
+    [POST_MODERATION]: 'components.preprintStatusBanner.message.pendingPost',
+    [ACCEPTED]: 'components.preprintStatusBanner.message.accepted',
+    [REJECTED]: 'components.preprintStatusBanner.message.rejected',
 };
 
 const CLASS_NAMES = {
@@ -43,16 +42,16 @@ const CLASS_NAMES = {
 
 const SETTINGS = {
     comments: {
-        public: 'components.preprint-status-banner.settings.comments.public',
-        private: 'components.preprint-status-banner.settings.comments.private',
+        public: 'components.preprintStatusBanner.settings.comments.public',
+        private: 'components.preprintStatusBanner.settings.comments.private',
     },
     names: {
-        anonymous: 'components.preprint-status-banner.settings.names.anonymous',
-        named: 'components.preprint-status-banner.settings.names.named',
+        anonymous: 'components.preprintStatusBanner.settings.names.anonymous',
+        named: 'components.preprintStatusBanner.settings.names.named',
     },
     moderation: {
-        [PRE_MODERATION]: 'components.preprint-status-banner.settings.moderation.pre',
-        [POST_MODERATION]: 'components.preprint-status-banner.settings.moderation.post',
+        [PRE_MODERATION]: 'components.preprintStatusBanner.settings.moderation.pre',
+        [POST_MODERATION]: 'components.preprintStatusBanner.settings.moderation.post',
     },
 };
 
@@ -73,22 +72,22 @@ const SETTINGS_ICONS = {
 
 const DECISION_EXPLANATION = {
     accept: {
-        [PRE_MODERATION]: 'components.preprint-status-banner.decision.accept.pre',
-        [POST_MODERATION]: 'components.preprint-status-banner.decision.accept.post',
+        [PRE_MODERATION]: 'components.preprintStatusBanner.decision.accept.pre',
+        [POST_MODERATION]: 'components.preprintStatusBanner.decision.accept.post',
     },
     reject: {
-        [PRE_MODERATION]: 'components.preprint-status-banner.decision.reject.pre',
-        [POST_MODERATION]: 'components.preprint-status-banner.decision.reject.post',
+        [PRE_MODERATION]: 'components.preprintStatusBanner.decision.reject.pre',
+        [POST_MODERATION]: 'components.preprintStatusBanner.decision.reject.post',
     },
 };
 
 const RECENT_ACTIVITY = {
-    [PENDING]: 'components.preprint-status-banner.recent_activity.pending',
-    [ACCEPTED]: 'components.preprint-status-banner.recent_activity.accepted',
-    [REJECTED]: 'components.preprint-status-banner.recent_activity.rejected',
+    [PENDING]: 'components.preprintStatusBanner.recentActivity.pending',
+    [ACCEPTED]: 'components.preprintStatusBanner.recentActivity.accepted',
+    [REJECTED]: 'components.preprintStatusBanner.recentActivity.rejected',
     automatic: {
-        [PENDING]: 'components.preprint-status-banner.recent_activity.automatic.pending',
-        [ACCEPTED]: 'components.preprint-status-banner.recent_activity.automatic.accepted',
+        [PENDING]: 'components.preprintStatusBanner.recentActivity.automatic.pending',
+        [ACCEPTED]: 'components.preprintStatusBanner.recentActivity.automatic.accepted',
     },
 };
 
@@ -97,11 +96,11 @@ export default Component.extend({
     theme: service(),
 
     // translations
-    moderator: 'components.preprint-status-banner.decision.moderator',
-    feedbackBaseMessage: 'components.preprint-status-banner.decision.base',
-    commentPlaceholder: 'components.preprint-status-banner.decision.comment_placeholder',
-    labelAccept: 'components.preprint-status-banner.decision.accept.label',
-    labelReject: 'components.preprint-status-banner.decision.reject.label',
+    moderator: 'components.preprintStatusBanner.decision.moderator',
+    feedbackBaseMessage: 'components.preprintStatusBanner.decision.base',
+    commentPlaceholder: 'components.preprintStatusBanner.decision.commentPlaceholder',
+    labelAccept: 'components.preprintStatusBanner.decision.accept.label',
+    labelReject: 'components.preprintStatusBanner.decision.reject.label',
 
     classNames: ['preprint-status-component'],
 
@@ -124,7 +123,7 @@ export default Component.extend({
 
     commentLengthErrorMessage: computed('reviewerComment', function () {
         const i18n = this.get('i18n');
-        return i18n.t('components.preprint-status-banner.decision.comment_length_error', {
+        return i18n.t('components.preprintStatusBanner.decision.commentLengthError', {
             limit: COMMENT_LIMIT,
             difference: Math.abs(COMMENT_LIMIT - this.get('reviewerComment.length')).toString(),
         });
@@ -201,23 +200,23 @@ export default Component.extend({
 
     labelDecisionDropdown: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
-            'components.preprint-status-banner.decision.make_decision' :
-            'components.preprint-status-banner.decision.modify_decision';
+            'components.preprintStatusBanner.decision.makeDecision' :
+            'components.preprintStatusBanner.decision.modifyDecision';
     }),
     labelDecisionHeader: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
-            'components.preprint-status-banner.decision.header.submit_decision' :
-            'components.preprint-status-banner.decision.header.modify_decision';
+            'components.preprintStatusBanner.decision.header.submitDecision' :
+            'components.preprintStatusBanner.decision.header.modifyDecision';
     }),
     labelDecisionBtn: computed('submission.reviewsState', 'decision', 'reviewerComment', function() {
         if (this.get('submission.reviewsState') === PENDING) {
-            return 'components.preprint-status-banner.decision.btn.submit_decision';
+            return 'components.preprintStatusBanner.decision.btn.submitDecision';
         } else if (this.get('submission.reviewsState') !== this.get('decision')) {
-            return 'components.preprint-status-banner.decision.btn.modify_decision';
+            return 'components.preprintStatusBanner.decision.btn.modifyDecision';
         } else if (this.get('reviewerComment').trim() !== this.get('initialReviewerComment')) {
-            return 'components.preprint-status-banner.decision.btn.update_comment';
+            return 'components.preprintStatusBanner.decision.btn.update_comment';
         }
-        return 'components.preprint-status-banner.decision.btn.modify_decision';
+        return 'components.preprintStatusBanner.decision.btn.modifyDecision';
     }),
 
     commentEdited: computed('reviewerComment', 'initialReviewerComment', function() {

@@ -7,7 +7,7 @@
                     <h1 id="preprintTitle" class="p-t-md p-b-md">{{node.title}}</h1>
                     <h5>{{contributor-list node}}</h5>
                     <h6 class="preprint-added-on">
-                        {{t actionDateLabel}}: {{moment-format model.dateLastTransitioned "MMMM DD, YYYY"}} | {{t "content.header.last_edited"}}: {{moment-format model.dateModified "MMMM DD, YYYY"}}
+                        {{t actionDateLabel}}: {{moment-format model.dateLastTransitioned "MMMM DD, YYYY"}} | {{t "content.header.lastEdited"}}: {{moment-format model.dateModified "MMMM DD, YYYY"}}
                     </h6>
                 </div>
             </div>
@@ -35,7 +35,7 @@
 
                 <div class="share-row p-sm osf-box-lt clearfix">
                     <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
-                        {{t "content.share.download_preprint"}}
+                        {{t "content.share.downloadPreprint"}}
                     </a>
                     <div class=" p-v-xs pull-right">
                         {{t "content.share.downloads"}}: {{model.primaryFile.extra.downloads}}
@@ -63,23 +63,23 @@
                         {{~if useShortenedDescription description node.description~}}
                     </p>
                     <button class='btn-link' hidden={{not hasShortenedDescription}} {{action 'expandAbstract'}}>
-                        {{~t (if expandedAbstract 'content.see_less' 'content.see_more')~}}
+                        {{~t (if expandedAbstract 'content.seeLess' 'content.seeMore')~}}
                     </button>
                 </div>
 
                 <section class="p-t-xs">
                     {{#if model.preprintDoiUrl}}
-                        <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
+                        <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
                         <a href={{model.preprintDoiUrl}}>{{extract-doi model.preprintDoiUrl}}</a>
                     {{else if (not model.isPublished)}}
-                        <h4 class="p-v-md f-w-md"><strong>{{t "content.preprint_doi"}}</strong></h4>
-                        {{t 'content.preprint_pending_doi'}}
+                        <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                        {{t 'content.preprintPendingDOI'}}
                     {{/if}}
                 </section>
 
                 {{#if model.articleDoiUrl}}
                     <section class="p-t-xs">
-                        <h4 class="p-v-md f-w-md"><strong>{{t "content.article_doi"}}</strong></h4>
+                        <h4 class="p-v-md f-w-md"><strong>{{t "content.articleDOI"}}</strong></h4>
                         <a href={{model.articleDoiUrl}}>{{model.doi}}</a>
                     </section>
                 {{/if}}
@@ -123,12 +123,12 @@
                 <div class="p-lg osf-box-lt row project-box">
                     <div class="col-xs-6 text-center">
                         <div class="content-provider-logo provider-osf-dark"
-                             title={{t "global.open_science_framework"}}></div>
+                             title={{t "global.openScienceFramework"}}></div>
                     </div>
                     <div class="col-xs-6 text-left">
-                        <p class="f-w-xs">{{t "content.project_button.paragraph"}}</p>
+                        <p class="f-w-xs">{{t "content.projectButton.paragraph"}}</p>
                         <a type="button" class="btn btn-info" href={{node.links.html}}>
-                            {{t "content.project_button.button"}}
+                            {{t "content.projectButton.button"}}
                         </a>
                     </div>
                 </div>

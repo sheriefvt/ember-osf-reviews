@@ -21,7 +21,7 @@ export default Component.extend({
     classNames: ['action-feed'],
     page: 0,
 
-    errorMessage: t('components.action-feed.error_loading'),
+    errorMessage: t('components.actionFeed.errorLoading'),
 
     dummyActionList: computed(function() {
         return new Array(10);
