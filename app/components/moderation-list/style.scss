@@ -12,10 +12,10 @@
     font-size: 20px;
     background: transparent;
     outline: none;
-    padding: 6px 0px;
+    padding: 6px 0;
   }
   .moderation-btn-filter {
-    margin: 0px;
+    margin: 0;
     margin-right: 20px;
   }
   .btn:hover {
@@ -82,15 +82,11 @@
 
 @media screen and (max-width: $screen-xs) {
   .moderation-list-heading {
-    display: flex;
-    .status-count {
-      display: none;
-    }
-    .moderation-btn-filter {
-      margin-right: 4px;
-    }
     .btn {
-      font-size: 13px;
+      display: block;
+    }
+    .dropdown-toggle {
+      margin-top: -1em;
     }
   }
 }
