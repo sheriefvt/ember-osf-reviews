@@ -64,6 +64,9 @@
     .reviewer-feedback {
       padding-right: 15px;
 
+      .button-loading-indicator {
+        margin-right: 8px;
+      }
       .dropdown-menu {
         font-size:62.5%;
         background-color: $color-bg-gray-lighter;
@@ -74,6 +77,10 @@
         right: 0px;
         margin-top: 0px;
         z-index: 98;  // prevent dropdown from scrolling over navbar
+
+        .dropdown-toggle {
+          box-shadow: none;
+        }
 
         .setting-reminder {
           font-size: 1.4em;

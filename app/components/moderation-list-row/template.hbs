@@ -1,25 +1,23 @@
-{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id disabled=dataLoading}}
+{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id
+           disabled=(or moderatorLoading submission.node.isPending submission.node.contributors.isPending)}}
     <div data-status={{submission.reviewsState}} class="flex-container">
         <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
         <div title={{submission.title}} class="submission-info">
             <div class="submission-title">{{submission.title}}</div>
-            {{#if dataLoading}}
+            {{#if (or moderatorLoading submission.node.isPending submission.node.contributors.isPending)}}
                 {{loading-indicator classes='ball-dark'}}
             {{else}}
                 <div class="submission-body">
                     {{#if (eq submission.reviewsState 'pending')}}
-                        {{t dateLabel}} {{relevantDate}} {{t submittedByLabel}}
+                        {{statusTimeDate}}
+                        {{#each firstContributors as |contributor| ~}}
+                            <li>{{contributor.users.fullName}}</li>
+                        {{/each}}
+                        {{#if (gt additionalContributors 0)}}
+                            + {{additionalContributors}}
+                        {{/if}}
                     {{else}}
-                        {{t submittedByLabel}}
-                    {{/if}}
-                    {{#each firstContributors as |contributor| ~}}
-                        <li>{{contributor.users.fullName}}</li>
-                    {{/each}}
-                    {{#if (gt additionalContributors 0)}}
-                        + {{additionalContributors}}
-                    {{/if}}
-                    {{#if (not-eq submission.reviewsState 'pending')}}
-                        {{t dateLabel}} {{relevantDate}}
+                        {{statusTimeDate}}
                     {{/if}}
                 </div>
             {{/if}}

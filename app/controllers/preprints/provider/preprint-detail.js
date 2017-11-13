@@ -6,8 +6,8 @@ import permissions from 'ember-osf/const/permissions';
 
 
 const DATE_LABEL = {
-    created: 'content.date_label.created_on',
-    submitted: 'content.date_label.submitted_on',
+    created: 'content.dateLabel.createdOn',
+    submitted: 'content.dateLabel.submittedOn',
 };
 const PRE_MODERATION = 'pre-moderation';
 
@@ -128,6 +128,6 @@ export default Controller.extend({
     },
 
     _notifySubmitFailure() {
-        this.get('toast').error(this.get('i18n').t('components.preprint-status-banner.error'));
+        this.get('toast').error(this.get('i18n').t('components.preprintStatusBanner.error'));
     },
 });

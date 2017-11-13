@@ -13,7 +13,7 @@
                     {{/each}}
                     {{#bs-dropdown classNames="pull-right" as |dd|}}
                         {{#dd.toggle classNames="btn"}}
-                            {{t 'components.moderation-list.sort'}}
+                            {{t 'components.moderationList.sort'}}
                             <span class="fa fa-caret-down"></span>
                         {{/dd.toggle}}
                         {{#dd.menu classNames="dropdown-menu-right" as |menu|}}
@@ -34,7 +34,7 @@
                     <div class="moderation-list-body">
                         {{#if (eq submissions.length 0)}}
                             <div class="text-center p-v-md moderation-list-row">
-                                {{t 'components.moderation-list.no_submissions'}}
+                                {{t 'components.moderationList.noSubmissions'}}
                             </div>
                         {{else}}
                             {{#each submissions as |submission|}}
