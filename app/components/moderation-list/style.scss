@@ -12,10 +12,10 @@
     font-size: 20px;
     background: transparent;
     outline: none;
-    padding: 6px 0px;
+    padding: 6px 0;
   }
   .moderation-btn-filter {
-    margin: 0px;
+    margin: 0;
     margin-right: 20px;
   }
   .btn:hover {
@@ -51,13 +51,14 @@
   }
 }
 
-@media screen and (max-width: $screen-sm) {
+@media screen and (max-width: $screen-small-tablet) {
   .moderation-list-heading {
+    padding-left: 20px;
     .btn {
       font-size: 16px;
     }
     .moderation-btn-filter {
-      margin-right: 10px;
+      margin-right: 1px;
     }
   }
   .submission-title {
@@ -68,6 +69,28 @@
   }
   .status-icon {
     font-size: 16px;
+  }
+}
+
+@media screen and (max-width: $screen-medium-small) {
+  .moderation-list-heading {
+    .btn {
+      font-size: 14px;
+    }
+  }
+}
+
+@media screen and (max-width: $screen-xs) {
+  .moderation-list-heading {
+    .btn {
+      display: block;
+    }
+    .dropdown-toggle {
+      margin-top: -2.3em;
+    }
+  }
+  .dropdown-menu-right {
+    margin-top: -0.7em;
   }
 }
 

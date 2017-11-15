@@ -32,16 +32,37 @@ li.active > a {
   color: $color-text-gray-dark !important;
 }
 
-@media (max-width: $screen-xs){
-  #tabTitle .nav > li > a {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-}
 
 /* This should be a temporary adjustment */
 @media (max-width: 768px) {
   .reviews-navbar {
     top: 50px;
+  }
+}
+
+@media screen and (max-width: $screen-small-tablet) {
+  .dark-header {
+    height: 190px;
+    .provider-title {
+      font-size: 32px;
+    }
+  }
+  #tabTitle .nav > li > a {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: $screen-medium-small) {
+  .dark-header {
+    height: 170px;
+    .provider-title {
+      font-size: 25px;
+    }
+    .breadcrumbs {
+      padding-bottom: 20px;
+    }
+  }
+  #tabTitle .nav > li > a {
+    font-size: 15px;
   }
 }

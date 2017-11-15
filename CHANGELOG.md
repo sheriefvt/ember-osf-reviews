@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use COS ember-base image and multi-stage build
   - Notify DevOps prior to merging into master to update Jenkins
 - Show moderator name (instead of creator) in the accepted/rejected records in the moderation list
+- Update style/layout for Reviews to be more mobile friendly 
+
 
 ### Removed
 - Remove name link from action logs in the dashboard view

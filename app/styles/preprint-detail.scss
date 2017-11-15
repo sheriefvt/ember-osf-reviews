@@ -65,6 +65,9 @@ ul.comma-list {
       outline: none;
     }
   }
+  .social-media {
+    padding: 0;
+  }
   .abstract {
     white-space: pre-line;
   }
@@ -99,4 +102,10 @@ ul.comma-list {
   color: $color-text-gray-dark;
   border: 1px solid $color-border;
   z-index: 98;
+}
+
+@media (max-width: $screen-md) {
+  .share-row {
+    visibility: hidden;
+  }
 }
