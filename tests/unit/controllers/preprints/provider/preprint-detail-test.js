@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
-import config from 'ember-get-config';
 
 moduleFor('controller:preprints/provider/preprint-detail', 'Unit | Controller | preprints/provider/preprint-detail', {
     needs: [
@@ -25,8 +24,8 @@ moduleFor('controller:preprints/provider/preprint-detail', 'Unit | Controller | 
         'service:theme',
         'service:currentUser',
         'service:i18n',
-        'service:toast'
-    ]
+        'service:toast',
+    ],
 });
 
 test('Initial properties', function (assert) {
@@ -45,3 +44,54 @@ test('Initial properties', function (assert) {
 
     assert.ok(propKeys.every(key => expected[key] === actual[key]));
 });
+
+test('isAdmin computed property', function (assert) {
+    this.inject.service('store');
+
+    const { store } = this.store;
+    const ctrl = this.subject();
+
+    Ember.run(() => {
+        const node = store.createRecord('node', {
+            title: 'test title',
+            description: 'test description',
+        });
+
+        const model = store.createRecord('preprint', { node });
+
+        ctrl.setProperties({ model });
+        ctrl.set('node.currentUserPermissions', ['admin']);
+
+        assert.strictEqual(ctrl.get('isAdmin'), true);
+    });
+});
+
+
+test('actionDateLabel computed property', function (assert) {
+    this.inject.service('store');
+
+    const { store } = this.store;
+    const ctrl = this.subject();
+
+    Ember.run(() => {
+        const node = store.createRecord('node', {
+            title: 'test title',
+            description: 'test description',
+        });
+
+        const provider = store.createRecord('preprint-provider', {
+            reviewsWorkflow: 'pre-moderation',
+        });
+
+        const model = store.createRecord('preprint', { node, provider });
+
+        ctrl.setProperties({ model });
+
+        assert.strictEqual(ctrl.get('actionDateLabel'), 'content.dateLabel.submittedOn');
+
+        ctrl.set('model.provider.reviewsWorkflow', 'post-moderation');
+
+        assert.strictEqual(ctrl.get('actionDateLabel'), 'content.dateLabel.createdOn');
+    });
+});
+
