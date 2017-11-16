@@ -217,7 +217,40 @@ test('chooseFile action', function (assert) {
 
         ctrl.send('chooseFile', fileItem);
         assert.strictEqual(ctrl.get('chosenFile'), 'test1');
-        assert.strictEqual(ctrl.get('activeFile'), fileItem);
+    });
+});
+
+test('activeFile action', function (assert) {
+    this.inject.service('store');
+    const ctrl = this.subject();
+
+    run(() => {
+        const primaryFile = this.store.createRecord('file', {
+            id: 'test1',
+        });
+
+        const anotherFile = this.store.createRecord('file', {
+            id: 'test2',
+        });
+
+        const node = this.store.createRecord('node', {
+            title: 'test title',
+            description: 'test description',
+        });
+
+        const model = this.store.createRecord('preprint', { node, primaryFile });
+
+        ctrl.setProperties({ model });
+
+        assert.strictEqual(ctrl.get('activeFile'), null);
+
+        ctrl.send('chooseFile', anotherFile);
+
+        assert.strictEqual(ctrl.get('activeFile'), anotherFile);
+
+        ctrl.send('chooseFile', primaryFile);
+
+        assert.strictEqual(ctrl.get('activeFile'), primaryFile);
     });
 });
 
