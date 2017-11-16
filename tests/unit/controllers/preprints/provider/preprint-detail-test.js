@@ -1,5 +1,6 @@
 import { run } from '@ember/runloop';
-import { moduleFor, test } from 'ember-qunit';
+import { moduleFor } from 'ember-qunit';
+import test from 'ember-sinon-qunit/test-support/test';
 
 moduleFor('controller:preprints/provider/preprint-detail', 'Unit | Controller | preprints/provider/preprint-detail', {
     needs: [
@@ -217,5 +218,33 @@ test('chooseFile action', function (assert) {
         ctrl.send('chooseFile', fileItem);
         assert.strictEqual(ctrl.get('chosenFile'), 'test1');
         assert.strictEqual(ctrl.get('activeFile'), fileItem);
+    });
+});
+
+test('submitDecision action', function (assert) {
+    this.inject.service('store');
+    const ctrl = this.subject();
+
+    run(() => {
+        const initialValue = ctrl.get('savingAction');
+
+        const action = {
+            comment: '',
+            save() {},
+        };
+
+        ctrl.set('store.createRecord', () => { return action; });
+
+        ctrl.set('_saveAction', () => {});
+
+        const stub = this.stub(ctrl, '_saveAction');
+
+        ctrl.send('submitDecision', 'accept', 'yes', 'accepted');
+        assert.strictEqual(ctrl.get('savingAction'), !initialValue);
+        assert.ok(stub.calledWithExactly(action, 'accepted'), 'correct arguments passed to _saveAction');
+
+        ctrl.send('submitDecision', 'reject', 'no', 'rejected');
+        assert.strictEqual(ctrl.get('savingAction'), initialValue);
+        assert.ok(stub.calledWithExactly(action, 'rejected'), 'correct arguments passed to _saveAction');
     });
 });

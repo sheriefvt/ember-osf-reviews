@@ -116,11 +116,15 @@ export default Controller.extend({
                 action.comment = comment;
             }
 
-            return action.save()
-                .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
-                .catch(this._notifySubmitFailure.bind(this))
-                .finally(() => this.toggleProperty('savingAction'));
+            this._saveAction(action, filter);
         },
+    },
+
+    _saveAction(action, filter) {
+        return action.save()
+            .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
+            .catch(this._notifySubmitFailure.bind(this))
+            .finally(() => this.toggleProperty('savingAction'));
     },
 
     _toModerationList(queryParams) {
