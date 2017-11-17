@@ -263,12 +263,10 @@ test('submitDecision action', function (assert) {
 
         const action = {
             comment: '',
-            save() {},
+            save() { return (new Promise(function(resolve) { resolve('hello'); })); },
         };
 
         ctrl.set('store.createRecord', () => { return action; });
-
-        ctrl.set('_saveAction', () => {});
 
         const stub = this.stub(ctrl, '_saveAction');
 
