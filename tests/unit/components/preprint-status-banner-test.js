@@ -1,6 +1,8 @@
 import { run } from '@ember/runloop';
 import { moduleForComponent } from 'ember-qunit';
+import EmberService from '@ember/service';
 import test from 'ember-sinon-qunit/test-support/test';
+import tHelper from 'ember-i18n/helper';
 
 
 moduleForComponent('preprint-status-banner', 'Unit | Component | preprint status banner', {
@@ -274,4 +276,25 @@ test('_handleActions  action', function(assert) {
 
         assert.strictEqual(component.get('loadingActions'), false);
     });
+});
+
+// Stub i18n service
+const i18nStub = EmberService.extend({
+    t(key, arg) {
+        const translated = {
+            'components.preprintStatusBanner.decision.commentLengthError':
+                `Comment is ${arg.difference} character(s) too long (maximum is ${arg.limit}).`,
+        };
+        return translated[key];
+    },
+});
+
+test('commentLengthErrorMessage computed property', function(assert) {
+    this.inject.service('store');
+    this.registry.register('helper:t', tHelper);
+    this.register('service:i18n', i18nStub);
+    const component = this.subject();
+
+    component.set('reviewerComment', 'test comment for error message'.repeat(2000));
+    assert.strictEqual(component.get('commentLengthErrorMessage'), 'Comment is 5535 character(s) too long (maximum is 65535).');
 });
