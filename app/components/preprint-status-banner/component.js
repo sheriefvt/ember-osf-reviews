@@ -234,7 +234,7 @@ export default Component.extend({
         return false;
     }),
 
-    init() {
+    didInsertElement() {
         this.get('submission.actions')
             .then(latestAction)
             .then(this._handleActions.bind(this));
