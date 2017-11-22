@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - moderation-list-row component
   - action-feed component
   - action-feed-entry component
+  - preprint-status-banner component
+- Unit tests for
+  - preprint-status-banner component
+  - preprint-detail controller
+  - provider setup controller
+  - provider moderation controller
 - Pending count on Reviews Dashboard
   - Skeleton screens for providers list
 
