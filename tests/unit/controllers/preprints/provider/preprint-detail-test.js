@@ -301,12 +301,3 @@ test('fileDownloadURL computed property', function (assert) {
         assert.strictEqual(ctrl.get('fileDownloadURL'), `${origin}/6gtu/download`);
     });
 });
-
-test('dummyMetaData computed property', function (assert) {
-    const ctrl = this.subject();
-    run(() => {
-
-        assert.ok(ctrl.get('dummyMetaData').isArray());
-        assert.ok(ctrl.get('dummyMetaData').length, 7);
-    });
-});
