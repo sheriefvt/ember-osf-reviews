@@ -1,7 +1,7 @@
 import { run } from '@ember/runloop';
 import { moduleForComponent } from 'ember-qunit';
 import test from 'ember-sinon-qunit/test-support/test';
-
+import { freezeDateAt, unfreezeDate } from 'ember-mockdate-shim';
 
 moduleForComponent('moderation-list-row', 'Unit | Component | moderation list row', {
 
@@ -73,5 +73,24 @@ test('latestActionCreator computed property', function(assert) {
         component.setProperties({ submission });
         assert.strictEqual(component.get('latestAction'), action1);
         assert.strictEqual(component.get('latestActionCreator'), action1.creator.fullName);
+    });
+});
+
+test('relevantDate computed property', function(assert) {
+    this.inject.service('store');
+    run(() => {
+        freezeDateAt(new Date('2017-01-05T14:57:35.949534Z'));
+        const component = this.subject();
+        assert.ok(component);
+        const submission = this.store.createRecord('preprint', { dateLastTransitioned: '2017-01-05T14:57:30.949534Z' });
+        component.setProperties({ submission });
+        assert.strictEqual(component.get('relevantDate'), 'a few seconds ago');
+        component.set('submission.dateLastTransitioned', '2017-01-01T14:57:35.949534Z');
+        assert.strictEqual(component.get('relevantDate'), 'January 01, 2017');
+        component.set('submission.dateLastTransitioned', '2017-01-05T12:50:35.949534Z');
+        assert.strictEqual(component.get('relevantDate'), '2 hours ago');
+        component.set('submission.dateLastTransitioned', '2017-01-05T14:50:35.949534Z');
+        assert.strictEqual(component.get('relevantDate'), '7 minutes ago');
+        unfreezeDate();
     });
 });
