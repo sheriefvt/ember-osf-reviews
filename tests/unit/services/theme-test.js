@@ -58,13 +58,8 @@ test('signupUrl computed property', function(assert) {
         domain: '',
     });
     service.setProperties({ provider });
-    const { location: { origin } } = window;
-
-    assert.strictEqual(
-        decodeURIComponent(service.get('signupUrl')),
-        'http://localhost:5000/register?campaign=OSF-reviews&next=' +
-        `${origin}/reviews/tests`,
-    );
+    const signUrl = decodeURIComponent(service.get('signupUrl')).split('&next=');
+    assert.strictEqual(signUrl[0], 'http://localhost:5000/register?campaign=OSF-reviews');
 });
 
 test('baseServiceUrl computed property', function (assert) {
