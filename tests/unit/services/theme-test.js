@@ -38,7 +38,7 @@ test('_onProviderLoad', function(assert) {
         id: 'OSF',
         name: 'Open Science Framework',
         preprintWord: 'preprint',
-        domian: '',
+        domain: '',
     });
 
     assert.strictEqual(service.provider, null);
@@ -47,4 +47,35 @@ test('_onProviderLoad', function(assert) {
     service._onProviderLoad(fakeProvider);
     assert.strictEqual(fakeProvider.get('id'), service.get('id'));
     assert.strictEqual(fakeProvider.get('reviewableStatusCounts'), service.get('reviewableStatusCounts'));
+});
+
+test('signupUrl computed property', function(assert) {
+    const service = this.subject();
+    const provider = EmberObject.create({
+        id: 'OSF',
+        name: 'Open Science Framework',
+        preprintWord: 'preprint',
+        domain: '',
+    });
+    service.setProperties({ provider });
+    assert.strictEqual(
+        decodeURIComponent(service.get('signupUrl')),
+        'http://localhost:5000/register?campaign=OSF-reviews&next=' +
+        'http://localhost:4400/reviews/tests?moduleId=f395c43f&moduleId=6b2937ae',
+    );
+});
+
+test('baseServiceUrl computed property', function (assert) {
+    const service = this.subject();
+    const provider = EmberObject.create({
+        id: 'pandaXriv',
+        name: 'Open Science Framework',
+        preprintWord: 'preprint',
+        domain: 'pandaXriv.com',
+    });
+    service.setProperties({ provider });
+    assert.strictEqual(service.get('baseServiceUrl'), 'pandaXriv.com');
+
+    service.set('provider.domain', '');
+    assert.strictEqual(service.get('baseServiceUrl'), '/preprints/pandaXriv/');
 });
