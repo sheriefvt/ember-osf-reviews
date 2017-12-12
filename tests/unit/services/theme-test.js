@@ -58,10 +58,12 @@ test('signupUrl computed property', function(assert) {
         domain: '',
     });
     service.setProperties({ provider });
+    const { location: { origin } } = window;
+
     assert.strictEqual(
         decodeURIComponent(service.get('signupUrl')),
         'http://localhost:5000/register?campaign=OSF-reviews&next=' +
-        'http://localhost:4400/reviews/tests?moduleId=f395c43f&moduleId=6b2937ae',
+        `${origin}/reviews/tests`,
     );
 });
 
