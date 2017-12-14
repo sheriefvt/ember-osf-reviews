@@ -262,11 +262,7 @@ export default Component.extend({
             this.set('reviewerComment', this.get('initialReviewerComment'));
         },
         closeReviewerFeedback() {
-            if (this.get('decisionChanged') || this.get('commentEdited')){
-                this.set('userHasEnteredReview', true);
-            } else {
-                this.set('userHasEnteredReview', false);
-            }
+            this.set('userHasEnteredReview', this.get('userActivity'));
         },
     },
 
