@@ -227,6 +227,10 @@ export default Component.extend({
         return this.get('submission.reviewsState') !== this.get('decision');
     }),
 
+    userActivity: computed('commentEdited', 'decisionChanged', function () {
+        return this.get('commentEdited') || this.get('decisionChanged');
+    }),
+
     btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
         if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit')) {
             return true;
@@ -256,6 +260,13 @@ export default Component.extend({
         cancel() {
             this.set('decision', this.get('submission.reviewsState'));
             this.set('reviewerComment', this.get('initialReviewerComment'));
+        },
+        closeReviewerFeedback() {
+            if (this.get('decisionChanged') || this.get('commentEdited')){
+                this.set('userHasEnteredReview', true);
+            } else {
+                this.set('userHasEnteredReview', false);
+            }
         },
     },
 
