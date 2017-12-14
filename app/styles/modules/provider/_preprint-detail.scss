@@ -138,3 +138,18 @@ ul.comma-list {
     visibility: hidden;
   }
 }
+
+.warning-header {
+  font-size: 20px;
+  padding: 5px 15px 8px 15px;
+
+  a {
+    color: grey;
+    float: right;
+  }
+}
+
+.setting-reminder {
+  font-size: 14px;
+}
+

@@ -1,8 +1,12 @@
 import { isArray } from '@ember/array';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+import ConfirmationMixin from 'ember-onbeforeunload/mixins/confirmation';
 
 
-export default Route.extend({
+export default Route.extend(ConfirmationMixin, {
+    theme: service(),
+    currentUser: service(),
 
     model(params) {
         return { preprintId: params.preprint_id };
@@ -29,5 +33,18 @@ export default Route.extend({
                 return this.intermediateTransitionTo('page-not-found');
             }
         },
+        willTransition(transition) {
+            if (this.controller.get('userHasEnteredReview')) {
+                this.controller.set('showWarning', true);
+                this.controller.set('previousTransition', transition);
+                transition.abort();
+            }
+        },
+    },
+
+    isPageDirty() {
+        // If true, shows a confirmation message when leaving the page
+        // True if the reviewer has any unsaved changes including comment edit or state change.
+        return this.controller.get('userHasEnteredReview');
     },
 });
