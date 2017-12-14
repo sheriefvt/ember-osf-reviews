@@ -115,7 +115,7 @@ export default Controller.extend({
             });
         },
         leavePage() {
-            let previousTransition = this.get('previousTransition');
+            const previousTransition = this.get('previousTransition');
             if (previousTransition) {
                 this.set('userHasEnteredReview', false);
                 this.set('showWarning', false);
