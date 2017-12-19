@@ -6,15 +6,11 @@ import test from 'ember-sinon-qunit/test-support/test';
 moduleForComponent('preprint-file-browser', 'Unit | Component | preprint file browser', {
     unit: true,
     needs: [
-        'model:action',
         'model:node',
-        'model:user',
         'model:preprint',
         'model:preprint-provider',
         'model:file-provider',
         'model:file',
-        'service:i18n',
-        'service:theme',
     ],
 });
 
