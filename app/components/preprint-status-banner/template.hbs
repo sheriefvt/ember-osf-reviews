@@ -22,8 +22,13 @@
         </div>
         <div class="dropdown reviewer-feedback">
             {{#bs-dropdown closeOnMenuClick=false as |dd|}}
-                {{#dd.button type="success"}}
-                    {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                {{#dd.button type="success" disabled=submission.actions.isPending}}
+                    {{#if submission.actions.isPending}}
+                        <i class='button-loading-indicator fa fa-circle-o-notch fa-spin'></i>
+                        {{t 'components.preprint-status-banner.loading'}}
+                    {{else}}
+                        {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    {{/if}}
                 {{/dd.button}}
                 {{#dd.menu}}
                     <div class="feedback-header">
@@ -65,6 +70,11 @@
                                 </span>
                             </label>
                             {{textarea value=reviewerComment rows="8" placeholder=(t commentPlaceholder) class="form-control"}}
+                            {{#if commentExceedsLimit}}
+                                <div class="comment-length-error">
+                                    {{commentLengthErrorMessage}}
+                                </div>
+                            {{/if}}
                         </form>
                     </div>
                     <div class="feedback-footer">

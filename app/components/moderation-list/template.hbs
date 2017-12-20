@@ -7,13 +7,13 @@
                         <button class="btn moderation-btn-filter {{if (eq status statusButton.status) 'active-filter'}}"
                                 {{action statusChanged statusButton.status}}>
                             <i class="fa {{statusButton.iconClass}}"></i>
-                            {{get statusCounts statusButton.status}}
+                            <span class="status-count">{{get theme.reviewableStatusCounts statusButton.status}}</span>
                             {{t statusButton.labelKey}}
                         </button>
                     {{/each}}
                     {{#bs-dropdown classNames="pull-right" as |dd|}}
                         {{#dd.toggle classNames="btn"}}
-                            {{t 'components.moderation-list.sort'}}
+                            {{t 'components.moderationList.sort'}}
                             <span class="fa fa-caret-down"></span>
                         {{/dd.toggle}}
                         {{#dd.menu classNames="dropdown-menu-right" as |menu|}}
@@ -28,13 +28,13 @@
                         {{/dd.menu}}
                     {{/bs-dropdown}}
                 </div>
-                {{#if loading}}
-                    {{loading-indicator classes='ball-dark text-center m-b-lg p-v-md'}}
-                {{else}}
-                    <div class="moderation-list-body">
+                <div class="moderation-list-body">
+                    {{#if loading}}
+                        {{moderation-list-row-skeleton}}
+                    {{else}}
                         {{#if (eq submissions.length 0)}}
                             <div class="text-center p-v-md moderation-list-row">
-                                {{t 'components.moderation-list.no_submissions'}}
+                                {{t 'components.moderationList.noSubmissions'}}
                             </div>
                         {{else}}
                             {{#each submissions as |submission|}}
@@ -48,8 +48,8 @@
                                 }}
                             </div>
                         {{/if}}
-                    </div>
-                {{/if}}
+                    {{/if}}
+                </div>
             </div>
         </div>
     </div>

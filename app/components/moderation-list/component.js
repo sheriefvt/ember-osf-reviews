@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 /**
  * Provides a list of pending, accepted, and rejected submissions.
  * Provides filtering by preprint state and sorting based on the preprint creation date.
@@ -19,44 +20,43 @@ import Component from '@ember/component';
  *   status=status
  *   loading=loading
  *   totalPages=totalPages
- *   statusCounts=statusCounts
  * }}
  * ```
  * @class moderation-list
  * */
 export default Component.extend({
+    theme: service(),
+
     classNames: ['content'],
 
-    init() {
-        this._super(...arguments);
-
-        this.statusButtons = [
+    didReceiveAttrs() {
+        this.set('statusButtons', [
             {
                 status: 'pending',
                 iconClass: 'fa-hourglass-o icon-pending',
-                labelKey: 'components.moderation-list.pending',
+                labelKey: 'components.moderationList.pending',
             },
             {
                 status: 'accepted',
                 iconClass: 'fa-check-circle-o icon-accepted',
-                labelKey: 'components.moderation-list.accepted',
+                labelKey: 'components.moderationList.accepted',
             },
             {
                 status: 'rejected',
                 iconClass: 'fa-times-circle-o icon-rejected',
-                labelKey: 'components.moderation-list.rejected',
+                labelKey: 'components.moderationList.rejected',
             },
-        ];
+        ]);
 
-        this.sortOptions = [
+        this.set('sortOptions', [
             {
                 sort: '-date_last_transitioned',
-                labelKey: 'components.moderation-list.newest',
+                labelKey: 'components.moderationList.newest',
             },
             {
                 sort: 'date_last_transitioned',
-                labelKey: 'components.moderation-list.oldest',
+                labelKey: 'components.moderationList.oldest',
             },
-        ];
+        ]);
     },
 });

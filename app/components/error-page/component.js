@@ -2,16 +2,16 @@ import { computed } from '@ember/object';
 import Component from '@ember/component';
 
 const MESSAGES = {
-    'not-found': 'components.error-page.details.not_found',
-    'not-authenticated': 'components.error-page.details.not_authenticated',
-    forbidden: 'components.error-page.details.forbidden',
-    'not-setup': 'components.error-page.details.not_setup',
+    'not-found': 'components.errorPage.details.notFound',
+    'not-authenticated': 'components.errorPage.details.notAuthenticated',
+    forbidden: 'components.errorPage.details.forbidden',
+    'not-setup': 'components.errorPage.details.notSetup',
 };
 const TITLES = {
-    'not-found': 'components.error-page.title.not_found',
-    'not-authenticated': 'components.error-page.title.not_authenticated',
-    forbidden: 'components.error-page.title.forbidden',
-    'not-setup': 'components.error-page.title.not_setup',
+    'not-found': 'components.errorPage.title.notFound',
+    'not-authenticated': 'components.errorPage.title.notAuthenticated',
+    forbidden: 'components.errorPage.title.forbidden',
+    'not-setup': 'components.errorPage.title.notSetup',
 };
 
 

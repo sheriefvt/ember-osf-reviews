@@ -1,28 +1,25 @@
-{{#link-to 'preprints.provider.preprint-detail' theme.id submission.id disabled=dataLoading}}
-    <div data-status={{submission.reviewsState}} class="flex-container">
-        <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
-        <div title={{submission.title}} class="submission-info">
-            <div class="submission-title">{{submission.title}}</div>
-            {{#if dataLoading}}
-                {{loading-indicator classes='ball-dark'}}
-            {{else}}
+{{#if fetchData.isRunning}}
+    {{moderation-list-row-skeleton}}
+{{else}}
+    {{#link-to 'preprints.provider.preprint-detail' theme.id submission.id}}
+        <div data-status={{submission.reviewsState}} class="flex-container">
+            <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
+            <div title={{submission.title}} class="submission-info">
+                <div class="submission-title">{{submission.title}}</div>
                 <div class="submission-body">
                     {{#if (eq submission.reviewsState 'pending')}}
-                        {{t dateLabel}} {{relevantDate}} {{t submittedByLabel}}
+                        {{statusTimeDate}}
+                        {{#each firstContributors as |contributor| ~}}
+                            <li>{{contributor.users.fullName}}</li>
+                        {{/each}}
+                        {{#if (gt additionalContributors 0)}}
+                            + {{additionalContributors}}
+                        {{/if}}
                     {{else}}
-                        {{t submittedByLabel}}
-                    {{/if}}
-                    {{#each firstContributors as |contributor| ~}}
-                        <li>{{contributor.users.fullName}}</li>
-                    {{/each}}
-                    {{#if (gt additionalContributors 0)}}
-                        + {{additionalContributors}}
-                    {{/if}}
-                    {{#if (not-eq submission.reviewsState 'pending')}}
-                        {{t dateLabel}} {{relevantDate}}
+                        {{statusTimeDate}}
                     {{/if}}
                 </div>
-            {{/if}}
+            </div>
         </div>
-    </div>
-{{/link-to}}
+    {{/link-to}}
+{{/if}}

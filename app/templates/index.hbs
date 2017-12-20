@@ -1,43 +1,22 @@
-{{#if showDashboard}}
-    <div class='reviews-dashboard'>
-        <div class='reviews-dashboard-header'>
-            <div class='container'>
-                <div class='row'>
-                    <div class='text-center m-t-lg col-xs-12'>
-                        <h1>{{t 'dashboard.title'}}</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='container'>
-            <div class='row'>
-                <div class='col-sm-4 col-sm-push-8'>
-                    {{dashboard-sidebar providers=sidebarProviders}}
-                </div>
-                <div class='col-sm-8 col-sm-pull-4'>
-                    {{action-feed
-                        toDetail=(action 'transitionToDetail')
-                    }}
-                </div>
-            </div>
-        </div>
-    </div>
-    {{contact-bar feedback=showDashboard}}
-{{else if providersToSetup}}
-    <div class="reviews-header">
-        <div class="container">
-            <div class="row">
-                <div class="text-center m-t-lg col-xs-12">
-                    <div class="m-b-lg reviews-brand"></div>
-                    {{#if showSetup}}
-                        {{start-moderating action=(action 'setupProvider') providers=providersToSetup}}
-                    {{/if}}
-                </div>
-            </div>
-        </div>
-    </div>
-{{else if (not currentUser.user.canViewReviews)}}
+{{#if (not currentUser.user.canViewReviews)}}
     {{error-page error='forbidden'}}
 {{else}}
-    {{error-page error='not-setup'}}
+    {{#load-providers as |loader|}}
+        {{#if loader.isRunning}}
+            {{loading-indicator-page}}
+        {{else}}
+            {{#if loader.showDashboard}}
+                {{reviews-dashboard
+                    transitionToDetail=(action 'transitionToDetail')
+                    providers=loader.sidebarProviders}}
+                {{contact-bar feedback=showDashboard}}
+            {{else if loader.providersToSetup}}
+                {{landing-page
+                    setupProvider=(action 'setupProvider')
+                    providersToSetup=loader.providersToSetup}}
+            {{else}}
+                {{error-page error='not-setup'}}
+            {{/if}}
+        {{/if}}
+    {{/load-providers}}
 {{/if}}
