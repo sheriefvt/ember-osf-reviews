@@ -1,10 +1,23 @@
 <div class="sidebar-header">
-    {{t 'components.dashboardSidebar.providers'}}
+    {{t 'components.dashboard-sidebar.providers'}}
 </div>
 <div class="sidebar-body">
-    <ul class="fa-ul">
+    <ul class="fa-ul provider-list">
         {{#each providers as |provider|}}
-            {{provider-links provider=provider}}
+            <li class="{{if provider.reviewsWorkflow "moderation-enabled" "moderation-disabled"}}">
+                <span class="provider-name">
+                    <i class="fa-li fa {{get iconMap provider.preprintWord}}"></i>
+                    {{provider.name}}
+                </span>
+                <ul class="provider-links">
+                    {{#if provider.reviewsWorkflow}}
+                        <li>{{#link-to 'preprints.provider.moderation' provider.id}}{{t 'global.moderation'}}{{/link-to}}</li>
+                        <li>{{#link-to 'preprints.provider.settings' provider.id}}{{t 'global.settings'}}{{/link-to}}</li>
+                    {{else}}
+                        <li>{{#link-to 'preprints.provider.setup' provider.id}}{{t 'components.dashboard-sidebar.set_up'}}{{/link-to}}</li>
+                    {{/if}}
+                </ul>
+            </li>
         {{/each}}
     </ul>
 </div>

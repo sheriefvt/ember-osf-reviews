@@ -1,8 +1,10 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:preprints/provider/settings', 'Unit | Route | preprints/provider/settings', {
+moduleFor('route:index', 'Unit | Route | index', {
     // Specify the other units that are required for this test.
     needs: [
+        'service:currentUser',
+        'service:session',
         'service:metrics',
     ],
 });

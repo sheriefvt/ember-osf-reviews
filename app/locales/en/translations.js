@@ -4,13 +4,17 @@ export default {
         abstract: 'Abstract',
         doi: 'DOI',
         tags: 'Tags',
-        openScienceFramework: 'Open Science Framework',
+        open_science_framework: 'Open Science Framework',
         title: 'Title',
         authors: 'Authors',
         license: 'License',
         none: 'None',
         settings: 'Settings',
         moderation: 'Moderation',
+        workflows: {
+            pre_moderation: 'pre-moderation',
+            post_moderation: 'post-moderation',
+        },
     },
     documentType: {
         default: {
@@ -49,21 +53,21 @@ export default {
             title: 'Moderate your collection',
             description: `At last, the ability to manage what scholarly works are displayed with your branding.
             No more working on off-topic papers confusing loyal researchers.`,
-            list1: 'See all submissions in one place.',
-            list2: 'Provide feedback to authors.',
-            list3: 'Manage collections settings.',
+            list_1: 'See all submissions in one place.',
+            list_2: 'Provide feedback to authors.',
+            list_3: 'Manage collections settings.',
         },
         workflow: {
             title: 'Choose your workflow',
-            list1: 'Have greater control over what material is publicly available by choosing pre-moderation.',
-            list2: 'Keep the time delay between submission and public access minimal by choosing post-moderation.',
+            list_1: 'Have greater control over what material is publicly available by choosing pre-moderation.',
+            list_2: 'Keep the time delay between submission and public access minimal by choosing post-moderation.',
             figure: {
-                preModeration: 'Pre-moderation',
-                postModeration: 'Post-moderation',
+                pre_moderation: 'Pre-moderation',
+                post_moderation: 'Post-moderation',
             },
         },
     },
-    providerSettings: {
+    provider_settings: {
         reviewsWorkflow: {
             title: 'Moderation Type',
             description: '',
@@ -108,14 +112,14 @@ export default {
         },
     },
     settings: {
-        notEditable: 'Moderation settings can only be changed by an OSF administrator. Contact support+{{provider.id}}@osf.io for assistance.',
+        not_editable: 'Moderation settings can only be changed by an OSF administrator. Contact support+{{provider.id}}@osf.io for assistance.',
     },
     setup: {
         start: 'Start Moderating',
         which: 'Which provider would you like to set up first?',
-        multipleProviders: 'You\'re an Admin for Multiple Providers',
-        chooseSettings: 'Choose moderation settings for {{provider.name}}',
-        onceFinalized: 'Once finalized, moderation settings can only be changed by an OSF administrator.',
+        multiple_providers: 'You\'re an Admin for Multiple Providers',
+        choose_settings: 'Choose moderation settings for {{provider.name}}',
+        once_finalized: 'Once finalized, moderation settings can only be changed by an OSF administrator.',
         finalize: 'Finalize Settings',
         error: {
             message: 'Unable to complete the setup of {{provider.name}}. Please contact support@osf.io.',
@@ -142,88 +146,88 @@ export default {
     },
     content: {
         header: {
-            lastEdited: 'Last edited',
+            last_edited: 'Last edited',
         },
-        dateLabel: {
-            createdOn: 'Created on',
-            submittedOn: 'Submitted on',
+        date_label: {
+            created_on: 'Created on',
+            submitted_on: 'Submitted on',
         },
         share: {
             download: 'Download',
             downloads: 'Downloads',
-            downloadFile: 'Download file',
-            downloadPreprint: 'Download {{provider.type.singular}}',
+            download_file: 'Download file',
+            download_preprint: 'Download {{provider.type.singular}}',
         },
-        seeMore: 'See more',
-        seeLess: 'See less',
+        see_more: 'See more',
+        see_less: 'See less',
         version: 'Version',
-        preprintDOI: '{{provider.type.singularCapitalized}} DOI',
-        preprintPendingDOI: 'DOI created after moderator approval',
-        articleDOI: 'Peer-reviewed Publication DOI',
+        preprint_doi: '{{provider.type.singularCapitalized}} DOI',
+        article_doi: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
         disciplines: 'Disciplines',
-        projectButton: {
+        project_button: {
             paragraph: 'The project for this paper is available on the OSF.',
             button: 'Visit project',
+            edit_preprint: 'Edit {{provider.type.singular}}',
         },
     },
     components: {
-        actionFeed: {
-            noActions: 'No recent activity.',
-            seeMore: 'See more',
-            errorLoading: 'Error fetching more events.',
+        'action-feed': {
+            no_actions: 'No recent activity.',
+            see_more: 'See more',
+            error_loading: 'Error fetching more events.',
         },
-        actionFeedEntry: {
-            actionMessage: {
+        'action-feed-entry': {
+            action_message: {
                 submit: 'submitted a {{documentType}} to {{providerName}}',
                 accept: 'accepted a {{documentType}} in {{providerName}}',
                 reject: 'rejected a {{documentType}} from {{providerName}}',
                 edit_comment: 'edited the comment for a {{documentType}} in {{providerName}}',
             },
         },
-        dashboardSidebar: {
+        'dashboard-sidebar': {
             providers: 'Providers',
-            setUp: 'Set up moderation',
+            set_up: 'Set up moderation',
         },
-        errorPage: {
+        'error-page': {
             title: {
-                notFound: 'Page not found',
-                notAuthenticated: 'Not logged in',
+                not_found: 'Page not found',
+                not_authenticated: 'Not logged in',
                 forbidden: 'Forbidden',
-                notSetup: 'Moderation not enabled',
+                not_setup: 'Moderation not enabled',
             },
             details: {
-                notFound: 'The page you were looking for is not found on the OSF Preprints service.',
-                notAuthenticated: 'You must be logged in to view this page.',
+                not_found: 'The page you were looking for is not found on the OSF Preprints service.',
+                not_authenticated: 'You must be logged in to view this page.',
                 forbidden: 'You do not have the permissions to view this page.',
-                notSetup: 'An admin needs to set up moderation for this preprint provider.',
+                not_setup: 'An admin needs to set up moderation for this preprint provider.',
             },
             report: 'If this should not have occurred and the issue persists, please report it to',
-            goTo: 'Go to OSF Preprints',
+            go_to: 'Go to OSF Preprints',
         },
-        moderationList: {
+        'moderation-list': {
             newest: 'Newest',
             oldest: 'Oldest',
             pending: 'Pending',
             accepted: 'Accepted',
             rejected: 'Rejected',
             sort: 'Sort',
-            noSubmissions: 'No submissions.',
+            no_submissions: 'No submissions.',
         },
-        moderationListRow: {
+        'moderation-list-row': {
             submission: {
-                submittedOn: 'submitted on {{timeDate}} by',
-                submitted: 'submitted {{timeDate}} by',
-                acceptedOn: 'accepted on {{timeDate}} by {{moderatorName}}',
-                accepted: 'accepted {{timeDate}} by {{moderatorName}}',
-                acceptedAutomaticallyOn: 'accepted automatically on {{timeDate}}',
-                acceptedAutomatically: 'accepted automatically {{timeDate}}',
-                rejectedOn: 'rejected on {{timeDate}} by {{moderatorName}}',
-                rejected: 'rejected {{timeDate}} by {{moderatorName}}',
+                submitted_on: 'submitted on',
+                was_accepted_on: 'was accepted on',
+                was_rejected_on: 'was rejected on',
+                submitted: 'submitted',
+                was_accepted: 'was accepted',
+                was_rejected: 'was rejected',
+                by: 'by',
+                submission_by: 'submission by',
             },
         },
-        preprintStatusBanner: {
-            recentActivity: {
+        'preprint-status-banner': {
+            recent_activity: {
                 pending: 'submitted this {{provider.type.singular}} on',
                 accepted: 'accepted this {{provider.type.singular}} on',
                 rejected: 'rejected this {{provider.type.singular}} on',
@@ -233,31 +237,29 @@ export default {
                 },
             },
             message: {
-                pendingPre: 'not publicly available or searchable until approved by a moderator',
-                pendingPost: 'publicly available and searchable but is subject to removal by a moderator',
+                pending_pre: 'not publicly available or searchable until approved by a moderator',
+                pending_post: 'publicly available and searchable but is subject to removal by a moderator',
                 accepted: 'publicly available and searchable',
                 rejected: 'not publicly available or searchable',
             },
             pending: 'pending',
             accepted: 'accepted',
             rejected: 'rejected',
-            loading: 'Loading...',
             decision: {
-                makeDecision: 'Make decision',
-                modifyDecision: 'Modify decision',
+                make_decision: 'Make decision',
+                modify_decision: 'Modify decision',
                 header: {
-                    submitDecision: 'Submit your decision',
-                    modifyDecision: 'Modify your decision',
+                    submit_decision: 'Submit your decision',
+                    modify_decision: 'Modify your decision',
                 },
                 moderator: 'Moderator',
                 base: 'This {{provider.type.singular}} is',
                 btn: {
-                    submitDecision: 'Submit decision',
-                    modifyDecision: 'Modify decision',
+                    submit_decision: 'Submit decision',
+                    modify_decision: 'Modify decision',
                     update_comment: 'Update comment',
                 },
-                commentPlaceholder: 'Explain the reasoning behind your decision (optional)',
-                commentLengthError: 'Comment is {{difference}} character(s) too long (maximum is {{limit}}).',
+                comment_placeholder: 'Explain the reasoning behind your decision (optional)',
                 accept: {
                     label: 'Accept',
                     pre: 'Submission will appear in search results and be made public.',

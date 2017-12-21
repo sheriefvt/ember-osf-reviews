@@ -2,7 +2,6 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { translationMacro as t } from 'ember-i18n';
-import { task } from 'ember-concurrency';
 
 /**
  * A feed of recent actions for all providers the user has access to
@@ -19,13 +18,9 @@ export default Component.extend({
     toast: service(),
     currentUser: service(),
     classNames: ['action-feed'],
-    page: 0,
+    page: 1,
 
-    errorMessage: t('components.actionFeed.errorLoading'),
-
-    dummyActionList: computed(function() {
-        return new Array(10);
-    }),
+    errorMessage: t('components.action-feed.error_loading'),
 
     moreActions: computed('totalPages', 'page', function() {
         return this.get('page') < this.get('totalPages');
@@ -33,26 +28,37 @@ export default Component.extend({
 
     init() {
         this._super(...arguments);
+        this.set('listLoading', true);
         this.set('actionsList', []);
-        this.get('loadActions').perform();
+        this.loadPage();
     },
 
-    loadActions: task(function* () {
-        this.incrementProperty('page');
+    loadPage() {
         const page = this.get('page');
-        try {
-            const user = yield this.get('currentUser.user');
-            const actions = yield this.get('store').queryHasMany(user, 'actions', {
-                page,
-                embed: 'target',
-            });
-            this.get('actionsList').pushObjects(actions.toArray());
-            this.set(
-                'totalPages',
-                Math.ceil(actions.get('meta.total') / actions.get('meta.per_page')),
-            );
-        } catch (e) {
-            this.get('toast').error(this.get('errorMessage'));
-        }
-    }).drop(),
+        this.get('currentUser.user')
+            .then(user => this.get('store').queryHasMany(user, 'actions', { page }))
+            .then(this._setPageProperties.bind(this))
+            .catch(this._handleLoadError.bind(this));
+    },
+
+    _handleLoadError() {
+        this.set('listLoading', false);
+        this.set('loadingMore', false);
+        this.get('toast').error(this.get('errorMessage'));
+    },
+
+    _setPageProperties(response) {
+        this.get('actionsList').pushObjects(response.toArray());
+        this.setProperties({
+            totalPages: Math.ceil(response.get('links.meta.total') / response.get('links.meta.per_page')),
+            listLoading: false,
+            loadingMore: false,
+        });
+    },
+
+    nextPage() {
+        this.incrementProperty('page');
+        this.set('loadingMore', true);
+        this.loadPage();
+    },
 });

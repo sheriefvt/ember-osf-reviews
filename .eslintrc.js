@@ -4,4 +4,7 @@ module.exports = {
     globals: {
         MathJax: true
     },
+    rules: {
+        'array-callback-return': 'off',
+    }
 };

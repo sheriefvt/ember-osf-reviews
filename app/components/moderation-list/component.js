@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 /**
  * Provides a list of pending, accepted, and rejected submissions.
  * Provides filtering by preprint state and sorting based on the preprint creation date.
@@ -20,43 +19,44 @@ import { inject as service } from '@ember/service';
  *   status=status
  *   loading=loading
  *   totalPages=totalPages
+ *   statusCounts=statusCounts
  * }}
  * ```
  * @class moderation-list
  * */
 export default Component.extend({
-    theme: service(),
-
     classNames: ['content'],
 
-    didReceiveAttrs() {
-        this.set('statusButtons', [
+    init() {
+        this._super(...arguments);
+
+        this.statusButtons = [
             {
                 status: 'pending',
                 iconClass: 'fa-hourglass-o icon-pending',
-                labelKey: 'components.moderationList.pending',
+                labelKey: 'components.moderation-list.pending',
             },
             {
                 status: 'accepted',
                 iconClass: 'fa-check-circle-o icon-accepted',
-                labelKey: 'components.moderationList.accepted',
+                labelKey: 'components.moderation-list.accepted',
             },
             {
                 status: 'rejected',
                 iconClass: 'fa-times-circle-o icon-rejected',
-                labelKey: 'components.moderationList.rejected',
+                labelKey: 'components.moderation-list.rejected',
             },
-        ]);
+        ];
 
-        this.set('sortOptions', [
+        this.sortOptions = [
             {
                 sort: '-date_last_transitioned',
-                labelKey: 'components.moderationList.newest',
+                labelKey: 'components.moderation-list.newest',
             },
             {
                 sort: 'date_last_transitioned',
-                labelKey: 'components.moderationList.oldest',
+                labelKey: 'components.moderation-list.oldest',
             },
-        ]);
+        ];
     },
 });

@@ -100,9 +100,3 @@ ul.comma-list {
   border: 1px solid $color-border;
   z-index: 98;
 }
-
-@media (max-width: $screen-md) {
-  .share-row {
-    visibility: hidden;
-  }
-}

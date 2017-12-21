@@ -12,8 +12,6 @@ const REJECTED = 'rejected';
 const PRE_MODERATION = 'pre-moderation';
 const POST_MODERATION = 'post-moderation';
 
-const COMMENT_LIMIT = 65535;
-
 const ICONS = {
     [PENDING]: 'fa-hourglass-o',
     [ACCEPTED]: 'fa-check-circle-o',
@@ -21,16 +19,16 @@ const ICONS = {
 };
 
 const STATUS = {
-    [PENDING]: 'components.preprintStatusBanner.pending',
-    [ACCEPTED]: 'components.preprintStatusBanner.accepted',
-    [REJECTED]: 'components.preprintStatusBanner.rejected',
+    [PENDING]: 'components.preprint-status-banner.pending',
+    [ACCEPTED]: 'components.preprint-status-banner.accepted',
+    [REJECTED]: 'components.preprint-status-banner.rejected',
 };
 
 const MESSAGE = {
-    [PRE_MODERATION]: 'components.preprintStatusBanner.message.pendingPre',
-    [POST_MODERATION]: 'components.preprintStatusBanner.message.pendingPost',
-    [ACCEPTED]: 'components.preprintStatusBanner.message.accepted',
-    [REJECTED]: 'components.preprintStatusBanner.message.rejected',
+    [PRE_MODERATION]: 'components.preprint-status-banner.message.pending_pre',
+    [POST_MODERATION]: 'components.preprint-status-banner.message.pending_post',
+    [ACCEPTED]: 'components.preprint-status-banner.message.accepted',
+    [REJECTED]: 'components.preprint-status-banner.message.rejected',
 };
 
 const CLASS_NAMES = {
@@ -42,16 +40,16 @@ const CLASS_NAMES = {
 
 const SETTINGS = {
     comments: {
-        public: 'components.preprintStatusBanner.settings.comments.public',
-        private: 'components.preprintStatusBanner.settings.comments.private',
+        public: 'components.preprint-status-banner.settings.comments.public',
+        private: 'components.preprint-status-banner.settings.comments.private',
     },
     names: {
-        anonymous: 'components.preprintStatusBanner.settings.names.anonymous',
-        named: 'components.preprintStatusBanner.settings.names.named',
+        anonymous: 'components.preprint-status-banner.settings.names.anonymous',
+        named: 'components.preprint-status-banner.settings.names.named',
     },
     moderation: {
-        [PRE_MODERATION]: 'components.preprintStatusBanner.settings.moderation.pre',
-        [POST_MODERATION]: 'components.preprintStatusBanner.settings.moderation.post',
+        [PRE_MODERATION]: 'components.preprint-status-banner.settings.moderation.pre',
+        [POST_MODERATION]: 'components.preprint-status-banner.settings.moderation.post',
     },
 };
 
@@ -72,22 +70,22 @@ const SETTINGS_ICONS = {
 
 const DECISION_EXPLANATION = {
     accept: {
-        [PRE_MODERATION]: 'components.preprintStatusBanner.decision.accept.pre',
-        [POST_MODERATION]: 'components.preprintStatusBanner.decision.accept.post',
+        [PRE_MODERATION]: 'components.preprint-status-banner.decision.accept.pre',
+        [POST_MODERATION]: 'components.preprint-status-banner.decision.accept.post',
     },
     reject: {
-        [PRE_MODERATION]: 'components.preprintStatusBanner.decision.reject.pre',
-        [POST_MODERATION]: 'components.preprintStatusBanner.decision.reject.post',
+        [PRE_MODERATION]: 'components.preprint-status-banner.decision.reject.pre',
+        [POST_MODERATION]: 'components.preprint-status-banner.decision.reject.post',
     },
 };
 
 const RECENT_ACTIVITY = {
-    [PENDING]: 'components.preprintStatusBanner.recentActivity.pending',
-    [ACCEPTED]: 'components.preprintStatusBanner.recentActivity.accepted',
-    [REJECTED]: 'components.preprintStatusBanner.recentActivity.rejected',
+    [PENDING]: 'components.preprint-status-banner.recent_activity.pending',
+    [ACCEPTED]: 'components.preprint-status-banner.recent_activity.accepted',
+    [REJECTED]: 'components.preprint-status-banner.recent_activity.rejected',
     automatic: {
-        [PENDING]: 'components.preprintStatusBanner.recentActivity.automatic.pending',
-        [ACCEPTED]: 'components.preprintStatusBanner.recentActivity.automatic.accepted',
+        [PENDING]: 'components.preprint-status-banner.recent_activity.automatic.pending',
+        [ACCEPTED]: 'components.preprint-status-banner.recent_activity.automatic.accepted',
     },
 };
 
@@ -96,11 +94,11 @@ export default Component.extend({
     theme: service(),
 
     // translations
-    moderator: 'components.preprintStatusBanner.decision.moderator',
-    feedbackBaseMessage: 'components.preprintStatusBanner.decision.base',
-    commentPlaceholder: 'components.preprintStatusBanner.decision.commentPlaceholder',
-    labelAccept: 'components.preprintStatusBanner.decision.accept.label',
-    labelReject: 'components.preprintStatusBanner.decision.reject.label',
+    moderator: 'components.preprint-status-banner.decision.moderator',
+    feedbackBaseMessage: 'components.preprint-status-banner.decision.base',
+    commentPlaceholder: 'components.preprint-status-banner.decision.comment_placeholder',
+    labelAccept: 'components.preprint-status-banner.decision.accept.label',
+    labelReject: 'components.preprint-status-banner.decision.reject.label',
 
     classNames: ['preprint-status-component'],
 
@@ -118,17 +116,6 @@ export default Component.extend({
 
     creatorProfile: alias('latestAction.creator.profileURL'),
     creatorName: alias('latestAction.creator.fullName'),
-
-    commentExceedsLimit: computed.gt('reviewerComment.length', COMMENT_LIMIT),
-
-    commentLengthErrorMessage: computed('reviewerComment', function () {
-        const i18n = this.get('i18n');
-        return i18n.t('components.preprintStatusBanner.decision.commentLengthError', {
-            limit: COMMENT_LIMIT,
-            difference: Math.abs(COMMENT_LIMIT - this.get('reviewerComment.length')).toString(),
-        });
-    }),
-
 
     statusExplanation: computed('reviewsWorkflow', 'submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
@@ -200,23 +187,23 @@ export default Component.extend({
 
     labelDecisionDropdown: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
-            'components.preprintStatusBanner.decision.makeDecision' :
-            'components.preprintStatusBanner.decision.modifyDecision';
+            'components.preprint-status-banner.decision.make_decision' :
+            'components.preprint-status-banner.decision.modify_decision';
     }),
     labelDecisionHeader: computed('submission.reviewsState', function() {
         return this.get('submission.reviewsState') === PENDING ?
-            'components.preprintStatusBanner.decision.header.submitDecision' :
-            'components.preprintStatusBanner.decision.header.modifyDecision';
+            'components.preprint-status-banner.decision.header.submit_decision' :
+            'components.preprint-status-banner.decision.header.modify_decision';
     }),
     labelDecisionBtn: computed('submission.reviewsState', 'decision', 'reviewerComment', function() {
         if (this.get('submission.reviewsState') === PENDING) {
-            return 'components.preprintStatusBanner.decision.btn.submitDecision';
+            return 'components.preprint-status-banner.decision.btn.submit_decision';
         } else if (this.get('submission.reviewsState') !== this.get('decision')) {
-            return 'components.preprintStatusBanner.decision.btn.modifyDecision';
+            return 'components.preprint-status-banner.decision.btn.modify_decision';
         } else if (this.get('reviewerComment').trim() !== this.get('initialReviewerComment')) {
-            return 'components.preprintStatusBanner.decision.btn.update_comment';
+            return 'components.preprint-status-banner.decision.btn.update_comment';
         }
-        return 'components.preprintStatusBanner.decision.btn.modifyDecision';
+        return 'components.preprint-status-banner.decision.btn.modify_decision';
     }),
 
     commentEdited: computed('reviewerComment', 'initialReviewerComment', function() {
@@ -227,14 +214,14 @@ export default Component.extend({
         return this.get('submission.reviewsState') !== this.get('decision');
     }),
 
-    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
-        if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit')) {
+    btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', function() {
+        if (this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited'))) {
             return true;
         }
         return false;
     }),
 
-    didInsertElement() {
+    init() {
         this.get('submission.actions')
             .then(latestAction)
             .then(this._handleActions.bind(this));

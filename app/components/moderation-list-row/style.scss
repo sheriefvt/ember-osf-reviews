@@ -21,7 +21,7 @@
 .submission-info {
   padding: 10px 20px 10px 20px;
   color: $color-text-gray-dark;
-  min-width: 0;  // needed for the text-overflow on submission-title
+  min-width: 0px;  // needed for the text-overflow on submission-title
 }
 
 .submission-title {

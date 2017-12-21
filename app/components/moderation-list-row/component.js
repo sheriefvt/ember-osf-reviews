@@ -1,11 +1,7 @@
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-
 import moment from 'moment';
-import { task } from 'ember-concurrency';
-
-import latestAction from 'reviews/utils/latest-action';
 
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
@@ -13,35 +9,26 @@ const REJECTED = 'rejected';
 
 const ACTION_LABELS = Object.freeze({
     [PENDING]: {
-        gtDay: 'components.moderationListRow.submission.submittedOn',
-        ltDay: 'components.moderationListRow.submission.submitted',
+        gtDay: 'components.moderation-list-row.submission.submitted_on',
+        ltDay: 'components.moderation-list-row.submission.submitted',
     },
     [ACCEPTED]: {
-        gtDay: 'components.moderationListRow.submission.acceptedOn',
-        ltDay: 'components.moderationListRow.submission.accepted',
-        gtDay_automatic: 'components.moderationListRow.submission.acceptedAutomaticallyOn',
-        ltDay_automatic: 'components.moderationListRow.submission.acceptedAutomatically',
+        gtDay: 'components.moderation-list-row.submission.was_accepted_on',
+        ltDay: 'components.moderation-list-row.submission.was_accepted',
     },
     [REJECTED]: {
-        gtDay: 'components.moderationListRow.submission.rejectedOn',
-        ltDay: 'components.moderationListRow.submission.rejected',
+        gtDay: 'components.moderation-list-row.submission.was_rejected_on',
+        ltDay: 'components.moderation-list-row.submission.was_rejected',
     },
 });
 
 
 export default Component.extend({
     theme: service(),
-    i18n: service(),
 
     classNames: ['moderation-list-row'],
 
-    latestActionCreator: computed.alias('latestAction.creator.fullName'),
-
-    noActions: computed.not('submission.actions.length'),
-
-    latestAction: computed('submission.actions.[]', function() {
-        return latestAction(this.get('submission.actions'));
-    }),
+    dataLoading: computed.not('firstContributors.length'),
 
     firstContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors').slice(0, 3);
@@ -62,26 +49,24 @@ export default Component.extend({
     }),
 
     // translations
-    statusTimeDate: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
-        const i18n = this.get('i18n');
+    dateLabel: computed('submission.reviewsState', 'gtDay', function() {
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
-        const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
-        const labels = ACTION_LABELS[this.get('submission.reviewsState')][timeWording];
-        return i18n.t(labels, { timeDate: this.get('relevantDate'), moderatorName: this.get('latestActionCreator') });
+        return ACTION_LABELS[this.get('submission.reviewsState')][dayValue];
     }),
 
-    didReceiveAttrs() {
+    submittedByLabel: computed('submission.reviewsState', function() {
+        return this.get('submission.reviewsState') === PENDING ?
+            'components.moderation-list-row.submission.by' :
+            'components.moderation-list-row.submission.submission_by';
+    }),
+
+    init() {
+        this._super(...arguments);
+
         this.iconClass = {
             accepted: 'fa-check-circle-o accepted',
             pending: 'fa-hourglass-o pending',
             rejected: 'fa-times-circle-o rejected',
         };
-        this.get('fetchData').perform();
     },
-
-    fetchData: task(function* () {
-        const node = yield this.get('submission.node');
-        yield node.get('contributors');
-        yield this.get('submission.actions');
-    }),
 });

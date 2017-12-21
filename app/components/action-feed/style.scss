@@ -1,8 +1,15 @@
 & {
-  padding: 40px 0;
+  padding: 20px 0;
+
+  .loading {
+    text-align: center;
+    margin-top: 30px;
+    height: 20px;
+  }
 
   .see-more {
     height: 20px;
+    margin-top: 30px;
     padding-left: 45px;
   }
 }

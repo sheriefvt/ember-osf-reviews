@@ -1,5 +1,5 @@
-import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
 /**
  * @module ember-osf-reviews
@@ -13,7 +13,6 @@ export default Route.extend({
     theme: service(),
 
     model(params) {
-        // need to load the provider here so theme can be used in child routes
         return this.get('theme').loadProvider(params.provider_id)
             .catch(() => this.replaceWith('page-not-found'));
     },
