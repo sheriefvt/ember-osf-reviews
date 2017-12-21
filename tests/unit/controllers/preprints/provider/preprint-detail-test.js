@@ -296,8 +296,9 @@ test('fileDownloadURL computed property', function (assert) {
         ctrl.setProperties({ preprint });
         ctrl.set('preprint.id', '6gtu');
 
-        const url = ctrl.get('fileDownloadURL').split(ctrl.get('model.id'));
-        assert.strictEqual(url[1], '/download');
+        const { location: { origin } } = window;
+
+        assert.strictEqual(ctrl.get('fileDownloadURL'), `${origin}/6gtu/download`);
     });
 });
 

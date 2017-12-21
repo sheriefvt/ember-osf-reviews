@@ -1,4 +1,3 @@
-import { run } from '@ember/runloop';
 import { moduleForComponent } from 'ember-qunit';
 import test from 'ember-sinon-qunit/test-support/test';
 
@@ -52,7 +51,7 @@ test('page computed property', function(assert) {
     component.set('pageNumber', 1);
 
     component.set('files', ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7']);
-    assert.deepEqual(component.get('page'), [ "f7"]);
+    assert.deepEqual(component.get('page'), ['f7']);
 
     component.set('pageNumber', 2);
     assert.deepEqual(component.get('page'), []);
