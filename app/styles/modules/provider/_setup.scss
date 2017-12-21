@@ -19,14 +19,22 @@
 
   > .alert-warning {
     font-size: 20px;
-    margin: 0px;
+    margin: 0;
     padding: 25px;
   }
 
   form {
     @include centered-horizontal;
-    min-width: 500px;
     max-width: 575px;
+  }
+
+  @media screen and (max-width: $screen-xs) {
+    form {
+      .osf-box {
+        margin: 5px;
+        padding: 10px;
+      }
+    }
   }
 
 }

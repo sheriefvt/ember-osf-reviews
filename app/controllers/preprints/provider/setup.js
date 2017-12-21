@@ -43,7 +43,7 @@ export default Controller.extend({
     },
 
     _t(key, tpl = {}) {
-        return this.get('i18n').t(`provider_settings.${key}`, tpl);
+        return this.get('i18n').t(`providerSettings.${key}`, tpl);
     },
 
     _buildOption(setting, option) {

@@ -43,7 +43,7 @@ export default Component.extend({
 
     message: computed('action.{actionTrigger,provider}', function() {
         const i18n = this.get('i18n');
-        return i18n.t(`components.action-feed-entry.action_message.${this.get('action.actionTrigger')}`, {
+        return i18n.t(`components.actionFeedEntry.actionMessage.${this.get('action.actionTrigger')}`, {
             providerName: this.get('action.provider.name'),
             documentType: i18n.t(`documentType.${this.get('action.provider.preprintWord')}.singular`),
         });

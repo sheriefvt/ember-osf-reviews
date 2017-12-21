@@ -45,6 +45,8 @@ const Router = EmberRouter.extend({
 
 });
 
+/* eslint-disable array-callback-return */
+
 Router.map(function() {
     this.route('page-not-found', { path: '/*bad_url' });
 
@@ -61,5 +63,7 @@ Router.map(function() {
     this.route('page-not-found');
     this.route('forbidden');
 });
+
+/* eslint-enable array-callback-return */
 
 export default Router;
