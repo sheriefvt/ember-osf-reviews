@@ -212,14 +212,14 @@ export default {
         },
         moderationListRow: {
             submission: {
-                submittedOn: 'submitted on {{timeDate}} by',
-                submitted: 'submitted {{timeDate}} by',
-                acceptedOn: 'accepted on {{timeDate}} by {{moderatorName}}',
-                accepted: 'accepted {{timeDate}} by {{moderatorName}}',
-                acceptedAutomaticallyOn: 'accepted automatically on {{timeDate}}',
-                acceptedAutomatically: 'accepted automatically {{timeDate}}',
-                rejectedOn: 'rejected on {{timeDate}} by {{moderatorName}}',
-                rejected: 'rejected {{timeDate}} by {{moderatorName}}',
+                submittedOn: 'Submitted on {{timeDate}} by {{contributorName}}',
+                submitted: 'Submitted {{timeDate}} by {{contributorName}}',
+                acceptedOn: 'Accepted on {{timeDate}} by {{moderatorName}}',
+                accepted: 'Accepted {{timeDate}} by {{moderatorName}}',
+                acceptedAutomaticallyOn: 'Accepted automatically on {{timeDate}}',
+                acceptedAutomatically: 'Accepted automatically {{timeDate}}',
+                rejectedOn: 'Rejected on {{timeDate}} by {{moderatorName}}',
+                rejected: 'Rejected {{timeDate}} by {{moderatorName}}',
             },
         },
         preprintStatusBanner: {
