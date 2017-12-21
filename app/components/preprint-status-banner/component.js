@@ -226,8 +226,7 @@ export default Component.extend({
     }),
 
     decisionChanged: computed('submission.reviewsState', 'decision', function() {
-        return ((this.get('submission.reviewsState') !== this.get('decision') && this.get('submission.reviewsState') !== PENDING) ||
-        (this.get('submission.reviewsState') === PENDING && this.get('decision') !== ACCEPTED));
+        return this.get('submission.reviewsState') !== this.get('decision') && this.get('decision') !== ACCEPTED;
     }),
 
     btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
