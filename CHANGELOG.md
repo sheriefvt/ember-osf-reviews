@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+- Update `action` to `review-action` to reflect changes in OSF's API and ember-osf
+
 ## [0.2.1] - 2017-12-21
 ### Fixed
 - Error on moderation list with automatically accepted submissions
@@ -28,7 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Notify DevOps prior to merging into master to update Jenkins
 - Show moderator name (instead of creator) in the accepted/rejected records in the moderation list
 - Update style/layout for Reviews to be more mobile friendly 
-
 
 ### Removed
 - Remove name link from action logs in the dashboard view
