@@ -34,7 +34,7 @@ export default Route.extend(ConfirmationMixin, {
             }
         },
         willTransition(transition) {
-            if (this.controller.get('userHasEnteredReview')) {
+            if (this.isPageDirty()) {
                 this.controller.set('showWarning', true);
                 this.controller.set('previousTransition', transition);
                 transition.abort();
