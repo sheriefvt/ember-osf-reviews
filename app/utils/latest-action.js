@@ -2,7 +2,7 @@ import moment from 'moment';
 
 
 export default function latestAction(actions) {
-    if (!actions.length) {
+    if (!actions.get('length')) {
         return null;
     }
     // on create, Ember puts the new object at the end of the array
