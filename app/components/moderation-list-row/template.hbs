@@ -7,16 +7,15 @@
             <div title={{submission.title}} class="submission-info">
                 <div class="submission-title">{{submission.title}}</div>
                 <div class="submission-body">
-                    {{#if (eq submission.reviewsState 'pending')}}
-                        {{statusTimeDate}}
-                        {{#each firstContributors as |contributor| ~}}
-                            <li>{{contributor.users.fullName}}</li>
-                        {{/each}}
-                        {{#if (gt additionalContributors 0)}}
-                            + {{additionalContributors}}
-                        {{/if}}
-                    {{else}}
-                        {{statusTimeDate}}
+                    {{pendingStatusTimeDate}}
+                    {{#each firstContributors as |contributor| ~}}
+                        <li>{{contributor.users.fullName}}</li>
+                    {{/each}}
+                    {{#if (gt additionalContributors 0)}}
+                        + {{additionalContributors}}
+                    {{/if}}
+                    {{#if (not-eq submission.reviewsState 'pending')}}
+                        {{acceptedRejectedStatusTimeDate}}
                     {{/if}}
                 </div>
             </div>
