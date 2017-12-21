@@ -42,7 +42,8 @@
     content: ", "
   }
   li:last-child:after {
-    content: "";
+    content: "\a";
+    white-space: pre;
   }
 }
 
