@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Update `action` to `review-action` to reflect changes in OSF's API and ember-osf
+
+## [0.2.1] - 2017-12-21
+### Fixed
+- Error on moderation list with automatically accepted submissions
+
+## [0.2.0] - 2017-12-20
 ### Added
 - Headless Firefox for tests
 - Integration tests for
@@ -33,7 +41,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update language 
   - Add `Submitted by` along with the `accepted by/rejected by` for records under accepted/rejected tabs in moderation list
   - Capitalize first letter (e.g `submitted by` to `Submitted by`) 
-
 
 ### Removed
 - Remove name link from action logs in the dashboard view

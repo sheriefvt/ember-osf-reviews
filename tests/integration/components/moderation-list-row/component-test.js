@@ -7,10 +7,10 @@ moduleForComponent('moderation-list-row', 'Integration | Component | moderation-
 });
 
 
-test('it renders moderation-list-row accepted with actions', function(assert) {
+test('it renders moderation-list-row accepted with reviewActions', function(assert) {
     this.set('submission', {
         dateCreated: '2017-10-27T19:14:27.816946Z',
-        actions: [
+        reviewActions: [
             EmberObject.create({
                 fromState: 'pending',
                 toState: 'accepted',
@@ -38,11 +38,11 @@ test('it renders moderation-list-row accepted with actions', function(assert) {
         ' Viper Oogway Accepted Invalid date by Kung-fu Panda');
 });
 
-test('it renders moderation-list-row accepted without actions', function(assert) {
+test('it renders moderation-list-row accepted without reviewActions', function(assert) {
     this.set('submission', {
         dateCreated: '2017-10-27T19:14:27.816946Z',
         dateLastTransitioned: '2017-10-27T19:14:27.816946Z',
-        actions: [],
+        reviewActions: [],
         reviewsState: 'accepted',
         node: EmberObject.create({
             contributors: [{ users: { fullName: 'Viper' } }],
@@ -53,11 +53,11 @@ test('it renders moderation-list-row accepted without actions', function(assert)
         ' Accepted automatically on October 27, 2017');
 });
 
-test('it renders moderation-list-row rejected with actions', function(assert) {
+test('it renders moderation-list-row rejected with reviewActions', function(assert) {
     this.set('submission', {
         dateLastTransitioned: '2017-10-27T19:14:27.816946Z',
         dateCreated: '2017-10-27T19:14:27.816946Z',
-        actions: [
+            reviewActions: [
             EmberObject.create({
                 fromState: 'pending',
                 toState: 'rejected',
@@ -81,11 +81,11 @@ test('it renders moderation-list-row rejected with actions', function(assert) {
         'Rejected on October 27, 2017 by Master Shifu');
 });
 
-test('it renders moderation-list-row pending with actions', function(assert) {
+test('it renders moderation-list-row pending with reviewActions', function(assert) {
     this.set('submission', {
         dateLastTransitioned: '2017-10-26T19:14:27.816946Z',
         dateCreated: '2017-10-26T19:14:27.816946Z',
-        actions: [
+        reviewActions: [
             EmberObject.create({
                 fromState: 'initial',
                 toState: 'pending',
@@ -102,11 +102,11 @@ test('it renders moderation-list-row pending with actions', function(assert) {
     assert.equal(this.$('[data-status=pending]').text().replace(/\s+/g, ' ').trim(), 'Submitted on October 26, 2017 by Mr. Ping Mantis');
 });
 
-test('it renders moderation-list-row pending with actions and more than three contributors', function(assert) {
+test('it renders moderation-list-row pending with reviewActions and more than three contributors', function(assert) {
     this.set('submission', {
         dateLastTransitioned: '2017-12-26T19:14:27.816946Z',
         dateCreated: '2017-12-26T19:14:27.816946Z',
-        actions: [
+        reviewActions: [
             EmberObject.create({
                 fromState: 'initial',
                 toState: 'pending',
