@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf#feature/reviews#2017-10-26":
+"@centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf#feature/reviews#2017-12-21":
   version "0.11.1"
-  resolved "https://github.com/CenterForOpenScience/ember-osf#21d464a0f92b1fd08a18f838ef961e5760f30a8f"
+  resolved "https://github.com/CenterForOpenScience/ember-osf#a51c80280802b55edfa0c5a9af2dd7c8bfee0c2f"
   dependencies:
     bootstrap-sass "^3.3.7"
     broccoli-funnel "1.2.0"
@@ -4369,15 +4369,7 @@ fs-extra@^3.0.1:
     jsonfile "^3.0.0"
     universalify "^0.1.0"
 
-fs-extra@^4.0.0:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
-
-fs-extra@^4.0.1:
+fs-extra@^4.0.0, fs-extra@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.2.tgz#f91704c53d1b461f893452b0c307d9997647ab6b"
   dependencies:

@@ -128,7 +128,7 @@ export default Controller.extend({
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
 
-            const action = this.store.createRecord('action', {
+            const action = this.store.createRecord('review-action', {
                 actionTrigger: trigger,
                 target: this.get('preprint'),
             });
@@ -160,7 +160,7 @@ export default Controller.extend({
         const response = yield this.get('store').findRecord(
             'preprint',
             preprintId,
-            { include: ['node', 'license', 'actions', 'contributors'] },
+            { include: ['node', 'license', 'review_actions', 'contributors'] },
         );
         const node = yield response.get('node');
         if (!node.get('public')) {
