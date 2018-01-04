@@ -311,9 +311,10 @@ test('userActivity computed property', function(assert) {
     assert.ok(!component.get('userActivity'));
 });
 
-test('closeReviewerFeedback computed property', function(assert) {
+test('closeReviewerFeedback action', function(assert) {
     const component = this.subject();
 
+    component.set('notDefaultValues', true);
     component.set('commentEdited', true);
     component.set('decisionChanged', true);
     component.send('closeReviewerFeedback');
@@ -323,4 +324,42 @@ test('closeReviewerFeedback computed property', function(assert) {
     component.set('decisionChanged', false);
     component.send('closeReviewerFeedback');
     assert.ok(!component.get('userHasEnteredReview'));
+
+    component.set('notDefaultValues', false);
+    assert.ok(!component.get('userHasEnteredReview'));
+});
+
+test('notDefaultValues computed property', function(assert) {
+    const component = this.subject();
+    this.inject.service('store');
+
+    run(() => {
+        const node = this.store.createRecord('node', {
+            title: 'test title',
+            description: 'test description',
+        });
+
+        const submission = this.store.createRecord('preprint', { node });
+        component.setProperties({ submission });
+
+        component.set('submission.reviewsState', 'pending');
+        component.set('decision', 'accepted');
+        component.set('commentEdited', false);
+        assert.ok(!component.get('notDefaultValues'));
+
+        component.set('submission.reviewsState', 'accepted');
+        component.set('decision', 'rejected');
+        component.set('commentEdited', false);
+        assert.ok(component.get('notDefaultValues'));
+
+        component.set('submission.reviewsState', 'rejected');
+        component.set('decision', 'pending');
+        component.set('commentEdited', false);
+        assert.ok(component.get('notDefaultValues'));
+
+        component.set('submission.reviewsState', 'pending');
+        component.set('decision', 'accepted');
+        component.set('commentEdited', true);
+        assert.ok(component.get('notDefaultValues'));
+    });
 });

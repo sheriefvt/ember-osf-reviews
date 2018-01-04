@@ -226,7 +226,11 @@ export default Component.extend({
     }),
 
     decisionChanged: computed('submission.reviewsState', 'decision', function() {
-        return this.get('submission.reviewsState') !== this.get('decision') && this.get('decision') !== ACCEPTED;
+        return this.get('submission.reviewsState') !== this.get('decision');
+    }),
+
+    notDefaultValues: computed('submission.reviewsState', 'decision', 'commentEdited', function() {
+        return this.get('decision') !== ACCEPTED || this.get('commentEdited');
     }),
 
     btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
@@ -257,7 +261,9 @@ export default Component.extend({
             this.set('reviewerComment', this.get('initialReviewerComment'));
         },
         closeReviewerFeedback() {
-            this.set('userHasEnteredReview', this.get('userActivity'));
+            if (this.get('notDefaultValues')) {
+                this.set('userHasEnteredReview', this.get('userActivity'));
+            }
         },
     },
 
