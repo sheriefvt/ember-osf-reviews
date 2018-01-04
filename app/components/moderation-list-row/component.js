@@ -70,7 +70,6 @@ export default Component.extend({
         const i18n = this.get('i18n');
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
         const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
-        console.log(dayValue);
         const status = this.get('submission.reviewsState');
         const labels = ACTION_LABELS[status][timeWording];
         return i18n.t(labels, { timeDate: this.get('acceptedRejectedDate'), moderatorName: this.get('latestActionCreator') });
