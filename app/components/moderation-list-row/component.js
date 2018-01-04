@@ -37,11 +37,11 @@ export default Component.extend({
 
     latestActionCreator: computed.alias('latestAction.creator.fullName'),
 
-    noActions: computed.not('submission.actions.length'),
+    noActions: computed.not('submission.reviewActions.length'),
 
     // latest action attempted on the preprint
-    latestAction: computed('submission.actions.[]', function() {
-        return latestAction(this.get('submission.actions'));
+    latestAction: computed('submission.reviewActions.[]', function() {
+        return latestAction(this.get('submission.reviewActions'));
     }),
 
     // first three contributors to the preprint
@@ -54,41 +54,38 @@ export default Component.extend({
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
     }),
 
-    // check if it has been more than a day since preprint last transition
     gtDay: computed('submission.dateLastTransitioned', function() {
         return moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
     }),
 
     // date of preprint acceptance or rejection
-    acceptedRejectedtDate: computed('submission.dateLastTransitioned', 'gtDay', function() {
+    acceptedRejectedDate: computed('submission.dateLastTransitioned', 'gtDay', function() {
         return this.get('gtDay') ?
             moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
             moment(Math.min(Date.parse(this.get('submission.dateLastTransitioned')), Date.now())).fromNow();
     }),
 
-    // date of preprint submission
-    submitDate: computed('submission.dateCreated', 'gtDay', function() {
-        return this.get('gtDay') ?
-            moment(this.get('submission.dateCreated')).format('MMMM DD, YYYY') :
-            moment(Math.min(Date.parse(this.get('submission.dateCreated')), Date.now())).fromNow();
-    }),
-
-    // translations for accepted and rejected records
-    acceptedRejectedStatusTimeDate: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
+    // translations for moderator action label
+    reviewedOnLabel: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
         const i18n = this.get('i18n');
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
         const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
+        console.log(dayValue);
         const status = this.get('submission.reviewsState');
         const labels = ACTION_LABELS[status][timeWording];
-        return i18n.t(labels, { timeDate: this.get('acceptedRejectedtDate'), moderatorName: this.get('latestActionCreator') });
+        return i18n.t(labels, { timeDate: this.get('acceptedRejectedDate'), moderatorName: this.get('latestActionCreator') });
     }),
 
-    // translations for pending records
-    pendingStatusTimeDate: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
+    // translations for submitted on label
+    submittedOnLabel: computed('gtDaySubmit', 'submission.dateCreated', function() {
         const i18n = this.get('i18n');
-        const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
+        const gtDaySubmit = moment().diff(this.get('submission.dateCreated'), 'days') > 1;
+        const dayValue = gtDaySubmit ? 'gtDay' : 'ltDay';
+        const submitDate = gtDaySubmit ?
+            moment(this.get('submission.dateCreated')).format('MMMM DD, YYYY') :
+            moment(Math.min(Date.parse(this.get('submission.dateCreated')), Date.now())).fromNow();
         const labels = ACTION_LABELS.pending[dayValue];
-        return i18n.t(labels, { timeDate: this.get('submitDate') });
+        return i18n.t(labels, { timeDate: submitDate });
     }),
 
     didReceiveAttrs() {
@@ -103,6 +100,6 @@ export default Component.extend({
     fetchData: task(function* () {
         const node = yield this.get('submission.node');
         yield node.get('contributors');
-        yield this.get('submission.actions');
+        yield this.get('submission.reviewActions');
     }),
 });

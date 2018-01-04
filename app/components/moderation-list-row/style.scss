@@ -42,8 +42,7 @@
     content: ", "
   }
   li:last-child:after {
-    content: "\a";
-    white-space: pre;
+    content: "";
   }
 }
 

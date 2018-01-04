@@ -212,8 +212,8 @@ export default {
         },
         moderationListRow: {
             submission: {
-                submittedOn: 'Submitted on {{timeDate}} by {{contributorName}}',
-                submitted: 'Submitted {{timeDate}} by {{contributorName}}',
+                submittedOn: 'Submitted on {{timeDate}} by',
+                submitted: 'Submitted {{timeDate}} by',
                 acceptedOn: 'Accepted on {{timeDate}} by {{moderatorName}}',
                 accepted: 'Accepted {{timeDate}} by {{moderatorName}}',
                 acceptedAutomaticallyOn: 'Accepted automatically on {{timeDate}}',
