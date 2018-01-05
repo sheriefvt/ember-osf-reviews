@@ -139,6 +139,9 @@ export default Controller.extend({
 
             this._saveAction(action, filter);
         },
+        closeReviewerFeedback(userActivity) {
+            this.set('userHasEnteredReview', userActivity);
+        },
     },
 
     _saveAction(action, filter) {

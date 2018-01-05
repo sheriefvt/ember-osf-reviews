@@ -21,9 +21,9 @@
             {{/if}}
         </div>
         <div class="dropdown reviewer-feedback">
-            {{#bs-dropdown onHide=(action 'closeReviewerFeedback') closeOnMenuClick=false as |dd|}}
+            {{#bs-dropdown onHide=(action 'closeFeedback') closeOnMenuClick=false as |dd|}}
                 {{#dd.button type="success" disabled=submission.reviewActions.isPending}}
-                    {{#if submission.actions.isPending}}
+                    {{#if submission.reviewActions.isPending}}
                         <i class='button-loading-indicator fa fa-circle-o-notch fa-spin'></i>
                         {{t 'components.preprint-status-banner.loading'}}
                     {{else}}

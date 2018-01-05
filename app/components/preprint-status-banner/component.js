@@ -110,7 +110,8 @@ export default Component.extend({
     // Submission form
     initialReviewerComment: '',
     reviewerComment: '',
-    decision: 'accepted',
+    decision: ACCEPTED,
+    initialDecision: '',
 
     reviewsWorkflow: alias('submission.provider.reviewsWorkflow'),
     reviewsCommentsPrivate: alias('submission.provider.reviewsCommentsPrivate'),
@@ -225,12 +226,12 @@ export default Component.extend({
         return this.get('reviewerComment').trim() !== this.get('initialReviewerComment');
     }),
 
-    decisionChanged: computed('submission.reviewsState', 'decision', function() {
-        return this.get('submission.reviewsState') !== this.get('decision');
+    decisionChanged: computed('decision', 'initialDecision', function() {
+        return this.get('initialDecision') !== this.get('decision');
     }),
 
-    notDefaultValues: computed('submission.reviewsState', 'decision', 'commentEdited', function() {
-        return this.get('decision') !== ACCEPTED || this.get('commentEdited');
+    pendingStateNotChanged: computed('submission.reviewsState', 'decision', function() {
+        return (this.get('submission.reviewsState') === PENDING) && (this.get('decision') === ACCEPTED);
     }),
 
     btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
@@ -260,9 +261,9 @@ export default Component.extend({
             this.set('decision', this.get('submission.reviewsState'));
             this.set('reviewerComment', this.get('initialReviewerComment'));
         },
-        closeReviewerFeedback() {
-            if (this.get('notDefaultValues')) {
-                this.set('userHasEnteredReview', this.get('userActivity'));
+        closeFeedback() {
+            if (!this.get('pendingStateNotChanged') || this.get('userActivity')) {
+                this.get('closeReviewerFeedback')(this.get('userActivity'));
             }
         },
     },
@@ -271,14 +272,15 @@ export default Component.extend({
         if (action) {
             if (this.get('submission.reviewsState') !== PENDING) {
                 const comment = action.get('comment');
-
                 this.set('initialReviewerComment', comment);
                 this.set('reviewerComment', comment);
                 this.set('decision', this.get('submission.reviewsState'));
+                this.set('initialDecision', this.get('submission.reviewsState'));
             } else {
                 this.set('initialReviewerComment', '');
                 this.set('reviewerComment', '');
                 this.set('decision', ACCEPTED);
+                this.set('initialDecision', ACCEPTED);
             }
             this.set('noActions', false);
         } else {
