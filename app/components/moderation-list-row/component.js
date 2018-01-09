@@ -66,7 +66,7 @@ export default Component.extend({
     }),
 
     // translations for moderator action label
-    reviewedOnLabel: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
+    reviewedOnLabel: computed('submission.reviewsState', 'gtDay', 'noActions', 'acceptedRejectedDate', 'latestActionCreator', function() {
         const i18n = this.get('i18n');
         const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
         const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
@@ -76,7 +76,7 @@ export default Component.extend({
     }),
 
     // translations for submitted on label
-    submittedOnLabel: computed('gtDaySubmit', 'submission.dateCreated', function() {
+    submittedOnLabel: computed('gtDay', 'submission.dateCreated', function() {
         const i18n = this.get('i18n');
         const gtDaySubmit = moment().diff(this.get('submission.dateCreated'), 'days') > 1;
         const dayValue = gtDaySubmit ? 'gtDay' : 'ltDay';

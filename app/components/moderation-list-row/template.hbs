@@ -16,11 +16,9 @@
                             + {{additionalContributors}}
                         {{/if}}
                     </div>
-                    <div>
-                        {{#if (not-eq submission.reviewsState 'pending')}}
-                            {{reviewedOnLabel}}
-                        {{/if}}
-                    </div>
+                    {{#if (not-eq submission.reviewsState 'pending')}}
+                        <div>{{reviewedOnLabel}}</div>
+                    {{/if}}
                 </div>
             </div>
         </div>
