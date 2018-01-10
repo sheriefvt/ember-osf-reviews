@@ -263,7 +263,7 @@ export default Component.extend({
         },
         closeFeedback() {
             if (!this.get('pendingStateNotChanged') || this.get('userActivity')) {
-                this.get('closeReviewerFeedback')(this.get('userActivity'));
+                this.get('setUserEnteredReview')(this.get('userActivity'));
             }
         },
     },

@@ -139,7 +139,7 @@ export default Controller.extend({
 
             this._saveAction(action, filter);
         },
-        closeReviewerFeedback(userActivity) {
+        setUserEnteredReview(userActivity) {
             this.set('userHasEnteredReview', userActivity);
         },
     },

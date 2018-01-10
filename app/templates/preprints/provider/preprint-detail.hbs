@@ -20,7 +20,7 @@
     {{#if fetchData.isRunning}}
         <div class="preprint-status-component preprint-status-component--skeleton"></div>
     {{else}}
-        {{preprint-status-banner submission=preprint saving=savingAction closeReviewerFeedback=(action 'closeReviewerFeedback') submitDecision=(action 'submitDecision')}}
+        {{preprint-status-banner submission=preprint saving=savingAction setUserEnteredReview=(action 'setUserEnteredReview') submitDecision=(action 'submitDecision')}}
     {{/if}}
 
     <div class="view-page">
