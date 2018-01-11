@@ -1,7 +1,6 @@
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { translationMacro as t } from 'ember-i18n';
 import { task } from 'ember-concurrency';
 
 /**
@@ -17,11 +16,11 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
     store: service(),
     toast: service(),
+    i18n: service(),
+
     currentUser: service(),
     classNames: ['action-feed'],
     page: 0,
-
-    errorMessage: t('components.actionFeed.errorLoading'),
 
     dummyActionList: computed(function() {
         return new Array(10);
@@ -41,18 +40,18 @@ export default Component.extend({
         this.incrementProperty('page');
         const page = this.get('page');
         try {
-            const user = yield this.get('currentUser.user');
-            const actions = yield this.get('store').queryHasMany(user, 'actions', {
+            const actions = yield this.get('store').query('review-action', {
                 page,
-                embed: 'target',
+                embed: ['target'],
             });
             this.get('actionsList').pushObjects(actions.toArray());
             this.set(
                 'totalPages',
-                Math.ceil(actions.get('meta.total') / actions.get('meta.per_page')),
+                Math.ceil(actions.get('meta.pagination.total') / actions.get('meta.pagination.per_page')),
             );
         } catch (e) {
-            this.get('toast').error(this.get('errorMessage'));
+            this.get('toast')
+                .error(this.get('i18n').t('components.actionFeed.errorLoading'));
         }
     }).drop(),
 });
