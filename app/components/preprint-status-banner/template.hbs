@@ -56,14 +56,14 @@
                     <div class="moderator-decision" aria-labelledby="moderator-feedback">
                         <form class="{{if noComment 'no-comment'}}">
                             <label class="decision-option ">
-                                {{radio-button value="accepted" groupValue=decision}}
+                                {{radio-button value="accepted" groupValue=decision changed="decisionToggled"}}
                                 <span class="p-l-sm">
                                     {{t labelAccept}}
                                     <p>{{t acceptExplanation}}</p>
                                 </span>
                             </label>
                             <label class="decision-option">
-                                {{radio-button value="rejected" groupValue=decision}}
+                                {{radio-button value="rejected" groupValue=decision changed="decisionToggled"}}
                                 <span class="p-l-sm">
                                     {{t labelReject}}
                                     <p>{{t rejectExplanation}}</p>

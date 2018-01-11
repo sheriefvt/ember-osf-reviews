@@ -112,6 +112,7 @@ export default Component.extend({
     reviewerComment: '',
     decision: ACCEPTED,
     initialDecision: '',
+    decisionValueToggled: false,
 
     reviewsWorkflow: alias('submission.provider.reviewsWorkflow'),
     reviewsCommentsPrivate: alias('submission.provider.reviewsCommentsPrivate'),
@@ -122,7 +123,9 @@ export default Component.extend({
 
     commentExceedsLimit: computed.gt('reviewerComment.length', COMMENT_LIMIT),
 
-    userActivity: computed.or('commentEdited', 'decisionChanged'),
+    userActivity: computed.or('commentEdited', 'decisionUpdated'),
+
+    decisionUpdated: computed.and('decisionChanged', 'decisionValueToggled'),
 
     commentLengthErrorMessage: computed('reviewerComment', function () {
         const i18n = this.get('i18n');
@@ -230,12 +233,8 @@ export default Component.extend({
         return this.get('initialDecision') !== this.get('decision');
     }),
 
-    pendingStateNotChanged: computed('submission.reviewsState', 'decision', function() {
-        return (this.get('submission.reviewsState') === PENDING) && (this.get('decision') === ACCEPTED);
-    }),
-
     btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
-        return this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited') && !this.get('pendingStateNotChanged')) || this.get('commentExceedsLimit');
+        return this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit');
     }),
 
     didInsertElement() {
@@ -266,6 +265,9 @@ export default Component.extend({
                 this.get('setUserEnteredReview')(this.get('userActivity'));
             }
         },
+        decisionToggled() {
+            this.set('decisionValueToggled', true);
+        },
     },
 
     _handleActions(action) {
@@ -280,7 +282,7 @@ export default Component.extend({
                 this.set('initialReviewerComment', '');
                 this.set('reviewerComment', '');
                 this.set('decision', ACCEPTED);
-                this.set('initialDecision', ACCEPTED);
+                this.set('initialDecision', PENDING);
             }
             this.set('noActions', false);
         } else {
