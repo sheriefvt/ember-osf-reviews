@@ -235,7 +235,7 @@ export default Component.extend({
     }),
 
     btnDisabled: computed('decisionChanged', 'commentEdited', 'saving', 'commentExceedsLimit', function() {
-        return this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited')) || this.get('commentExceedsLimit');
+        return this.get('saving') || (!this.get('decisionChanged') && !this.get('commentEdited') && !this.get('pendingStateNotChanged')) || this.get('commentExceedsLimit');
     }),
 
     didInsertElement() {
