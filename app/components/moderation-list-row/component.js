@@ -54,29 +54,22 @@ export default Component.extend({
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
     }),
 
-    gtDay: computed('submission.dateLastTransitioned', function() {
-        return moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
-    }),
-
-    // date of preprint acceptance or rejection
-    acceptedRejectedDate: computed('submission.dateLastTransitioned', 'gtDay', function() {
-        return this.get('gtDay') ?
+    // translations for moderator action label
+    reviewedOnLabel: computed('submission.{reviewsState,dateLastTransitioned}', 'noActions', 'latestActionCreator', function() {
+        const gtDay = moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
+        const acceptedRejectedDate = gtDay ?
             moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
             moment(Math.min(Date.parse(this.get('submission.dateLastTransitioned')), Date.now())).fromNow();
-    }),
-
-    // translations for moderator action label
-    reviewedOnLabel: computed('submission.reviewsState', 'gtDay', 'noActions', 'acceptedRejectedDate', 'latestActionCreator', function() {
         const i18n = this.get('i18n');
-        const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
+        const dayValue = gtDay ? 'gtDay' : 'ltDay';
         const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
         const status = this.get('submission.reviewsState');
         const labels = ACTION_LABELS[status][timeWording];
-        return i18n.t(labels, { timeDate: this.get('acceptedRejectedDate'), moderatorName: this.get('latestActionCreator') });
+        return i18n.t(labels, { timeDate: acceptedRejectedDate, moderatorName: this.get('latestActionCreator') });
     }),
 
     // translations for submitted on label
-    submittedOnLabel: computed('gtDay', 'submission.dateCreated', function() {
+    submittedOnLabel: computed('submission.dateCreated', function() {
         const i18n = this.get('i18n');
         const gtDaySubmit = moment().diff(this.get('submission.dateCreated'), 'days') > 1;
         const dayValue = gtDaySubmit ? 'gtDay' : 'ltDay';
