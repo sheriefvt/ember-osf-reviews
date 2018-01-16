@@ -7,15 +7,15 @@ import { task } from 'ember-concurrency';
 
 import latestAction from 'reviews/utils/latest-action';
 
-const PENDING = 'pending';
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
 
+const submittedOnLabel = {
+    gtDay: 'components.moderationListRow.submission.submittedOn',
+    ltDay: 'components.moderationListRow.submission.submitted',
+};
+
 const ACTION_LABELS = Object.freeze({
-    [PENDING]: {
-        gtDay: 'components.moderationListRow.submission.submittedOn',
-        ltDay: 'components.moderationListRow.submission.submitted',
-    },
     [ACCEPTED]: {
         gtDay: 'components.moderationListRow.submission.acceptedOn',
         ltDay: 'components.moderationListRow.submission.accepted',
@@ -56,11 +56,8 @@ export default Component.extend({
 
     // translations for moderator action label
     reviewedOnLabel: computed('submission.{reviewsState,dateLastTransitioned}', 'noActions', 'latestActionCreator', function() {
-        const gtDay = moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
-        const acceptedRejectedDate = gtDay ?
-            moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
-            moment(Math.min(Date.parse(this.get('submission.dateLastTransitioned')), Date.now())).fromNow();
         const i18n = this.get('i18n');
+        const [acceptedRejectedDate, gtDay] = this.formattedDateLabel(this.get('submission.dateLastTransitioned'));
         const dayValue = gtDay ? 'gtDay' : 'ltDay';
         const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
         const status = this.get('submission.reviewsState');
@@ -71,12 +68,9 @@ export default Component.extend({
     // translations for submitted on label
     submittedOnLabel: computed('submission.dateCreated', function() {
         const i18n = this.get('i18n');
-        const gtDaySubmit = moment().diff(this.get('submission.dateCreated'), 'days') > 1;
+        const [submitDate, gtDaySubmit] = this.formattedDateLabel(this.get('submission.dateCreated'));
         const dayValue = gtDaySubmit ? 'gtDay' : 'ltDay';
-        const submitDate = gtDaySubmit ?
-            moment(this.get('submission.dateCreated')).format('MMMM DD, YYYY') :
-            moment(Math.min(Date.parse(this.get('submission.dateCreated')), Date.now())).fromNow();
-        const labels = ACTION_LABELS.pending[dayValue];
+        const labels = submittedOnLabel[dayValue];
         return i18n.t(labels, { timeDate: submitDate });
     }),
 
@@ -87,6 +81,14 @@ export default Component.extend({
             rejected: 'fa-times-circle-o rejected',
         };
         this.get('fetchData').perform();
+    },
+
+    formattedDateLabel(rawDate) {
+        const gtDayAgo = moment().diff(rawDate, 'days') > 1;
+        const formattedDate = gtDayAgo ?
+            moment(rawDate).format('MMMM DD, YYYY') :
+            moment(Math.min(Date.parse(rawDate), Date.now())).fromNow();
+        return [formattedDate, gtDayAgo];
     },
 
     fetchData: task(function* () {
