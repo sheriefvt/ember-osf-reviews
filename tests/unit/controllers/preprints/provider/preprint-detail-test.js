@@ -302,13 +302,6 @@ test('fileDownloadURL computed property', function (assert) {
     });
 });
 
-test('hideWarning action', function (assert) {
-    const ctrl = this.subject();
-    ctrl.set('showWarning', true);
-    ctrl.send('hideWarning');
-    assert.ok(!ctrl.get('showWarning'));
-});
-
 test('leavePage action', function (assert) {
     const ctrl = this.subject();
 

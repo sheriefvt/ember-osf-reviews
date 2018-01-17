@@ -122,9 +122,6 @@ export default Controller.extend({
                 previousTransition.retry();
             }
         },
-        hideWarning() {
-            this.set('showWarning', false);
-        },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
 
