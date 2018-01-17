@@ -258,7 +258,10 @@ export default Component.extend({
             this.set('reviewerComment', this.get('initialReviewerComment'));
         },
         decisionToggled() {
-            this.set('decisionValueToggled', true);
+            this.get('setUserEnteredReview')(this.get('decisionChanged'));
+        },
+        commentChanged() {
+            this.get('setUserEnteredReview')(this.get('commentEdited'));
         },
     },
 

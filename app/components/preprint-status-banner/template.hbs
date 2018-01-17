@@ -21,7 +21,7 @@
             {{/if}}
         </div>
         <div class="dropdown reviewer-feedback">
-            {{#bs-dropdown onHide=(action setUserEnteredReview userActivity) closeOnMenuClick=false as |dd|}}
+            {{#bs-dropdown closeOnMenuClick=false as |dd|}}
                 {{#dd.button type="success" disabled=submission.reviewActions.isPending}}
                     {{#if submission.reviewActions.isPending}}
                         <i class='button-loading-indicator fa fa-circle-o-notch fa-spin'></i>
@@ -69,7 +69,12 @@
                                     <p>{{t rejectExplanation}}</p>
                                 </span>
                             </label>
-                            {{textarea value=reviewerComment rows="8" placeholder=(t commentPlaceholder) class="form-control"}}
+                            {{textarea
+                                key-up=(action "commentChanged")
+                                value=reviewerComment
+                                rows="8" placeholder=(t commentPlaceholder)
+                                class="form-control"
+                            }}
                             {{#if commentExceedsLimit}}
                                 <div class="comment-length-error">
                                     {{commentLengthErrorMessage}}
