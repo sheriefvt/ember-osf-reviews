@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Show moderator name (instead of creator) in the accepted/rejected records in the moderation list
 - Update style/layout for Reviews to be more mobile friendly 
 - Update language 
-  - Add `Submitted by` along with the `accepted by/rejected by` for records under accepted/rejected tabs in moderation list
+  - Add `Submitted by` along with the `accepted by/rejected by` for the accepted/rejected records in the moderation list
   - Capitalize first letter (e.g `submitted by` to `Submitted by`) 
 
 ### Removed
