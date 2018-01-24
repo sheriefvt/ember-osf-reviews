@@ -6,7 +6,6 @@ import ConfirmationMixin from 'ember-onbeforeunload/mixins/confirmation';
 
 export default Route.extend(ConfirmationMixin, {
     theme: service(),
-    currentUser: service(),
 
     model(params) {
         return { preprintId: params.preprint_id };
